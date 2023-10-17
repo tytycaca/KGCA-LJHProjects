@@ -11,8 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLang_01", "CLang_01\CLang_
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLang", "CLang", "{87AD7C53-0B24-4D50-9007-9E3D2B6BB97E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C++", "C++", "{2D071FB9-FBF9-4BEB-ABC0-F37E404EF540}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
