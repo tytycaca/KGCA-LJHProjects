@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f9881a2a-2f2b-4274-978f-12e7f718da8a}</ProjectGuid>
-    <RootNamespace>CLang0</RootNamespace>
+    <ProjectGuid>{9bd0ac3e-a1d5-497a-8b25-07c9ef5f464a}</ProjectGuid>
+    <RootNamespace>TempleteStack</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -78,8 +78,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../../output/</OutDir>
-    <IntDir>../../output/CLang_0</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -141,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CLang_0.cpp" />
+    <ClCompile Include="TempleteStack.cpp" />
+    <ClCompile Include="TStack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TStack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
