@@ -13,7 +13,7 @@ TStack<T>::~TStack()
 }
 
 template <class T>
-void TStack<T>::Push(const T &pData)
+void TStack<T>::Push(T pData)
 {
 	if (top == SIZE - 1)
 	{

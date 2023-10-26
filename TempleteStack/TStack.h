@@ -10,7 +10,7 @@ class TStack
 public:
 	TStack();
 	~TStack();
-	void Push(const T& pData);
+	void Push(T pData);
 	void Pop();
 
 private:
