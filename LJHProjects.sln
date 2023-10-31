@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cppprimerplus", "cppprimerp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TempleteStack", "TempleteStack\TempleteStack.vcxproj", "{9BD0AC3E-A1D5-497A-8B25-07C9EF5F464A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestGame_0", "testGame_0\testGame_0.vcxproj", "{C81EE5E1-280C-4C34-A78A-4217927173FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -83,6 +85,14 @@ Global
 		{9BD0AC3E-A1D5-497A-8B25-07C9EF5F464A}.Release|x64.Build.0 = Release|x64
 		{9BD0AC3E-A1D5-497A-8B25-07C9EF5F464A}.Release|x86.ActiveCfg = Release|Win32
 		{9BD0AC3E-A1D5-497A-8B25-07C9EF5F464A}.Release|x86.Build.0 = Release|Win32
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Debug|x64.ActiveCfg = Debug|x64
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Debug|x64.Build.0 = Debug|x64
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Debug|x86.ActiveCfg = Debug|Win32
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Debug|x86.Build.0 = Debug|Win32
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Release|x64.ActiveCfg = Release|x64
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Release|x64.Build.0 = Release|x64
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Release|x86.ActiveCfg = Release|Win32
+		{C81EE5E1-280C-4C34-A78A-4217927173FE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
