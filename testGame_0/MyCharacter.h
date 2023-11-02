@@ -21,7 +21,7 @@ struct Point
 	float m_z_pos;
 
 	// 삽입 연산자 재정의 (Point 구조체를 출력했을때)
-	friend std::wostream& operator << (std::wostream& wos, const Point p)
+	friend std::wostream& operator << (std::wostream& wos, const Point& p)
 	{
 		using std::endl;
 
