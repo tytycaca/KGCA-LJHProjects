@@ -1,0 +1,18 @@
+// HLSL (High Language Shader Level) = C 언어와 유사한 언어
+// 정점 쉐이더 (정점의 개수만큼 호출된다.)
+// 포지션 p 는 NDC 좌표계여야만 한다
+
+// 정점버퍼에 있는 각 정점을 InputLayout 구조에 따라서 정점 쉐이더에 전달한다.
+// 정점쉐이더의 반환은 반드시 SV_POSITION 레지스터(float4 : xyzw)에 저장되어야 한다.
+// 출력타입 float4, 입력 타입 float2, 입력받는 레이아웃명 POSITION, 출력하여 저장하는 레지스터 SV_POSITION
+float4 VS( in float2 p : POSITION) : SV_POSITION
+{
+	return float4(p.x, p.y, 0.5f, 1.0f);
+}
+
+// 픽셀 쉐이더 (픽셀의 개수만큼 호출된다.)
+// 픽셀쉐이더의 반환은 반드시 SV_TARGET 레지스터(float4 : rgba)에 저장되어야 한다.
+float4 PS( in float4 p : SV_POSITION) : SV_TARGET
+{
+	return float4(0,0,1,0);
+}
