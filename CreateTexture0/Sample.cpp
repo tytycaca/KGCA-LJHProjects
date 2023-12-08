@@ -9,10 +9,10 @@ bool    Sample::Init()
     //m_VertexList.emplace_back(800.0f, 600.0f);  // 2
     //m_VertexList.emplace_back(0.0f, 600.0f);    // 3
 
-    m_VertexList.emplace_back(-0.5f, 0.5f);      // 0
-    m_VertexList.emplace_back(0.5f, 0.5f);      // 1
-    m_VertexList.emplace_back(0.5f, -0.5f);      // 2
-    m_VertexList.emplace_back(-0.5f, -0.5f);      // 3
+    m_VertexList.emplace_back(TVector3(-0.5f, 0.5f, 0.5f), TVector4(1,1,1,1));      // 0
+    m_VertexList.emplace_back(TVector3(0.5f, 0.5f, 0.5f), TVector4(1, 0, 0, 1));      // 1
+    m_VertexList.emplace_back(TVector3(0.5f, -0.5f, 0.5f), TVector4(0, 1, 0, 1));      // 2
+    m_VertexList.emplace_back(TVector3(-0.5f, -0.5f, 0.5f), TVector4(0, 0, 1, 1));      // 3
 
     m_IndexList.push_back(0);
     m_IndexList.push_back(1);
@@ -39,6 +39,7 @@ bool    Sample::Init()
 
 bool    Sample::Render() 
 {   
+    m_pd3dContext->PSSetShaderResources(0, 1, &m_pTextureSRV); // 0번 텍스쳐 레지스터에 m_pTextureSRV 텍스쳐를 1개 전달하겠다
     m_pd3dContext->VSSetShader(m_pVertexShader, NULL, 0);
     m_pd3dContext->PSSetShader(m_pPixelShader, NULL, 0);
     m_pd3dContext->IASetInputLayout(m_pVertexlayout);
@@ -66,6 +67,114 @@ bool    Sample::Release()
     if (m_pVertexShader) m_pVertexShader->Release();
     if (m_pPixelShader) m_pPixelShader->Release();
     if (m_pVertexlayout) m_pVertexlayout->Release();
+    if (m_pTextureSRV) m_pTextureSRV->Release();
+
+    return true;
+}
+
+bool Sample::LoadTexture(std::wstring texFileName)
+{
+    // 메타데이터 : 다른 데이터(raw data)를 설명해 주는 데이터
+    DirectX::TexMetadata metadata;
+
+    m_tex = std::make_unique<DirectX::ScratchImage>();
+    HRESULT hr = DirectX::GetMetadataFromWICFile(texFileName.c_str(), DirectX::WIC_FLAGS_NONE, metadata);
+    if (SUCCEEDED(hr))
+    {
+        hr = DirectX::LoadFromWICFile(texFileName.c_str(), DirectX::WIC_FLAGS_NONE, &metadata, *m_tex);
+        if (SUCCEEDED(hr))
+        {
+            hr = DirectX::CreateShaderResourceView(
+                m_pd3dDevice,
+                m_tex->GetImages(),
+                m_tex->GetImageCount(),
+                metadata,
+                &m_pTextureSRV);
+            if (SUCCEEDED(hr))
+            {
+                return true;
+            }
+        }
+    }
+
+    // DDS : 다이렉트 SDK 전용 압축 포맷
+    hr = DirectX::GetMetadataFromDDSFile(texFileName.c_str(), DirectX::DDS_FLAGS_NONE, metadata);
+    if(SUCCEEDED(hr))
+    {
+        DirectX::TexMetadata metadata;
+
+        m_tex = std::make_unique<DirectX::ScratchImage>();
+        HRESULT hr = DirectX::GetMetadataFromDDSFile(texFileName.c_str(), DirectX::DDS_FLAGS_NONE, metadata);
+        if (SUCCEEDED(hr))
+        {
+            hr = DirectX::LoadFromDDSFile(texFileName.c_str(), DirectX::DDS_FLAGS_NONE, &metadata, *m_tex);
+            if (SUCCEEDED(hr))
+            {
+                hr = DirectX::CreateShaderResourceView(
+                    m_pd3dDevice,
+                    m_tex->GetImages(),
+                    m_tex->GetImageCount(),
+                    metadata,
+                    &m_pTextureSRV);
+                if (SUCCEEDED(hr))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    hr = DirectX::GetMetadataFromTGAFile(texFileName.c_str(), DirectX::TGA_FLAGS_NONE, metadata);
+    if (SUCCEEDED(hr))
+    {
+        DirectX::TexMetadata metadata;
+
+        m_tex = std::make_unique<DirectX::ScratchImage>();
+        HRESULT hr = DirectX::GetMetadataFromTGAFile(texFileName.c_str(), DirectX::TGA_FLAGS_NONE, metadata);
+        if (SUCCEEDED(hr))
+        {
+            hr = DirectX::LoadFromTGAFile(texFileName.c_str(), DirectX::TGA_FLAGS_NONE, &metadata, *m_tex);
+            if (SUCCEEDED(hr))
+            {
+                hr = DirectX::CreateShaderResourceView(
+                    m_pd3dDevice,
+                    m_tex->GetImages(),
+                    m_tex->GetImageCount(),
+                    metadata,
+                    &m_pTextureSRV);
+                if (SUCCEEDED(hr))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    hr = DirectX::GetMetadataFromHDRFile(texFileName.c_str(), metadata);
+    if (SUCCEEDED(hr))
+    {
+        DirectX::TexMetadata metadata;
+
+        m_tex = std::make_unique<DirectX::ScratchImage>();
+        HRESULT hr = DirectX::GetMetadataFromHDRFile(texFileName.c_str(), metadata);
+        if (SUCCEEDED(hr))
+        {
+            hr = DirectX::LoadFromHDRFile(texFileName.c_str(), &metadata, *m_tex);
+            if (SUCCEEDED(hr))
+            {
+                hr = DirectX::CreateShaderResourceView(
+                    m_pd3dDevice,
+                    m_tex->GetImages(),
+                    m_tex->GetImageCount(),
+                    metadata,
+                    &m_pTextureSRV);
+                if (SUCCEEDED(hr))
+                {
+                    return true;
+                }
+            }
+        }
+    }
 
     return true;
 }
@@ -179,7 +288,9 @@ bool Sample::CreateInputLayout()
 {
     D3D11_INPUT_ELEMENT_DESC layout[] =
     {
-        {"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"TEX", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0}
     };
 
     /*LPCSTR SemanticName;
@@ -198,6 +309,11 @@ bool Sample::CreateInputLayout()
         m_pVertexShaderCode->GetBufferSize(),
         &m_pVertexlayout);
     if (FAILED(hr))
+    {
+        return false;
+    }
+
+    if (!LoadTexture(L"abcd"))
     {
         return false;
     }

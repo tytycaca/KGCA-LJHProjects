@@ -36,6 +36,8 @@ BOOL TWindow::InitInstance(HINSTANCE hInstance, int nCmdShow)
     }
     m_hWnd = hWnd;
 
+    RECT  m_rtWindow;
+    RECT  m_rtClient;
     ::GetWindowRect(m_hWnd, &m_rtWindow);
     ::GetClientRect(m_hWnd, &m_rtClient);
 

@@ -7,9 +7,9 @@ struct TVertex
 	float x;
 	float y;
 	float z;
-	TVertex() { x = 0; y = 0;/* z = 0;*/ }
+	TVertex() { x = 0; y = 0; z = 0; }
 	// z의 성분은 0 ~ 1 범위로 되어 있다.
-	TVertex(float _x, float _y/*, float _z = 0.5f*/) { x = _x; y = _y; /*z = _z;*/ }
+	TVertex(float _x, float _y, float _z = 0.5f) { x = _x; y = _y; z = _z; }
 };
 
 class Sample : public TDevice

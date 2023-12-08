@@ -5,8 +5,6 @@ class TWindow
 public:
     HWND        m_hWnd;
     HINSTANCE   m_hInstance;
-    RECT  m_rtWindow;
-    RECT  m_rtClient;
 public:
     void SetWindow(HINSTANCE hInstance, int    nCmdShow);
     void Run();

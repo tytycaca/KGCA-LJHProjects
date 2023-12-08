@@ -6,6 +6,12 @@
 #include <list>
 #include <map>
 #include <d3dcompiler.h>
+#include <memory>
+
+// 프로젝트 속성에 링커에 입력에 추가종속성 d3d11.lib; d3dcompiler.lib; DirectXTex.lib;
+// 넣어놨던 것을 #pragma comment 을 이용하면 프로젝트로 포함할 수 있다.
+#pragma comment (lib, "d3d11.lib")
+#pragma comment (lib, "d3dcompiler.lib")
 
 class TDevice : public TWindow
 {
