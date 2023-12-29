@@ -4,15 +4,15 @@ bool    Sample::Init()
     // v0       v1
     //
     // v3       v2
-    //m_VertexList.emplace_back(0.0f, 0.0f);      // 0
-    //m_VertexList.emplace_back(800.0f, 0.0f);    // 1
-    //m_VertexList.emplace_back(800.0f, 600.0f);  // 2
-    //m_VertexList.emplace_back(0.0f, 600.0f);    // 3
+    m_VertexList.emplace_back(0.0f, 0.0f);      // 0
+    m_VertexList.emplace_back(800.0f, 0.0f);    // 1
+    m_VertexList.emplace_back(800.0f, 600.0f);  // 2
+    m_VertexList.emplace_back(0.0f, 600.0f);    // 3
 
-    m_VertexList.emplace_back(TVector3(-0.5f, 0.5f, 0.5f), TVector4(1,1,1,1));      // 0
-    m_VertexList.emplace_back(TVector3(0.5f, 0.5f, 0.5f), TVector4(1, 0, 0, 1));      // 1
-    m_VertexList.emplace_back(TVector3(0.5f, -0.5f, 0.5f), TVector4(0, 1, 0, 1));      // 2
-    m_VertexList.emplace_back(TVector3(-0.5f, -0.5f, 0.5f), TVector4(0, 0, 1, 1));      // 3
+    //m_VertexList.emplace_back(TVector3(-0.5f, 0.5f, 0.5f), TVector4(1,1,1,1));      // 0
+    //m_VertexList.emplace_back(TVector3(0.5f, 0.5f, 0.5f), TVector4(1, 0, 0, 1));      // 1
+    //m_VertexList.emplace_back(TVector3(0.5f, -0.5f, 0.5f), TVector4(0, 1, 0, 1));      // 2
+    //m_VertexList.emplace_back(TVector3(-0.5f, -0.5f, 0.5f), TVector4(0, 0, 1, 1));      // 3
 
     m_IndexList.push_back(0);
     m_IndexList.push_back(1);

@@ -53,7 +53,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.lpfnWndProc = WndProc;
     wcex.hInstance = hInstance;
     wcex.lpszClassName = L"Lee's Project";
-
+    wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 
     return RegisterClassExW(&wcex);
 }
