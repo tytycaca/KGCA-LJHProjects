@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MyDevice" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAgAAEA=</HashCode>
+      <FileName>MyDevice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyGameCore" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAACAAAAAAAAAQAAAAAAAAAAACAAAABACABAIAEE=</HashCode>
+      <FileName>MyGameCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyMain" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACABAAAAE=</HashCode>
+      <FileName>MyMain.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPlaneShape" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQEAABAAIEEAEAAAAgAAAAAAQABCEEAAZECAVACCEE=</HashCode>
+      <FileName>MyPlaneShape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyTexture" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>MyTextureMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyTextureMgr" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgCAEAAAAAABAAAQAAAAAAAAAAAAAAAAAABAIAEA=</HashCode>
+      <FileName>MyTextureMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyWindow" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACAAAAABQAAAAAAAAAgACAQAAAAAAAgIAAY=</HashCode>
+      <FileName>MyWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MyVector2" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAQBAAAAIAAAgAABgAAAAAAA=</HashCode>
+      <FileName>MyPlaneShape.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MyVector3" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAABgAQAAAAA=</HashCode>
+      <FileName>MyPlaneShape.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MyVector4" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAhgAQAAAAA=</HashCode>
+      <FileName>MyPlaneShape.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MyVertex" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAIAAAAAAAACAAAAAAAAAAgA=</HashCode>
+      <FileName>MyPlaneShape.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="tagTRECT" Collapsed="true">
+    <Position X="4.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAgAAAAIAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="T_STR" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="W_STR" Collapsed="true">
+    <Position X="8.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="C_STR" Collapsed="true">
+    <Position X="8.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="T_STR_VECTOR" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="T_ITOR" Collapsed="true">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="W_ITOR" Collapsed="true">
+    <Position X="7" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="C_ITOR" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="T_ARRAY_ITOR" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="DWORD_VECTOR" Collapsed="true">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="DWORD_VECTOR_ITOR" Collapsed="true">
+    <Position X="8.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="DWORD_LIST" Collapsed="true">
+    <Position X="10.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="DWORD_LIST_ITOR" Collapsed="true">
+    <Position X="12.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="HANDLE_LIST" Collapsed="true">
+    <Position X="10.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="HANDLE_LIST_ITOR" Collapsed="true">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="myRECT" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

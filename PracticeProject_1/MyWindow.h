@@ -6,6 +6,8 @@ class MyWindow
 public:
 	HWND m_hWnd;
 	HINSTANCE m_hInstance;
+	RECT m_rtWindow;
+	RECT m_rtClientWindow;
 	
 // 윈도우 생성에 필요한 기본 함수들
 public:
@@ -18,11 +20,11 @@ public:
 	void Run();
 	void ReleaseAll();
 
-// 하위 소스에서 재정의하여 쓸 함수들 (동적 바인딩을 통한 호출 구현)
+// 하위 소스(MyGameCore)에서 재정의하여 쓸 함수들 (동적 바인딩을 통한 호출 구현)
 public:
-	virtual bool GameInit() { return true; }
-	virtual bool GameFrame() { return true; }
-	virtual bool GameRender() { return true; }
-	virtual bool GameRelease() { return true; }
+	virtual bool GameInit() { return true; };
+	virtual bool GameFrame() { return true; };
+	virtual bool GameRender() { return true; };
+	virtual bool GameRelease() { return true; };
 };
 

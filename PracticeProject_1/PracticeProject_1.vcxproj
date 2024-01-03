@@ -118,13 +118,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../DxTex/include;../../FMOD/inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../DxTex/include;../../FMOD/inc;../../box2d</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DirectXTex.lib;box2d.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,6 +150,7 @@
     <ClInclude Include="MyPlaneShape.h" />
     <ClInclude Include="MyStd.h" />
     <ClInclude Include="MyTextureMgr.h" />
+    <ClInclude Include="MyTimer.h" />
     <ClInclude Include="MyWindow.h" />
   </ItemGroup>
   <ItemGroup>
@@ -158,12 +159,16 @@
     <ClCompile Include="MyMain.cpp" />
     <ClCompile Include="MyPlaneShape.cpp" />
     <ClCompile Include="MyTextureMgr.cpp" />
+    <ClCompile Include="MyTimer.cpp" />
     <ClCompile Include="MyWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\shader\effect.txt" />
     <Text Include="..\..\data\shader\object.txt" />
     <Text Include="..\..\data\shader\Shader.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

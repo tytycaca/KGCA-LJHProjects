@@ -39,6 +39,9 @@
     <ClInclude Include="MyPlaneShape.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="MyTimer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyWindow.cpp">
@@ -59,6 +62,9 @@
     <ClCompile Include="MyPlaneShape.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MyTimer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\shader\Shader.txt">
@@ -70,5 +76,8 @@
     <Text Include="..\..\data\shader\object.txt">
       <Filter>shader</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
