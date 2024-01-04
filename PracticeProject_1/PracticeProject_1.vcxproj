@@ -150,6 +150,7 @@
     <ClInclude Include="MyInput.h" />
     <ClInclude Include="MyMain.h" />
     <ClInclude Include="MyPlaneShape.h" />
+    <ClInclude Include="MyPlayerObj.h" />
     <ClInclude Include="MyStd.h" />
     <ClInclude Include="MyTextureMgr.h" />
     <ClInclude Include="MyTimer.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="MyInput.cpp" />
     <ClCompile Include="MyMain.cpp" />
     <ClCompile Include="MyPlaneShape.cpp" />
+    <ClCompile Include="MyPlayerObj.cpp" />
     <ClCompile Include="MyTextureMgr.cpp" />
     <ClCompile Include="MyTimer.cpp" />
     <ClCompile Include="MyWindow.cpp" />

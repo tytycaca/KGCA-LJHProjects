@@ -286,8 +286,6 @@ bool MyPlaneShape::Render()
 
 bool MyPlaneShape::Release()
 {
-	if (m_pd3dDevice) m_pd3dDevice->Release();
-	if (m_pd3dContext) m_pd3dContext->Release();
 	if (m_pVertexBuffer) m_pVertexBuffer->Release();
 	if (m_pIndexBuffer) m_pIndexBuffer->Release();
 	if (m_pVertexShaderByteCode) m_pVertexShaderByteCode->Release();
@@ -295,7 +293,6 @@ bool MyPlaneShape::Release()
 	if (m_pPixelShaderByteCode) m_pPixelShaderByteCode->Release();
 	if (m_pPixelShader) m_pPixelShader->Release();
 	if (m_pVertexlayout) m_pVertexlayout->Release();
-	if (m_pTexture) m_pTexture->Release();
 
 	return true;
 }

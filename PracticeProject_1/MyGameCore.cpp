@@ -291,7 +291,7 @@ bool MyGameCore::GameRender()
 	Render();
 
 	// m_MyTimer.Render(); // 출력 테스트용
-    MyInput::Get().Render();
+    // MyInput::Get().Render();
 	// MyDxWrite::Get().Render(); // 출력 테스트용
 
     // 시스템 정보 출력
@@ -306,7 +306,7 @@ bool MyGameCore::GameRender()
 bool MyGameCore::GameRelease()
 {
 	m_MyTimer.Release();
-	MyDxWrite::Get().Release();
+	//MyDxWrite::Get().Release();
 
     if (m_pDefaultSS)m_pDefaultSS->Release();
     if (m_pDefaultSSPoint)m_pDefaultSSPoint->Release();
