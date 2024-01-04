@@ -43,7 +43,7 @@ ATOM MyWindow::MyRegisterClass(HINSTANCE hInstance)
 BOOL MyWindow::InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     // 클라이언트 영역 정의
-    RECT rt = { 0, 0, 800, 600 };
+    RECT rt = { 0, 0, 1600, 900 };
     DWORD dwStyle = WS_OVERLAPPEDWINDOW;
 
     // 정의한 클라이언트 영역에 맞게 창 크기를 계산하여 반환하는 함수 (rt로 받아서 rt로 반환)

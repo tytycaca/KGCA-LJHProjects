@@ -21,6 +21,7 @@ public:
 public:
 	bool Init();
 	bool Frame();
+	// 출력 테스트용
 	bool Render();
 	bool Release();
 };

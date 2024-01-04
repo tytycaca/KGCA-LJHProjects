@@ -92,7 +92,7 @@ bool MyPlaneShape::CreatePixelShader()
 		nullptr,
 		nullptr,
 		m_csDefaultPSEntryName.c_str(),
-		"vs_5_0",
+		"ps_5_0",
 		0,
 		0,
 		&m_pPixelShaderByteCode,

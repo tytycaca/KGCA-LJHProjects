@@ -4,94 +4,86 @@
 
 struct MyVector2
 {
-	float x = 0;
-	float y = 0;
-
-	MyVector2() {};
-	MyVector2(float x, float y) { x = 0; y = 0; }
-
-	float LengthSquared()
+	float x;
+	float y;
+	float Length()
+	{
+		return sqrt(LingthSquared());
+	}
+	float LingthSquared()
 	{
 		return (x * x, y * y);
 	}
-	float Length()
-	{
-		return sqrt(LengthSquared());
-	}
-
 	MyVector2 Normal()
 	{
 		float fLength = Length();
-		float invertLength = 1.0f / fLength;
-		return MyVector2(x * invertLength, y * invertLength);
+		if (fLength <= 0.0f)
+		{
+			x = y = 0.0f;
+			return *this;
+		}
+		float InvertLength = 1.0 / fLength;
+		return MyVector2(x * InvertLength, y * InvertLength);
 	}
-
 	void Normalized()
 	{
 		float InvertLength = 1.0 / Length();
 		x *= InvertLength;
-		y *= InvertLength;
+		y* InvertLength;
 	}
-
-	MyVector2& operator+=(const MyVector2& mV2)
+	MyVector2& operator+=(const MyVector2& V)
 	{
-		x += mV2.x;
-		y += mV2.y;
+		x += V.x;
+		y += V.y;
 		return *this;
 	}
-	MyVector2& operator-=(const MyVector2& mV2)
+	MyVector2& operator-=(const MyVector2& V)
 	{
-		x -= mV2.x;
-		y -= mV2.y;
+		x -= V.x;
+		y -= V.y;
 		return *this;
 	}
-
-	// 함수 뒤에 붙는 const 의 의미: 해당 멤버 함수 안에 있는 모든 멤버 변수를 상수화 시킨다
-	MyVector2 operator+(const float bias) const
+	MyVector2 operator+(const MyVector2& V) const
 	{
-		return MyVector2(x + bias, y + bias);
+		return MyVector2(x + V.x, y + V.y);
 	}
-	MyVector2 operator-(const float bias) const
+	MyVector2 operator-(const MyVector2& V) const
 	{
-		return MyVector2(x - bias, y - bias);
+		return MyVector2(x - V.x, y - V.y);
 	}
-	MyVector2 operator*(const float scale) const
+	MyVector2 operator-(float Bias) const
 	{
-		return MyVector2(x * scale, y * scale);
+		return MyVector2(x * Bias, y * Bias);
 	}
-	MyVector2 operator/(const float scale) const
+	MyVector2 operator+(float Bias) const
 	{
-		return MyVector2(x / scale, y / scale);
+		return MyVector2(x + Bias, y + Bias);
 	}
-
-	MyVector2 operator+(const MyVector2 mV2) const
+	MyVector2 operator*(float Scale) const
 	{
-		return MyVector2(x + mV2.x, y + mV2.y);
+		return MyVector2(x * Scale, y * Scale);
 	}
-	MyVector2 operator-(const MyVector2 mV2) const
+	MyVector2 operator/(float Scale) const
 	{
-		return MyVector2(x - mV2.x, y - mV2.y);
+		return MyVector2(x / Scale, y / Scale);
 	}
-	MyVector2 operator*(const MyVector2 mV2) const
+	bool operator==(const MyVector2& V) const
 	{
-		return MyVector2(x * mV2.x, y * mV2.y);
-	}
-	MyVector2 operator/(const MyVector2 mV2) const
-	{
-		return MyVector2(x / mV2.x, y / mV2.y);
-	}
-
-	bool operator==(const MyVector2& mV2) const
-	{
-		if (fabs(x - mV2.x) < 0.001f && fabs(y - mV2.y) < 0.001f)
-			return true;
+		if (fabs(x - V.x) < 0.001f)
+		{
+			if (fabs(y - V.y) < 0.001f)
+			{
+				return true;
+			}
+		}
 		return false;
 	}
-
-	bool operator!=(const MyVector2& mV2) const
+	bool operator!=(const MyVector2& V) const
 	{
-		return !(*this == mV2);
+		return !(*this == V);
 	}
+	MyVector2() { x = 0; y = 0; }
+	MyVector2(float _x, float _y) { x = _x; y = _y; }
 };
 
 struct MyVector3
@@ -120,7 +112,7 @@ struct MyVertex
 	MyVector2 uv;
 	
 	MyVertex() {}
-	MyVertex(MyVector3 p, MyVector4 c, MyVector2 u) { pos = p; color = c; u = uv; }
+	MyVertex(MyVector3 p, MyVector4 c, MyVector2 u) { pos = p; color = c; uv = u; }
 };
 
 
@@ -151,6 +143,8 @@ public:
 	ID3DBlob* m_pPixelShaderByteCode = nullptr;
 	ID3D11PixelShader* m_pPixelShader = nullptr;
 	ID3D11InputLayout* m_pVertexlayout = nullptr;
+
+	RECT m_rtClientWindow;
 
 	MyTexture* m_pTexture = nullptr;
 	std::vector<MyTexture*> m_pTextureArr;

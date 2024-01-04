@@ -42,6 +42,12 @@
     <ClInclude Include="MyTimer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="MyDxWrite.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MyInput.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyWindow.cpp">
@@ -65,19 +71,25 @@
     <ClCompile Include="MyTimer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MyDxWrite.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MyInput.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\data\shader\Shader.txt">
-      <Filter>shader</Filter>
-    </Text>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
     <Text Include="..\..\data\shader\effect.txt">
       <Filter>shader</Filter>
     </Text>
     <Text Include="..\..\data\shader\object.txt">
       <Filter>shader</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <Text Include="..\..\data\shader\shader.txt">
+      <Filter>shader</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -46,7 +46,7 @@ public:
 	}
 
 	// device, deviceContext 按眉 setter
-	void set(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dContext)
+	void Set(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dContext)
 	{
 		m_pd3dDevice = pd3dDevice;
 		m_pd3dContext = pd3dContext;
@@ -61,9 +61,12 @@ public:
 
 private:
 	// 积己磊 private拳 (教臂沛)
-	MyTextureMgr() {};
+	MyTextureMgr() {}
 
 public:
-	~MyTextureMgr();
+	~MyTextureMgr()
+	{
+		Release();
+	}
 };
 

@@ -22,7 +22,7 @@ bool MyTimer::Frame()
 	if (m_dwTime >= 1000)
 	{
 		m_msgFPS = std::to_wstring(m_iFPS);
-		m_msgFPS += L" FPS\n";
+		m_msgFPS += L" FPS";
 		m_dwTime -= 1000;
 		m_iFPS = 0;
 	}

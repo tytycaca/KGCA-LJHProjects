@@ -133,8 +133,3 @@ bool MyTextureMgr::Release()
 
     return true;
 }
-
-MyTextureMgr::~MyTextureMgr()
-{
-    Release();
-}

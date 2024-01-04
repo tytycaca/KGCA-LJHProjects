@@ -25,11 +25,10 @@ bool MyDevice::CreateDevice()
     };
 
     DXGI_SWAP_CHAIN_DESC sd;
-    ZeroMemory(&sd, sizeof(DXGI_SWAP_CHAIN_DESC));
-    sd.BufferDesc.Width = 800;
-    sd.BufferDesc.Height = 600;
+    sd.BufferDesc.Width = 1600;
+    sd.BufferDesc.Height = 900;
     sd.BufferDesc.RefreshRate.Denominator = 1;
-    sd.BufferDesc.RefreshRate.Numerator = 60;   // 주사율 60 hz
+    sd.BufferDesc.RefreshRate.Numerator = 100;   // 주사율 100 hz
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
@@ -39,7 +38,7 @@ bool MyDevice::CreateDevice()
     sd.BufferCount = 1;
     sd.OutputWindow = m_hWnd;
     sd.Windowed = true;
-    sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+    sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
     sd.Flags = 0;
 
     HRESULT hr = D3D11CreateDeviceAndSwapChain(
@@ -54,23 +53,23 @@ bool MyDevice::CreateDevice()
         &m_pSwapChain,
         &m_pd3dDevice,
         nullptr,
-        &m_pd3dContext
-    );
+        &m_pd3dContext);
     if (FAILED(hr))
     {
         return false;
     }
 
     ID3D11Buffer* pBackBuffer = nullptr;
-    hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (void**)&pBackBuffer);
-
-    if (pBackBuffer)
+    hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBuffer);
+    if (FAILED(hr))
     {
-        hr = m_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &m_pRenderTargetView);
-        if (FAILED(hr))
-        {
-            return false;
-        }
+        return false;
+    }
+
+    hr = m_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &m_pRenderTargetView);
+    if (FAILED(hr))
+    {
+        return false;
     }
 
     if (pBackBuffer) pBackBuffer->Release();

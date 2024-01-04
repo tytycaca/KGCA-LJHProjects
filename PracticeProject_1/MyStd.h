@@ -7,6 +7,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <math.h>
 
 //프로젝트 속성에 링커->입력->추가종속성 d3d11.lib; d3dcompiler.lib; DirectXTex.lib;
 //#pragma commnet을 이용하면 프로젝트으로 포함할 수 있다.
