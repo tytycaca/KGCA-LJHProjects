@@ -3,6 +3,9 @@
 
 bool MyDevice::CreateDevice(HWND hWnd)
 {
+	// DWRITE 연동에 필요함.
+	UINT Flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
 	CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 	DXGI_SWAP_CHAIN_DESC pSwapChainDesc;
 	ZeroMemory(&pSwapChainDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
@@ -25,7 +28,7 @@ bool MyDevice::CreateDevice(HWND hWnd)
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
-		0,
+		Flags,
 		&pFeatureLevels,
 		1,
 		D3D11_SDK_VERSION,
@@ -38,6 +41,7 @@ bool MyDevice::CreateDevice(HWND hWnd)
 	{
 		return false;
 	}
+
 	if (g_pd3dDevice != nullptr && g_pSwapChain != nullptr)
 	{
 		ID3D11Texture2D* pBackBuffer = nullptr;

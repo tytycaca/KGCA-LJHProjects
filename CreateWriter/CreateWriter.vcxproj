@@ -154,6 +154,7 @@
     <ClInclude Include="MyCore.h" />
     <ClInclude Include="MyDevice.h" />
     <ClInclude Include="MyInput.h" />
+    <ClInclude Include="MyStd.h" />
     <ClInclude Include="MyTimer.h" />
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="MyWriterFont.h" />

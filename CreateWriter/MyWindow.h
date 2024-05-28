@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+#include "MyStd.h"
 
 class MyWindow
 {
@@ -10,11 +10,8 @@ public:
 
 public:
 	void	CreateRegisterClass(HINSTANCE hInstance);
-	bool	CreateWin(UINT xSize = 800, UINT ySize = 600);
-	void	WindowRun();
-	virtual void GameInit();
-	virtual void GameRun();
-	virtual void GameRelease();
+	bool	CreateWin(HINSTANCE hInstance, UINT xSize = 800, UINT ySize = 600);
+	bool	WindowRun();
 	MyWindow();
 };
 
