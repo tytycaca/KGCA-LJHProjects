@@ -109,7 +109,7 @@ bool MyGameCore::GameInit()
     m_BackgroundPlane->m_pd3dContext = m_pd3dContext;
     m_BackgroundPlane->m_rtClientWindow = m_rtClientWindow;
 
-    m_BackgroundPlane->m_VertexList.emplace_back(MyVector3(0, 0.0f, 0.5f), MyVector4(1, 1, 1, 1), MyVector2(0.0f, 0.0f));      // 0
+    m_BackgroundPlane->m_VertexList.emplace_back(MyVector3(0.0f, 0.0f, 0.5f), MyVector4(1, 1, 1, 1), MyVector2(0.0f, 0.0f));      // 0
     m_BackgroundPlane->m_VertexList.emplace_back(MyVector3(1600.0f, 0.0f, 0.5f), MyVector4(1, 1, 1, 1), MyVector2(1.0f, 0.0f));    // 1
     m_BackgroundPlane->m_VertexList.emplace_back(MyVector3(1600.0f, 900.0f, 0.5f), MyVector4(1, 1, 1, 1), MyVector2(1.0f, 1.0f));  // 2
     m_BackgroundPlane->m_VertexList.emplace_back(MyVector3(0.0f, 900.0f, 0.5f), MyVector4(1, 1, 1, 1), MyVector2(0.0f, 1.0f));    // 3
