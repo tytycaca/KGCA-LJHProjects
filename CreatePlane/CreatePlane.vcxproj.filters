@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Sample.cpp" />
+    <ClCompile Include="MyCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MyDevice.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MyInput.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTimer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MyWindow.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MyWriterFont.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="MyDXObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyDevice.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyInput.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyStd.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTimer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyWindow.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyWriterFont.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMath.h" />
+    <ClInclude Include="MyDXObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{29c4d8b6-ee50-4c8d-8134-a160b869926c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{be6ca899-402f-4912-b07e-0d5308b1e05d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="VS.txt">
+      <Filter>HLSL</Filter>
+    </Text>
+    <Text Include="PS.txt">
+      <Filter>HLSL</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
