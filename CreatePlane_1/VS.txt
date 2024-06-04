@@ -1,0 +1,28 @@
+// 정점 쉐이더: 반환값이 무조건 float4 형이어야한다.
+// 시멘틱(의미구조): POSITION, SV_POSITION
+struct VS_In
+{
+	float2 p : POS;
+	float4 c : COLOR;
+	float2 t : TEX;
+};
+struct VS_Out
+{
+	float4 p : SV_POSITION; // 반드시 float4
+	float4 c : COLOR0; // COLOR0 ~ COLOR1 가능
+	float2 t : TEXCOORD0; // TEXCOORD0 ~ TEXCOORD015 가능
+};
+VS_Out VS(VS_In vsIn)
+{
+	VS_Out vsOut = (VS_Out)0;
+	vsOut.p = float4(vsIn.p.x, vsIn.p.y, 0, 1);
+	vsOut.c = vsIn.c;
+	vsOut.t = vsIn.t;
+	return vsOut;
+}
+
+/* float4 VS(float2 p : POS, float4 c : COLOR) : SV_POSITION
+{
+	VS_Out vsOut = 0;
+	return float4(p.x,p.y,0.5f,1.0f);
+} */
