@@ -2,6 +2,9 @@
 // 윈도우 프로시져에서 내 클래스를 사용하기 위한 편법
 MyWindow* g_pWindow = nullptr;
 
+UINT g_xClientSize;
+UINT g_yClientSize;
+
 const wchar_t CLASS_NAME[] = L"SAMPLEWINDOW";		// 이름
 
 LRESULT CALLBACK WindowProc(HWND hwnd,
@@ -24,8 +27,8 @@ void MyWindow::CreateRegisterClass(HINSTANCE hInstance)
 
 bool MyWindow::CreateWin(HINSTANCE hInstance, UINT xSize, UINT ySize)
 {
-	m_xClientSize = xSize;
-	m_yClientSize = ySize;
+	g_xClientSize = xSize;
+	g_yClientSize = ySize;
 
 	DWORD dwStyle = WS_OVERLAPPEDWINDOW;
 	// 추가 : 클라이언트 크기를 xSize, ySize 로 조정한다.
@@ -53,10 +56,7 @@ bool MyWindow::CreateWin(HINSTANCE hInstance, UINT xSize, UINT ySize)
 		return 0;
 	}
 
-	RECT rtWindow;
 	GetClientRect(hwnd, &m_rtWindow);
-
-	RECT rtClient;
 	GetClientRect(hwnd, &m_rtClient);
 
 	m_hWnd = hwnd;

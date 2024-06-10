@@ -12,7 +12,7 @@ class MyDevice : public MyWindow
 {
 public:
 	// 且寸, 积己
-	ID3D11Device* m_pd3dDevice = nullptr;
+	ComPtr<ID3D11Device>   m_pd3dDevice = nullptr;
 	// 包府, 款康
 	ID3D11DeviceContext* m_pContext = nullptr;
 	IDXGISwapChain* m_pSwapChain = nullptr;

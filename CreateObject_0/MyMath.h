@@ -15,6 +15,7 @@ namespace MY_Math
 		FVector2 operator -(const FVector2& v) const;
 		FVector2 operator *(const float s) const;
 		FVector2 operator /(const float s) const;
+		FVector2 operator +=(const FVector2& v);
 		float	 Length();
 		FVector2 Normalize();
 		bool	 isZero(float& fLength);

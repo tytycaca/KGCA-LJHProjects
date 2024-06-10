@@ -1,5 +1,7 @@
 #include "MyTimer.h"
 
+double g_fSecondPerFrame = 0.0f;
+
 void MyTimer::DebugTimer()
 {
 #ifdef _DEBUG
@@ -29,6 +31,8 @@ void MyTimer::Frame()
 	m_fSecondPerFrame = (float)m_dwSecondPerFrame / 1000.0f;
 	// 게임 경과 시간
 	m_fGameTimeTick += m_fSecondPerFrame;
+
+	g_fSecondPerFrame = m_fSecondPerFrame;
 
 	fSecondTime += m_fSecondPerFrame;
 	if (fSecondTime >= 1.0f) // 1.01f

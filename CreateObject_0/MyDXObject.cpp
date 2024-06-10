@@ -1,15 +1,110 @@
 #include "MyDXObject.h"
+#include "MyStd.h"
 
 MyDXObject& MyDXObject::Move(float dx, float dy)
 {
-    m_vList[0].p.X = m_vList[0].p.X + dx;
-    m_vList[0].p.Y = m_vList[0].p.Y + dy;
-    m_vList[1].p.X = m_vList[1].p.X + dx;
-    m_vList[1].p.Y = m_vList[1].p.Y + dy;
-    m_vList[2].p.X = m_vList[2].p.X + dx;
-    m_vList[2].p.Y = m_vList[2].p.Y + dy;
+    for (auto& v : m_vList)
+    {
+        v.p += { dx, dy };
+    }
+    m_vPos = { dx,dy };
+
+    for (int i = 0; i < m_vList.size(); i++)
+    {
+        m_vListNDC[i].p = ConvertScreenToNDC(m_vList[i].p);
+    }
+
+    m_pContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, &m_vListNDC.at(0), 0, 0);
 
     return *this;
+}
+
+MY_Math::FVector2 MyDXObject::ConvertScreenToNDC(MY_Math::FVector2 v)
+{
+    // 0~ 800 -> 0 ~ 1
+    v.X = v.X / g_xClientSize;
+    v.Y = v.Y / g_yClientSize;
+    //NDC 좌표계
+    // 0 ~ 1  -> -1 ~ +1
+    MY_Math::FVector2 ret;
+    ret.X = v.X * 2.0f - 1.0f;
+    ret.Y = -(v.Y * 2.0f - 1.0f);
+
+
+    // -1 ~ 1  -> 0 ~ +1
+    /*v.X = v.X * 0.5f + 0.5f;
+    v.Y = v.Y * 0.5f + 0.5f;*/
+    return ret;
+}
+
+bool   MyDXObject::Create(
+    ID3D11Device* pd3dDevice,
+    ID3D11DeviceContext* pContext,
+    RECT rt, std::wstring texName)
+{
+
+    // 포인터 변수의 주소 반환 : m_pSRV.GetAddressOf();
+    // 포인터 주소 :m_pSRV.Get();
+
+    m_pd3dDevice = pd3dDevice;
+    m_pContext = pContext;
+    HRESULT hr =
+        DirectX::CreateWICTextureFromFile(
+            m_pd3dDevice,
+            texName.c_str(),
+            m_pTexture.GetAddressOf(),//&m_pTexture
+            m_pSRV.GetAddressOf());
+
+    m_vPos.X = (rt.left + rt.right) * 0.5f;
+    m_vPos.Y = (rt.bottom + rt.top) * 0.5f;
+
+    m_vList.resize(6);
+    // 시계방향으로 구축되어야 한다.
+    m_vList[0] = { (float)rt.left, (float)rt.top,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f };
+    m_vList[1] = { MY_Math::FVector2(rt.right, rt.top),
+                    MY_Math::FVector4(1, 1, 1, 1),
+                    MY_Math::FVector2(1, 0) };
+    m_vList[2] = { MY_Math::FVector2(rt.right, rt.bottom),
+                    MY_Math::FVector4(1, 1, 1, 1),
+                    MY_Math::FVector2(1, 1) };
+    m_vList[3] = { MY_Math::FVector2(rt.right, rt.bottom),
+                    MY_Math::FVector4(1, 1, 1, 1),
+                    MY_Math::FVector2(1, 1) };
+    m_vList[4] = { MY_Math::FVector2(rt.left, rt.bottom),
+                    MY_Math::FVector4(1, 1, 1, 1),
+                    MY_Math::FVector2(0, 1) };
+    /*m_vList[5] = { MY_Math::FVector2(rt.left, rt.top),
+                    MY_Math::FVector4(1, 1, 1, 1),
+                    MY_Math::FVector2(0, 0) };*/
+    m_vList[5].p = MY_Math::FVector2(rt.left, rt.top);
+    m_vList[5].c = MY_Math::FVector4(0, 0, 1, 1);
+    m_vList[5].t = MY_Math::FVector2(0, 0);
+
+
+    // 화면좌표계를  NDC좌표 변경한다.
+    m_vListNDC = m_vList;
+    for (int i = 0; i < m_vList.size(); i++)
+    {
+        m_vListNDC[i].p = ConvertScreenToNDC(m_vList[i].p);
+    }
+
+    if (CreateVertexBuffer(m_pd3dDevice) == false)
+    {
+        Release();
+        return false;
+    }
+    if (LoadShader(m_pd3dDevice) == false)
+    {
+        Release();
+        return false;
+    }
+    if (CreateInputLayout(m_pd3dDevice) == false)
+    {
+        Release();
+        return false;
+    }
+
+    return true;
 }
 
 bool MyDXObject::CreateVertexBuffer(ID3D11Device* pd3dDevice)
@@ -174,6 +269,11 @@ void MyDXObject::Render(ID3D11DeviceContext* pContext)
         &pOffsets);
     pContext->IASetInputLayout(m_pVertexLayout);
     pContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    // 0번 슬롯으로 텍스처 전달
+    pContext->PSSetShaderResources(0, 1, m_pSRV.GetAddressOf());
+    //Texture2D g_txTexture : register(t0);
+
     pContext->VSSetShader(m_pVertexShader, nullptr, 0);
     pContext->PSSetShader(m_pPixelShader, nullptr, 0);
     

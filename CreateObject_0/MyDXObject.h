@@ -1,10 +1,5 @@
 #pragma once
-#include <d3d11.h>
-#include <d3dcompiler.h>
-#pragma comment (lib, "d3dcompiler.lib")
-
-#include <vector>
-#include "MyMath.h"
+#include "MyStd.h"
 
 // p, n, c, t
 struct MyVertex
@@ -12,14 +7,49 @@ struct MyVertex
 	MY_Math::FVector2 p; // 정점 위치
 	MY_Math::FVector4 c; // 정점 컬러
 	MY_Math::FVector2 t; // 정점 텍스처 좌표
+
+	MyVertex() = default;
+	MyVertex(MY_Math::FVector2 p, MY_Math::FVector4 c, MY_Math::FVector2 t)
+	{
+		this->p = p;
+		this->c = c;
+		this->t = t;
+	}
+	MyVertex(float x, float y, float r, float g, float b,
+		float a, float u, float v)
+	{
+		this->p = { x, y };
+		this->c = { r,g,b,a };
+		this->t = { u, v };
+	}
 };
 
 class MyDXObject
 {
+	ID3D11Device* m_pd3dDevice = nullptr;
+	ID3D11DeviceContext* m_pContext = nullptr;
+
+	// 렌더링 파이브라인(픽쉘쉐이더)에 전송 데이터
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_pSRV = nullptr;
+	// 텍스처(이미지) 로드 데이터
+	ComPtr<ID3D11Resource> m_pTexture = nullptr;
+
 public:
+	MY_Math::FVector2 m_vPos;
 	// 시스템 메모리에 할당된 버퍼.
 	std::vector<MyVertex> m_vList;
+	std::vector<MyVertex> m_vListNDC;
 	MyDXObject& Move(float dx, float dy);
+
+public:
+	MY_Math::FVector2 ConvertScreenToNDC(MY_Math::FVector2 v);
+
+	virtual bool   Create(ID3D11Device* pd3dDevice,
+		ID3D11DeviceContext* pContext,
+		RECT rt, std::wstring texName);
+
+public:
+	// 시스템 메모리에 할당된 버퍼.
 	bool CreateVertexBuffer(ID3D11Device* pd3dDevice);
 	bool LoadShader(ID3D11Device* pd3dDevice);
 	bool CreateInputLayout(ID3D11Device* pd3dDevice);

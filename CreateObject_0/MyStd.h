@@ -5,6 +5,25 @@
 #include <map>
 #include <list>
 #include <algorithm>
+#include <d3d11.h>
+#include <d3dcompiler.h> 
+#include <wrl.h> // windows runtime c++ template library
+#include "WicTextureLoader.h" // ../../dxtk/include/ 를 기본 경로로 설정한다. (속성)
+#include "MyMath.h"
+
+#pragma comment ( lib, "d3dcompiler.lib")
+
+#ifdef _DEBUG
+#pragma comment(lib, "DirectXTK_D.lib")
+#else
+#pragma comment(lib, "DirectXTK_R.lib")
+#endif
+
+using namespace Microsoft::WRL;
+
+extern UINT		g_xClientSize;
+extern UINT		g_yClientSize;
+extern double   g_fSecondPerFrame;
 
 class MyBaseCore
 {

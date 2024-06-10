@@ -24,6 +24,13 @@ namespace MY_Math
 		return FVector2(X / s, Y / s);
 	}
 
+	FVector2 FVector2::operator +=(const FVector2& v)
+	{
+		X += v.X;
+		Y += v.Y;
+		return *this;
+	}
+
 	float FVector2::Length()
 	{
 		return sqrt(X * X + Y * Y);
