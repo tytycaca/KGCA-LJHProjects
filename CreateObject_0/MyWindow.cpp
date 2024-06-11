@@ -29,13 +29,13 @@ bool MyWindow::CreateWin(HINSTANCE hInstance, UINT xSize, UINT ySize)
 {
 	g_xClientSize = xSize;
 	g_yClientSize = ySize;
+	CreateRegisterClass(hInstance);
 
 	DWORD dwStyle = WS_OVERLAPPEDWINDOW;
 	// 추가 : 클라이언트 크기를 xSize, ySize 로 조정한다.
 	RECT rt = { 0,0,xSize,ySize };
 	AdjustWindowRect(&rt, dwStyle, FALSE);
-
-	CreateRegisterClass(hInstance);
+	
 	// 2) 등록된 윈도우클래스를 사용하여 윈도우 생성
 	HWND hwnd = CreateWindowEx(
 		0, // Optional window styles.

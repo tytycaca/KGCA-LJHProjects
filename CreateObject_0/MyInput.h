@@ -26,6 +26,6 @@ public:
 public:
 	MyInput()
 	{
-		ZeroMemory(&m_dwKeyState, sizeof(DWORD));
+		ZeroMemory(&m_dwKeyState, sizeof(DWORD) * 256);
 	}
 };

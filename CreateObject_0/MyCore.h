@@ -7,7 +7,7 @@
 #include "MyInput.h"
 #include "MyWriterFont.h"
 
-class MyCore : public MyDevice, public MyBaseCore
+class MyCore : public MyDevice, MyBaseCore
 {
 public:
 	MyInput m_Input;

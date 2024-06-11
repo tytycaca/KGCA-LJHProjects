@@ -67,7 +67,7 @@ void MyWriterFont::Frame()
 void MyWriterFont::DrawTextW(std::wstring msg, POINT pos)
 {
 	m_pd2dRT->BeginDraw(); // 그리기 시작
-	D2D1_RECT_F layoutRect = { pos.x,pos.y, 700, 700 };
+	D2D1_RECT_F layoutRect = { pos.x,pos.y, 800, 600 };
 	m_pDefaultColor->SetColor({ 0,0,0,1 });
 	m_pd2dRT->DrawTextW(
 		msg.c_str(),
@@ -82,8 +82,8 @@ void MyWriterFont::Render()
 {
 	m_pd2dRT->BeginDraw(); // 그리기 시작
 		std::wstring msg = L"이지혁입니다.";
-		D2D1_RECT_F layoutRect = { 700, 700 };
-		m_pDefaultColor->SetColor({ 0,0,1,1 });
+		D2D1_RECT_F layoutRect = { 0,0,800, 600 };
+		m_pDefaultColor->SetColor({ 0,0,0,1 });
 		m_pd2dRT->DrawTextW(
 			msg.c_str(),
 			msg.size(),
