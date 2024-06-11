@@ -1,30 +1,49 @@
 #pragma once
 #include "MyDxObject.h"
+#include "MyCollision.h"
+
 // 움직임 기능이 없는 오브젝트
 class MyActer : public MyDxObject
 {
+public:
+	bool				m_bDead = false;
+	RECT				m_rt;
+	MY_Math::FVector2	m_vPos;
+
+public:
+	float				m_fSpeed = 300.0f; // 속력
+	MY_Math::FVector2	m_vDirection = { 1.0f, 1.0f };
+	MY_Math::FVector2	m_vOffset;
+	MY_Math::FVector2	m_vVelocity; // 속도
+
+public:
+	virtual void	SetVertexData(RECT rt) override;
+	MyActer&		Move(float dx, float dy);
 };
+
 // 움직임 기능이 있는 오브젝트
 class MyPawn : public MyActer
 {
+public:
+	virtual void  Move(MY_Math::FVector2 d)
+	{
+		MY_Math::FVector2 vOffset = d * m_fSpeed * g_fSecondPerFrame;
+		m_vPos += vOffset;
+		m_vOffset += vOffset;
+
+		float halfW = (m_rt.right - m_rt.left) * 0.5f;
+		float halfH = (m_rt.bottom - m_rt.top) * 0.5f;
+
+		m_rt.left = m_vList[0].p.X;
+		m_rt.right = m_vList[1].p.X;
+		m_rt.top = m_vList[0].p.Y;
+		m_rt.bottom = m_vList[2].p.Y;
+	}
 };
 
 class MyHero : public MyPawn
 {
 public:
-	float				m_fSpeed = 100.0f; // 속력
-	MY_Math::FVector2	m_vOffset;
-	MY_Math::FVector2	m_vVelocity; // 속도
-
-public:
-	virtual void Move(MY_Math::FVector2 d)
-	{
-		MY_Math::FVector2 p = m_vPos;
-		MY_Math::FVector2 vOffset = d * m_fSpeed * g_fSecondPerFrame;
-		m_vPos = m_vPos + vOffset;
-		m_vOffset += vOffset;
-	}
-
 	virtual void Frame() override
 	{
 		// 화면 좌표계
@@ -77,23 +96,15 @@ public:
 		m_vPos = m_vPos + vOffset;
 		m_vOffset += vOffset;
 	}
+	MyHero()
+	{
+		m_fSpeed = 100.0f;
+	}
 };
 
 class MyNpc : public MyPawn
 {
 public:
-	float				m_fSpeed = 300.0f; // 속력
-	MY_Math::FVector2	m_vDirection = { 1.0f, 0.0f };
-	MY_Math::FVector2	m_vOffset;
-	MY_Math::FVector2	m_vVelocity; // 속도
-
-	virtual void Move(MY_Math::FVector2 d)
-	{
-		MY_Math::FVector2 vOffset = d * m_fSpeed * g_fSecondPerFrame;
-		m_vPos = m_vPos + vOffset;
-		m_vOffset += vOffset;
-	}
-
 	virtual void Frame() override
 	{
 		if (m_vPos.X > g_xClientSize)
@@ -138,7 +149,7 @@ public:
 
 	MyNpc()
 	{
-		m_fSpeed = randstep(0.0f, 300.0f);
+		m_fSpeed = randstep(100.0f, 300.0f);
 		m_vDirection.X = randstep(-1.0f, 1.0f);
 		m_vDirection.Y = randstep(-1.0f, 1.0f);
 	}

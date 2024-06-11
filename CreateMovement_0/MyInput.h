@@ -13,8 +13,8 @@ class MyInput
 {
 private:
 	DWORD   g_dwKeyState[256];
-	POINT   m_ptMousePos;
 public:
+	POINT   m_ptMousePos;
 public:
 	void    DebugPrint(int iKey);
 	void    DebugMousePos();

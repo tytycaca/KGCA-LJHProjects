@@ -1,22 +1,6 @@
 #include "MyDxObject.h"
 #include "MyStd.h"
-MyDxObject& MyDxObject::Move(float dx, float dy)
-{
-	// 화면 좌표계
-	for (auto& v : m_vList)
-	{
-		v.p += { dx, dy };
-	}	
-	m_vPos = { dx,dy };
 
-	// NDC 좌표계 변환
-	for (int i = 0; i < m_vList.size(); i++)
-	{
-		m_vListNDC[i].p = ConvertScreenToNDC(m_vList[i].p);
-	}
-	m_pContext->UpdateSubresource(m_pVertexBuffer,	0, NULL, &m_vListNDC.at(0), 0, 0);
-	return *this;
-}
 MY_Math::FVector2 MyDxObject::ConvertScreenToNDC(MY_Math::FVector2 v)
 {
 	// 0~ 800 -> 0 ~ 1
@@ -34,6 +18,36 @@ MY_Math::FVector2 MyDxObject::ConvertScreenToNDC(MY_Math::FVector2 v)
 	v.Y = v.Y * 0.5f + 0.5f;*/
 	return ret;
 }
+
+void MyDxObject::SetVertexData(RECT rt)
+{
+	m_vList.resize(6);
+	// 시계방향으로 구축되어야 한다.
+	m_vList[0] = { (float)rt.left, (float)rt.top,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f };
+	m_vList[1] = { MY_Math::FVector2(rt.right, rt.top),
+					MY_Math::FVector4(1, 1, 1, 1),
+					MY_Math::FVector2(1, 0) };
+	m_vList[2] = { MY_Math::FVector2(rt.right, rt.bottom),
+					MY_Math::FVector4(1, 1, 1, 1),
+					MY_Math::FVector2(1, 1) };
+	m_vList[3] = { MY_Math::FVector2(rt.right, rt.bottom),
+					MY_Math::FVector4(1, 1, 1, 1),
+					MY_Math::FVector2(1, 1) };
+	m_vList[4] = { MY_Math::FVector2(rt.left, rt.bottom),
+					MY_Math::FVector4(1, 1, 1, 1),
+					MY_Math::FVector2(0, 1) };
+	m_vList[5].p = MY_Math::FVector2(rt.left, rt.top);
+	m_vList[5].c = MY_Math::FVector4(0, 0, 1, 1);
+	m_vList[5].t = MY_Math::FVector2(0, 0);
+
+	// 화면좌표계를  NDC좌표 변경한다.
+	m_vListNDC = m_vList;
+	for (int i = 0; i < m_vList.size(); i++)
+	{
+		m_vListNDC[i].p = ConvertScreenToNDC(m_vList[i].p);
+	}
+}
+
 bool   MyDxObject::Create(
 	ID3D11Device* pd3dDevice,	
 	ID3D11DeviceContext* pContext,
@@ -52,60 +66,8 @@ bool   MyDxObject::Create(
 			m_pTexture.GetAddressOf(),//&m_pTexture
 			m_pSRV.GetAddressOf());
 
-	m_vPos.X = (rt.left+rt.right)* 0.5f;
-	m_vPos.Y = (rt.bottom + rt.top) * 0.5f;
+	SetVertexData(rt);
 
-	m_vList.resize(6);
-	// 시계방향으로 구축되어야 한다.
-	m_vList[0] = {  (float)rt.left, (float)rt.top,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f };
-	m_vList[1] = {  MY_Math::FVector2(rt.right, rt.top),
-					MY_Math::FVector4(1, 1, 1, 1),
-					MY_Math::FVector2(1, 0) };
-	m_vList[2] = {  MY_Math::FVector2(rt.right, rt.bottom),
-					MY_Math::FVector4(1, 1, 1, 1),
-					MY_Math::FVector2(1, 1) };
-	m_vList[3] = { MY_Math::FVector2(rt.right, rt.bottom),
-					MY_Math::FVector4(1, 1, 1, 1),
-					MY_Math::FVector2(1, 1) };
-	m_vList[4] = { MY_Math::FVector2(rt.left, rt.bottom),
-					MY_Math::FVector4(1, 1, 1, 1),
-					MY_Math::FVector2(0, 1) };
-	/*m_vList[5] = { MY_Math::FVector2(rt.left, rt.top),
-					MY_Math::FVector4(1, 1, 1, 1),
-					MY_Math::FVector2(0, 0) };
-	*/
-	m_vList[5].p = MY_Math::FVector2(rt.left, rt.top);
-	m_vList[5].c = MY_Math::FVector4(0, 0, 1, 1);
-	m_vList[5].t = MY_Math::FVector2(0, 0);
-
-	/*m_vList[0].p = MY_Math::FVector2(rt.left, rt.top);
-	m_vList[1].p = MY_Math::FVector2(rt.right , rt.top);
-	m_vList[2].p = MY_Math::FVector2(rt.right, rt.bottom );
-	m_vList[0].c = MY_Math::FVector4(1, 0, 0, 1);
-	m_vList[1].c = MY_Math::FVector4(0, 1, 0, 1);
-	m_vList[2].c = MY_Math::FVector4(0, 0, 1, 1);
-	m_vList[0].t = MY_Math::FVector2(0, 0);
-	m_vList[1].t = MY_Math::FVector2(1, 0);
-	m_vList[2].t = MY_Math::FVector2(1, 1);
-
-
-	m_vList[3].p = MY_Math::FVector2(rt.right, rt.bottom);
-	m_vList[4].p = MY_Math::FVector2(rt.left, rt.bottom);
-	m_vList[5].p = MY_Math::FVector2(rt.left, rt.top);
-	m_vList[3].c = MY_Math::FVector4(1, 0, 0, 1);
-	m_vList[4].c = MY_Math::FVector4(0, 1, 0, 1);
-	m_vList[5].c = MY_Math::FVector4(0, 0, 1, 1);
-	m_vList[3].t = MY_Math::FVector2(1, 1);
-	m_vList[4].t = MY_Math::FVector2(0, 1);
-	m_vList[5].t = MY_Math::FVector2(0, 0);*/
-
-
-	// 화면좌표계를  NDC좌표 변경한다.
-	m_vListNDC = m_vList;
-	for( int i = 0; i < m_vList.size(); i++)
-	{
-		m_vListNDC[i].p = ConvertScreenToNDC(m_vList[i].p);		
-	}
 	if (CreateVertexBuffer(m_pd3dDevice) == false)
 	{
 		Release();

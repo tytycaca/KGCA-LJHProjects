@@ -11,6 +11,7 @@
     <ClCompile Include="MyTimer.cpp" />
     <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="MyWriterFont.cpp" />
+    <ClCompile Include="MyCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h" />
@@ -24,6 +25,7 @@
     <ClInclude Include="MyTimer.h" />
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="MyWriterFont.h" />
+    <ClInclude Include="MyCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PS.txt">

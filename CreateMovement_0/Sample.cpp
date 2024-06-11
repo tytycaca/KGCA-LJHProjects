@@ -1,6 +1,3 @@
-#include "MyCore.h"
-#include "MyDxObject.h"
-#include "MyActer.h"
 #include "Sample.h"
 
 void   Sample::Init()
@@ -33,7 +30,14 @@ void   Sample::Init()
 }
 void   Sample::Frame()
 {
-	float fSpeed = 100.0f * g_fSecondPerFrame;
+	for (auto& ui : m_UIList)
+	{
+		if (MyCollision::RectToPt(ui.m_rt, m_Input.m_ptMousePos))
+		{
+			ui.m_bDead = true;
+		}
+	}
+
 	if (m_Input.KeyCheck('W') == KEY_HOLD)
 	{
 		hero.Move({ 0.0f, -1.0f });
@@ -73,7 +77,10 @@ void   Sample::Render()
 	//auto LamdaRender = [&](auto& obj) { obj.Render(m_pContext); };
 	for_each(begin(m_UIList), end(m_UIList), [&](auto& obj)
 		{
-			obj.Render(m_pContext);
+			if (!obj.m_bDead)
+			{
+				obj.Render(m_pContext);
+			}
 		});
 
 	hero.Render(m_pContext);

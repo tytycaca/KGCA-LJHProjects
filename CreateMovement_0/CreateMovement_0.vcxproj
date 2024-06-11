@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyCollision.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="MyActer.cpp" />
     <ClCompile Include="MyCore.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="MyWriterFont.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MyCollision.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="MyActer.h" />
     <ClInclude Include="MyCore.h" />

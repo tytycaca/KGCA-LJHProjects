@@ -37,7 +37,7 @@ public:
 	// 시스템 메모리에 할당된 버퍼.
 	std::vector<MyVertex>  m_vList;
 	std::vector<MyVertex>  m_vListNDC;
-	MyDxObject& Move(float dx, float dy);
+
 public:
 	MY_Math::FVector2 ConvertScreenToNDC(MY_Math::FVector2 v);
 
@@ -60,5 +60,7 @@ public:
 	virtual void	 Frame();
 	virtual void     Render(ID3D11DeviceContext* pContext);
 	virtual void     Release();
+
+	virtual void	SetVertexData(RECT rt);
 };
 
