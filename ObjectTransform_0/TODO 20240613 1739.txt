@@ -1,0 +1,139 @@
+MyMath.h 에 float3x2 struct, float2 struct, FMatrix 클래스 추가 (행렬 기능 추가)
+
+fvector2 FMatrix 에 float2, float3x2 상속
+
+void Identity() 추가 (단위행렬)
+FMatrix() 기본 생성자에 void Identity() 추가(단위행렬로 초기화)
+
+fvector2 클래스에 float2 상속
+
+fmatrix 연산자 재정의 추가 (행렬곱셈 연산, 내항 일치)
+ -> 3x2 행렬을 쓰기 때문에 벡터에 곱하려면 벡터를 행렬화 시키는 내항일치가 필요함
+
+Sample::Init() 에 지역변수 m1~m5 추가 (이동, 스케일, 로테이션 행렬 등등)
+Sample::Init() 에 이동변환 추가
+
+MyObject 에 정점좌표로 ~할수있게 변경
+
+mydxobject 에 Update 기능 추가 (ndc 좌표변환하는거)
+
+mydxobject::setvertexdata update() 함수로 처리
+
+myactor 에 ndc 좌표변경 부분 Update() 함수로 처리
+
+vector2 연산자 재정의 추가 (2차원벡터에 직접적으로 행렬 곱셈 가능하게)
+
+MY_Math 네임스페이스에 전방선언 추가
+
+수정한 함수갖고 Sample::Init()의 이동변환 부분 변경
+
+샘플에서 이동변환 처리하던 부분 Actor 클래스로 이관
+ -> Trans() 함수 추가 (참조로 넘기는 이유: 연속적으로 작업이 가능하게끔 하도록 만들게)
+
+MyHero Frame() 에서 NDC 좌표계 변환하는 부분 update 함수로 처리
+
+NPC Frame() 에서 NDC 좌표계 변환하는 부분 update 함수로 처리
+
+Actor 클래스에 Matrix 멤버 추가
+
+Hero Frame() 에서 정점 이동하는 부분 Trans() 이동행렬 함수로 처리가능하게 바꾸기
+
+timer 클래스의 m_fGameTimeTick 멤버  g_fGameTimer 으로 전역으로 빼기 (MyStd 에 추가)
+
+hero frame() 에 지역변수 fAngle = cos(g_fGameTime) 추가
+
+hero frame() 에 rotate 기능 추가
+ -> 지금 당장은 이상하게 움직임 (원점을 기준으로 회전하기 때문에)
+ -> 그래서 원점으로 옮겨놓고 회전해야함
+
+hero frame() 에 scale 기능 추가
+
+이렇게 기능을 바꾸면 값이 누적이 되기 때문에 이상하게 움직임 (rotate, scale)
+ -> 따로 init멤버를 만들어 vlist멤버에서 값을 가져오고 초기화 작업을 해줘야함
+ -> 헤더에 init멤버 추가
+
+setVertexData() 에서 init, vlist 멤버 갱신
+
+MyHero::Frame() 에서 m_vList = m_vListInit 추가
+
+MyHero::Frame() 에서 크기변환되고 이동되게끔 행렬곱 추가
+
+좌표계 단위로 수정을 해야 누적문제가 해결되므로 이동 기능 빼고 나머지 주석처리
+
+m_vList 이름변경 (m_vListScreen) -> 스크린 좌표로 변환된 좌표
+m_vListNDC -> NDC 좌표로 변환된 좌표
+※일괄 이름바꾸기를 하되, MyDxObject::UpdateVertexBuffer() 안의 m_vListScreen 으로 바뀐 부분은
+  반드시 원래의 m_vList 로 바꿔주어야함!
+
+MyPawn, MyHero, MyNpc 이름변경 (뒤에 1붙임)
+
+object 필터 넣고 actor 클래스, 헤더 넣어두기
+
+Pawn 클래스, Hero 클래스 전부 따로 클래스, 헤더 파일 만들어서 분리
+
+액터 헤더에 Move() 오버로딩 2개 추가
+
+Sample 에 Hero, Npc 헤더 추가 및 구현
+
+Sample::Render() 에서 싹다 주석처리하고 objScreen 만 렌더 (배경만 렌더)
+
+Sample::Frame() 에 objScreen.Frame() 추가
+
+Actor 헤더에 Frame 오버라이드 추가 및 cpp 에서 재정의
+
+MyActor::Translation() 구현
+ -> 이동변환하는 함수
+
+MyActor::Transform() 구현
+ -> World 행렬에 의해 조작을 가하는 함수
+
+Actor Frame() 에 행렬 = 포지션 값 대입 추가
+ -> 모든 이동을 벡터 포지션값 계산에서 행렬 계산으로 바꾸려는 의도
+
+MyObject 헤더에 m_vListScreen, m_vList, m_vListNDC 로 멤버 변경
+ -> 각각 초기 화면 정보, 프레임 화면 정보, NDC 변환 정점을 의미
+ -> Screen 변수는 절대 바꾸지 말고 모든 이동 작업은 m_vList 를 갖고 한다.
+
+바뀐 멤버를 갖고 MyActor::Transform() 수정
+
+MyObject::SetVertexData 수정
+ -> 맨밑에 멤버 대입 부분 추가
+
+화면좌표계를 기준으로 만들어놓고 변환이 되는 상태
+ -> 근데 포지션값이 RECT 의 중앙으로 되어있기 때문에 좌표값이 이상해짐
+ -> MyActor::Frame() 수정
+ -> RECT 의 좌상단값을 기준으로 바꿈 (MyActor 에서 SetVertexData() 재정의)
+  -> 원래 화면좌표계의 기준으로 바꾼것
+
+MyActor::SetPos() 추가 (2개의 오버로딩)
+
+Sample::Frame 에 SetPos 추가하고 objScreen.Frame() 으로 갱신하여 테스트
+
+MyActor::Frmae() 에 SetPos 로 움직일 수 있게 추가
+
+Sample::Frame 에 Actor 의 SetPos() 와 Frame() 으로 이동변환하게 수정
+
+MyActor::SetWorld() 추가
+ -> 행렬을 받아서 m_matWorld 멤버에 대입해주는 함수
+
+Transform() 함수는 바깥에서 작업하지 못하게 private나 protect 로 막아놓기
+
+Sample::Frame() 에서 MyActor::SetWorld 와 MyActor::Frame 을 돌려서 이동하게 수정
+ -> 앞부분에 Translation, Rotate, Scale 어떤걸 붙이느냐에 따라 이동 회전 스케일 변환이 달라짐
+
+마찬가지로 rotate scale 도 추가해서 테스트
+ -> matTrans, matRotate, matScalse 을 지역변수로 선언하고 모두 곱해서 matWorld 로 결합
+ -> 최종적으로 SetWorld 로 정점값을 세팅해준 다음
+ -> MyActor::Frame() 을 돌려서 정점값 변화
+
+우리가 사용하는 행렬은 3x2 행렬인데 3x3 행렬로 연산자 재정의로 곱셈을 정의해놨음
+ -> 버그 수정
+ -> FMatrix 의 * 연산자 재정의 수정 (1.0f * 마지막줄에 추가)
+
+3x2 행렬을 계속 사용하면 정신적으로 피곤함
+ -> float3x2 행렬을 3x3 행렬로 수정
+ -> 그 밑의 단위행렬도 수정
+
+제자리에서 커졌다 작아졌다, 회전될 수 있도록 Sample::Frame() 의 테스트코드 수정 (matCenter)
+ -> 오브젝트의 센터값이 0,0(원점)이 되도록 일단 옮긴 후,
+     조작(스케일, 회전)을 가하고 다시 원래 위치로 돌아오게 작업하면 됨
