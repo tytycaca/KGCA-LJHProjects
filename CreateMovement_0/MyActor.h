@@ -3,7 +3,7 @@
 #include "MyCollision.h"
 
 // 움직임 기능이 없는 오브젝트
-class MyActer : public MyDxObject
+class MyActor : public MyDxObject
 {
 public:
 	bool				m_bDead = false;
@@ -18,11 +18,11 @@ public:
 
 public:
 	virtual void	SetVertexData(RECT rt) override;
-	MyActer&		Move(float dx, float dy);
+	MyActor&		Move(float dx, float dy);
 };
 
 // 움직임 기능이 있는 오브젝트
-class MyPawn : public MyActer
+class MyPawn : public MyActor
 {
 public:
 	virtual void  Move(MY_Math::FVector2 d)

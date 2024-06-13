@@ -58,7 +58,9 @@ public:
 	ID3D11InputLayout* m_pVertexLayout = nullptr;
 	bool     CreateInputLayout(ID3D11Device* pd3dDevice);
 	virtual void	 Frame();
+	virtual void     PreRender(ID3D11DeviceContext* pContext);
 	virtual void     Render(ID3D11DeviceContext* pContext);
+	virtual void     PostRender(ID3D11DeviceContext* pContext);
 	virtual void     Release();
 
 	virtual void	SetVertexData(RECT rt);

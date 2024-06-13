@@ -1,6 +1,6 @@
-#include "MyActer.h"
+#include "MyActor.h"
 
-void MyActer::SetVertexData(RECT rt)
+void MyActor::SetVertexData(RECT rt)
 {
 	MyDxObject::SetVertexData(rt);
 
@@ -9,7 +9,7 @@ void MyActer::SetVertexData(RECT rt)
 	m_rt = rt;
 }
 
-MyActer& MyActer::Move(float dx, float dy)
+MyActor& MyActor::Move(float dx, float dy)
 {
 	// È­¸é ÁÂÇ¥°è
 	for (auto& v : m_vList)

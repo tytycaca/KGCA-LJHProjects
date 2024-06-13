@@ -1,11 +1,11 @@
 #pragma once
 #include "MyCore.h"
-#include "MyActer.h"
+#include "MyActor.h"
 
 class Sample : public MyCore
 {
-	MyActer objScreen; // »ï°¢Çü
-	std::vector<MyActer> m_UIList;
+	MyActor objScreen; // »ï°¢Çü
+	std::vector<MyActor> m_UIList;
 	std::vector<MyNpc> m_npcList;
 	MyHero hero;
 	UINT m_iNpcCounter = 0;

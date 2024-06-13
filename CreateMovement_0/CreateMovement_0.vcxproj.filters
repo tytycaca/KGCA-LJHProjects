@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Sample.cpp" />
-    <ClCompile Include="MyActer.cpp" />
+    <ClCompile Include="MyActor.cpp" />
     <ClCompile Include="MyCore.cpp" />
     <ClCompile Include="MyDevice.cpp" />
     <ClCompile Include="MyDxObject.cpp" />
@@ -15,7 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sample.h" />
-    <ClInclude Include="MyActer.h" />
+    <ClInclude Include="MyActor.h" />
     <ClInclude Include="MyCore.h" />
     <ClInclude Include="MyDevice.h" />
     <ClInclude Include="MyDxObject.h" />

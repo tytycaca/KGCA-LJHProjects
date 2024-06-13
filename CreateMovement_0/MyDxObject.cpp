@@ -213,7 +213,7 @@ void MyDxObject::Frame()
 	
 }
 
-void     MyDxObject::Render(ID3D11DeviceContext* pContext)
+void MyDxObject::PreRender(ID3D11DeviceContext* pContext)
 {
 	// 사용하지 않는 파이프라인은 디폴트 값 또는 null사용된다.	
 	UINT StartSlot = 0;
@@ -223,15 +223,26 @@ void     MyDxObject::Render(ID3D11DeviceContext* pContext)
 	pContext->IASetVertexBuffers(StartSlot, NumBuffers, &m_pVertexBuffer, &pStrides, &pOffsets);
 	pContext->IASetInputLayout(m_pVertexLayout);
 	pContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
+
 	// 0번 슬롯으로 텍스처 전달
 	pContext->PSSetShaderResources(0, 1, m_pSRV.GetAddressOf());
 	//Texture2D g_txTexture : register(t0);
 
-	pContext->VSSetShader(m_pVertexShader, nullptr, 0);	
-	pContext->PSSetShader(m_pPixelShader, nullptr, 0);	
+	pContext->VSSetShader(m_pVertexShader, nullptr, 0);
+	pContext->PSSetShader(m_pPixelShader, nullptr, 0);
+}
+
+void MyDxObject::PostRender(ID3D11DeviceContext* pContext)
+{
 	pContext->Draw(m_vList.size(), 0);
 }
+
+void     MyDxObject::Render(ID3D11DeviceContext* pContext)
+{
+	PreRender(pContext);
+	PostRender(pContext);
+}
+
 void MyDxObject::Release()
 {
 	/*if (m_pSRV)

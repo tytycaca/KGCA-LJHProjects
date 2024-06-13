@@ -11,6 +11,7 @@ public:
 	MyInput m_Input;
 	MyTimer m_Timer;
 	MyWriterFont  m_font;
+	bool m_bGameRun = true;
 public:
 	virtual void Init();
 	virtual void Frame();

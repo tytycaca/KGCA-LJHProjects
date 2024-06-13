@@ -2,6 +2,22 @@
 
 void   Sample::Init()
 {
+	std::wstring texPath = L"../../data/"; //0.png
+	for (int iTex = 0; iTex < 10; iTex++)
+	{
+		std::wstring texFileName = texPath +
+			std::to_wstring(iTex) + L".png";
+		ComPtr<ID3D11ShaderResourceView> texSRV;
+		//ComPtr<ID3D11Resource> m_pTexture = nullptr;
+		HRESULT hr =
+			DirectX::CreateWICTextureFromFile(
+				m_pd3dDevice.Get(),
+				texFileName.c_str(),
+				nullptr,
+				texSRV.GetAddressOf());
+		m_pNumber.push_back(texSRV);
+	}
+
 	MY_Math::FVector2 a = { 10.0f, 0.0f };
 	MY_Math::FVector2 b = { 0.0f, 10.0f };
 	float fDot = a | b;
@@ -16,6 +32,7 @@ void   Sample::Init()
 	m_UIList[1].Create(m_pd3dDevice.Get(), m_pContext, { 700, 0, 800, 100 }, L"kgca2.png");
 	m_UIList[2].Create(m_pd3dDevice.Get(), m_pContext, { 700, 500, 800, 600 }, L"kgca3.png");
 	hero.Create(m_pd3dDevice.Get(), m_pContext, { 350, 250, 450, 350 }, L"Peach.png");
+	hero.m_fSpeed = 500.0f;
 
 	for (int iNpc = 0; iNpc < 10; iNpc++)
 	{
@@ -27,7 +44,9 @@ void   Sample::Init()
 		m_npcList.push_back(npc);
 	}
 	
+	m_iNpcCounter = m_npcList.size();
 }
+
 void   Sample::Frame()
 {
 	for (auto& ui : m_UIList)
@@ -35,6 +54,15 @@ void   Sample::Frame()
 		if (MyCollision::RectToPt(ui.m_rt, m_Input.m_ptMousePos))
 		{
 			ui.m_bDead = true;
+		}
+	}
+
+	for (auto& npc : m_npcList)
+	{
+		if (npc.m_bDead == false && MyCollision::RectToRect(npc.m_rt, hero.m_rt))
+		{
+			npc.m_bDead = true;
+			m_iNpcCounter = max(1, m_iNpcCounter - 1);
 		}
 	}
 
@@ -67,6 +95,7 @@ void   Sample::Frame()
 		m_npcList[iNpc].Frame();
 	}
 }
+
 void   Sample::Render()
 {
 	objScreen.Render(m_pContext);
@@ -79,16 +108,25 @@ void   Sample::Render()
 		{
 			if (!obj.m_bDead)
 			{
-				obj.Render(m_pContext);
+				obj.PreRender(m_pContext);
+				m_pContext->PSSetShaderResources(0, 1, m_pNumber[m_iNpcCounter - 1].GetAddressOf());
+				obj.PostRender(m_pContext);
 			}
 		});
-
+	
+	bool bGameEnding = true;
 	hero.Render(m_pContext);
 	for (int iNpc = 0; iNpc < m_npcList.size(); iNpc++)
 	{
-		m_npcList[iNpc].Render(m_pContext);
+		if (!m_npcList[iNpc].m_bDead)
+		{
+			m_npcList[iNpc].Render(m_pContext);
+			bGameEnding = false;
+		}
 	}
+	m_bGameRun = !bGameEnding;
 }
+
 void   Sample::Release()
 {
 	objScreen.Release();
@@ -102,6 +140,5 @@ void   Sample::Release()
 		m_npcList[iNpc].Release();
 	}
 }
-
 
 T_GAME_START(800, 600);

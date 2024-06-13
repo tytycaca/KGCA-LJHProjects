@@ -146,7 +146,7 @@
   <ItemGroup>
     <ClCompile Include="MyCollision.cpp" />
     <ClCompile Include="Sample.cpp" />
-    <ClCompile Include="MyActer.cpp" />
+    <ClCompile Include="MyActor.cpp" />
     <ClCompile Include="MyCore.cpp" />
     <ClCompile Include="MyDevice.cpp" />
     <ClCompile Include="MyDxObject.cpp" />
@@ -159,7 +159,7 @@
   <ItemGroup>
     <ClInclude Include="MyCollision.h" />
     <ClInclude Include="Sample.h" />
-    <ClInclude Include="MyActer.h" />
+    <ClInclude Include="MyActor.h" />
     <ClInclude Include="MyCore.h" />
     <ClInclude Include="MyDevice.h" />
     <ClInclude Include="MyDxObject.h" />

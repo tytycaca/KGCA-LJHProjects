@@ -65,7 +65,7 @@ void   MyCore::GameInit()
 void   MyCore::GameRun()
 {
 	GameInit();
-	while(1)
+	while(m_bGameRun)
 	{
 		if(MyWindow::WindowRun()==false)
 		{
