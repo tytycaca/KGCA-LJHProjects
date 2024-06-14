@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9C353EFE-5041-4F77-AE19-75E6FB2E6627}</ProjectGuid>
+    <ProjectGuid>{427EFDBF-9284-4CD8-A6E5-F31A406959F2}</ProjectGuid>
     <RootNamespace>CreateWindow</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../output/</OutDir>
-    <IntDir>../../output/ObjectTransform_0</IntDir>
+    <IntDir>../../output/ObjectCamera</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -177,8 +177,8 @@
     <ClInclude Include="MyWriterFont.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="PS.txt" />
-    <Text Include="VS.txt" />
+    <Text Include="..\..\data\shader\PS.txt" />
+    <Text Include="..\..\data\shader\VS.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,112 @@
+MyActor::Frame 에
+m_matWorld = m_matCenter * m_matScale * m_matRotate * m_matTrans 추가
+
+MyActor 헤더에 csrt 멤버 변수 추가
+
+MyActor 클래스에 SetCenterMove, SetScale, SetRotate, SetTrans 함수 추가
+(벡터만 넘기면 알아서 행렬 만들어서 자동으로 작업이 돌아가게끔 만들것)
+
+Sample::Frame 에서 위에서 만든 함수로 srt 작업프로세스 변경
+objScreen.SetCenterMove(matCenter) ~
+
+MyActor::Transform() 오버로딩 추가
+
+Sample::Frame 에 ui.Frame() 추가
+uiList 루프 안쪽 수정 (스케일 추가 등등)
+
+MyNpc::Frame() 수정
+기존 이동에서 행렬쓰는 이동으로 수정
+
+MyHero::Frame() 수정
+matTrans = m_vPos
+MyActor::Frmae() 추가
+m_vOffset = {0.0f, 0.0f}; 추가
+
+MyNpc::Frame() 수정
+world -> trans 멤버 변수로 변경
+
+Sample::Frame() 수정
+Hero 와 Npc 모두 행렬 연산으로 돌아가게 바꿈
+
+MyActor::SetVertexData() 오버라이딩
+ -> 초기 배치의 정점버퍼 각 정점의 위치를 중점으로 한다.
+
+MyActor::Move() 에서 center 보냈다 돌아오는 부분 주석처리
+ -> SetTrans 로 바꾸기
+ -> 움직일때는 센터로 보냈다가 돌아오는 부분이 들어가있으면 이동이 되지 않기 때문
+
+uiList 루프 안에 Setter 부분 삭제
+-> 움직이지 않는 오브젝트들은 굳이 Setter 들을 사용해서 바꿔줄 필요가 없음
+    (이미 Actor::Frame() 에 작업하는 부분이 있기 때문)
+       -> Setter 들을 사용해서 다시 바꿔준다는 것은 내가 움직임을 바꾸거나 위치를 바꾼다는 의미
+
+MyHero::Frame() 삭제
+
+MyNpc::Frame() 의 offset 부분 삭제
+
+MyActor::Trans() 삭제
+Sample 의 init 의 trans 호출 부분 삭제
+
+MyActor::Move(float, float) 변경
+
+MyActor::Move(fvector2) 변경
+ -> 충돌처리 변경
+ Screen -> List 로 (Screen 좌표는 변경되지 않으니 행렬곱연산이 적용된 좌표로 갱신해줘야함)
+
+Sample::Frame 수정
+초기부분 지역변수부터 ui 루프 전까지 전부 바뀐 api 에 맞게 수정
+ -> MyActor::Frame() 에서 처리하게 만든 구조에 맞게 수정
+
+Sample::Render 수정
+UIList 의 충돌관련 렌더링 기믹 삭제 (if 구문 주석처리)
+
+--------------------------- 20240614 1611 -------------------------------
+
+ObjectCamera 로 프로젝트 분리
+
+데이터 정리 (코드 소스 업로드하는 부분과 사용하는 리소스 데이터 분리)
+ -> ../../data/shader 에 쉐이더 코드 넣어놓고 ../../data 에 리소스 저장
+ -> 코드 내부의 Path 들 모두 수정(리소스, 쉐이더 등등)
+
+Sample 헤더에 MY_Math::FMatrix m_matCamera 멤버 추가
+
+Sample::Frame() 수정
+카메라 포지션 벡터값 지역변수 추가하고 Translation() 으로 이동행렬 만들기
+
+렌더하기 전에 objScreen.SetTransform() 집어넣기
+ -> 카메라 행렬 적용하는 부분
+
+MyActor 의 Transform 수정
+ -> void SetTransform(MY_Math::FMatrix& matCamera)
+ -> 함수 내부도 카메라 행렬을 통해서 WorldView 행렬을 만들어내게 수정
+
+Sample::Render 수정
+ui, hero, objscreen 렌더하는 앞부분에 SetTransform 추가
+렌더 직전에는 무조건 SetTransform 이 들어가야함 (카메라 변환하는 부분)
+
+Sample::Frame 수정
+샘플 헤더에 카메라포지션 멤버변수 추가
+wasd 이동하는 부분 앞에 방향을 나타내는 지역변수 추가하고 카메라 이동 구현(역행렬 곱)
+
+Sample::Init 수정
+백그라운드 이미지 너비 바꾸기
+
+Sample::Frame 수정
+ad 키만 캐릭터를 붙여서 움직이게 변경
+ -> 횡스크롤 구현
+
+Sample 헤더에 MyCamera 클래스 생성해서 분리
+
+Sample::Frame 의 move 부분 복사해서 카메라 클래스로 이관
+ -> 카메라 움직임 함수화
+
+MyCamera 클래스에 Frame() 생성
+ -> m_matCamera.Translation(m_vCameraPos)
+
+Sample::Frame 수정
+hero move 부분 Camera 클래스 기반으로 수정
+
+Sample::Render 수정
+카메라 클래스 기반으로 수정
+ui 렌더에는 카메라 뷰 행렬 적용 x
+
