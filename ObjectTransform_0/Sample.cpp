@@ -44,27 +44,6 @@ void   Sample::Init()
 	hero.Create(m_pd3dDevice.Get(), m_pContext, { 350, 250, 450, 350 }, L"Peach.png");
 	hero.m_fSpeed = 500.0f;
 
-	// 이동변환
-	m_UIList[0].Trans(matTrans);
-
-	// 이동 변환
-	//for (int iv = 0; iv < m_UIList[0].m_vListScreen.size(); iv++)
-	//{
-	//	// 1 by 3	*	3 by 2	=>	1 by 2
-	//	MY_Math::FVector2 p = m_UIList[0].m_vListScreen[0].p;
-	//	/*MY_Math::FVector2 ret = p * matTrans;
-	//	MY_Math::FVector2 ret = matTrans.Multiply(p);*/
-	//	MY_Math::FVector2 ret;
-	//	ret.X = p.X * matTrans.m[0][0] +
-	//			p.Y * matTrans.m[1][0] +
-	//			1.0f * matTrans.m[2][0];
-	//	ret.Y = p.X * matTrans.m[0][1] +
-	//			p.Y * matTrans.m[1][1] +
-	//			1.0f * matTrans.m[2][1];
-	//	m_UIList[0].m_vListScreen[iv].p = ret;
-	//}
-	//m_UIList[0].UpdateVertexBuffer();
-
 	for (int iNpc = 0; iNpc < 10; iNpc++)
 	{
 		MyNpc npc;
@@ -80,93 +59,84 @@ void   Sample::Init()
 
 void   Sample::Frame()
 {
-	MY_Math::FVector2 vPos = { 400.0f, 300.0f };
-	vPos.X = 400.0f;// *(cos(g_fGameTime) * 0.5f + 0.5f);
-	vPos.Y = 300.0f;// *(cos(g_fGameTime) * 0.5f + 0.5f);
-	//objScreen.SetPos(vPos);
-
-	MY_Math::FMatrix matWorld;
-	MY_Math::FMatrix matTrans;
-	MY_Math::FMatrix matScale;
-	MY_Math::FMatrix matRotate;
-	matTrans.Translation(vPos);
-	matRotate.Rotate(g_fGameTime);// DegreeToRadian(g_fGameTime));
-	MY_Math::FVector2 vScale = {
-		(float)cos(g_fGameTime) * 0.5f + 0.5f,
-		(float)cos(g_fGameTime) * 0.5f + 0.5f };
-	matScale.Scale(vScale);
-
-	MY_Math::FMatrix matCenter;
+	MY_Math::FVector2 vPos = objScreen.m_vPos;
+	MY_Math::FVector2 vScale = { (float)cos(g_fGameTime) * 0.5f + 0.5f, (float)cos(g_fGameTime) * 0.5f + 0.5f };
 	MY_Math::FVector2 vCenter = { -800.0f * 0.5f, -600.0f * 0.5f };
-	matCenter.Translation(vCenter);
-	matWorld = matCenter * matScale * matRotate * matTrans;// *matRotate* matTrans;
-	//matWorld._31 = matTrans._31;
-	//matWorld._32 = matTrans._32;
-	objScreen.SetWorld(matWorld);
 
+	//objScreen.SetCenterMove(vCenter);
+	//objScreen.SetScale(vScale);
+	//objScreen.SetRotate(g_fGameTime);
+	//objScreen.SetTrans(vPos);
 	objScreen.Frame();
 
-	//for (auto& ui : m_UIList)
-	//{
-	//	if (MyCollision::RectToPt(ui.m_rt, m_Input.m_ptMousePos))
-	//	{
-	//		ui.m_bDead = true;
-	//	}
-	//}
+	for (auto& ui : m_UIList)
+	{
+		if (MyCollision::RectToPt(ui.m_rt, m_Input.m_ptMousePos))
+		{
+			MY_Math::FVector2 vScale = { 0.7f + (float)cos(g_fGameTime * 5) * 0.5f + 0.5f,
+										0.7f + (float)cos(g_fGameTime * 5) * 0.5f + 0.5f };
+			ui.SetScale(vScale);
+			//ui.SetRotate(g_fGameTime);
+			ui.SetTrans(ui.m_vPos);
+		}
 
-	//for (auto& npc : m_npcList)
-	//{
-	//	if (npc.m_bDead == false && MyCollision::RectToRect(npc.m_rt, hero.m_rt))
-	//	{
-	//		npc.m_bDead = true;
-	//		m_iNpcCounter = max(1, m_iNpcCounter - 1);
-	//	}
-	//}
+		ui.Frame();
+	}
 
-	//if (m_Input.KeyCheck('W') == KEY_HOLD)
-	//{
-	//	hero.Move({ 0.0f, -1.0f });
-	//	//hero.Front();
-	//}
-	//if (m_Input.KeyCheck('S') == KEY_HOLD)
-	//{
-	//	hero.Move({ 0.0f, 1.0f });
-	//	//hero.Back();
-	//}
-	//if (m_Input.KeyCheck('A') == KEY_HOLD)
-	//{
-	//	hero.Move({ -1.0f, 0.0f });
-	//	//hero.Left();
-	//}
-	//if (m_Input.KeyCheck('D') == KEY_HOLD)
-	//{
-	//	hero.Move({ 1.0f, 0.0f });
-	//	//hero.Right();
-	//}
+	for (auto& npc : m_npcList)
+	{
+		if (npc.m_bDead == false && MyCollision::RectToRect(npc.m_rt, hero.m_rt))
+		{
+			npc.m_bDead = true;
+			m_iNpcCounter = max(1, m_iNpcCounter - 1);
+		}
+	}
 
-	//hero.Frame();
-	//for (int iNpc = 0; iNpc < m_npcList.size(); iNpc++)
-	//{
-	//	m_npcList[iNpc].Frame();
-	//}
+	if (m_Input.KeyCheck('W') == KEY_HOLD)
+	{
+		hero.Move({ 0.0f, -1.0f });
+		//hero.Front();
+	}
+	if (m_Input.KeyCheck('S') == KEY_HOLD)
+	{
+		hero.Move({ 0.0f, 1.0f });
+		//hero.Back();
+	}
+	if (m_Input.KeyCheck('A') == KEY_HOLD)
+	{
+		hero.Move({ -1.0f, 0.0f });
+		//hero.Left();
+	}
+	if (m_Input.KeyCheck('D') == KEY_HOLD)
+	{
+		hero.Move({ 1.0f, 0.0f });
+		//hero.Right();
+	}
+
+	hero.Frame();
+	for (int iNpc = 0; iNpc < m_npcList.size(); iNpc++)
+	{
+		m_npcList[iNpc].Frame();
+	}
 }
 
 void   Sample::Render()
 {
 	objScreen.Render(m_pContext);
 
-	/*for_each(begin(m_UIList), end(m_UIList), [&](auto& obj)
+	for_each(begin(m_UIList), end(m_UIList), [&](auto& obj)
 		{
-			if (!obj.m_bDead)
+			//if (!obj.m_bDead)
 			{
 				obj.PreRender(m_pContext);
 				m_pContext->PSSetShaderResources(0, 1, m_pNumber[m_iNpcCounter - 1].GetAddressOf());
 				obj.PostRender(m_pContext);
 			}
 		});
-	
-	bool bGameEnding = true;
+
 	hero.Render(m_pContext);
+
+	bool bGameEnding = true;
 	for (int iNpc = 0; iNpc < m_npcList.size(); iNpc++)
 	{
 		if (!m_npcList[iNpc].m_bDead)
@@ -175,7 +145,7 @@ void   Sample::Render()
 			bGameEnding = false;
 		}
 	}
-	m_bGameRun = !bGameEnding;*/
+	m_bGameRun = !bGameEnding;
 }
 
 void   Sample::Release()

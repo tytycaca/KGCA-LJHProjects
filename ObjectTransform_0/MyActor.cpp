@@ -1,11 +1,33 @@
 #include "MyActor.h"
 
-void    MyActor::Frame()
+void MyActor::Frame()
 {
+	m_matWorld = m_matCenter * m_matScale * m_matRotate * m_matTrans;
 	Transform(m_matWorld);
+	m_vOffset = { 0.0f,0.0f };
 }
 
-void    MyActor::SetPos(MY_Math::FVector2& p)
+void MyActor::SetTrans(MY_Math::FVector2& p)
+{
+	m_matTrans.Translation(p);
+}
+
+void MyActor::SetScale(MY_Math::FVector2& s)
+{
+	m_matScale.Scale(s);
+}
+
+void MyActor::SetRotate(float r)
+{
+	m_matRotate.Rotate(r);
+}
+
+void MyActor::SetCenterMove(MY_Math::FVector2& p)
+{
+	m_matCenter.Translation(p);
+}
+
+void MyActor::SetPos(MY_Math::FVector2& p)
 {
 	m_vPos = p;
 	m_matWorld._31 = m_vPos.X;
@@ -23,6 +45,16 @@ void MyActor::SetWorld(MY_Math::FMatrix& m)
 	m_matWorld = m;
 }
 
+MyActor& MyActor::Transform()
+{
+	for (int iv = 0; iv < m_vListScreen.size(); iv++)
+	{
+		m_vList[iv].p = m_vListScreen[iv].p * m_matWorld;
+	}
+	UpdateVertexBuffer();
+	return *this;
+}
+
 MyActor& MyActor::Transform(MY_Math::FMatrix& m)
 {
 	for (int iv = 0; iv < m_vListScreen.size(); iv++)
@@ -33,40 +65,33 @@ MyActor& MyActor::Transform(MY_Math::FMatrix& m)
 	return *this;
 }
 
-MyActor& MyActor::Trans(MY_Math::FMatrix& m)
-{
-	//for (int iv = 0; iv < m_vListScreen.size(); iv++)
-	//{
-	//	m_vListScreen[iv].p = m_vListScreen[iv].p * m;		
-	//}
-	//UpdateVertexBuffer();
-	return *this;
-}
-
 void   MyActor::SetVertexData(RECT rt)
 {
 	MyDxObject::SetVertexData(rt);
 
-	// 사각형의 센터를 포지션으로
-	//m_vPos.X = (rt.left + rt.right) * 0.5f;
-	//m_vPos.Y = (rt.bottom + rt.top) * 0.5f;
-	// 왼쪽 상단 모서리를 포지션으로
-	m_vPos.X = rt.left;
-	m_vPos.Y = rt.top;
+	// 사각형의 센터를 포지션으로	
+	m_vPos.X = (rt.left + rt.right) * 0.5f;
+	m_vPos.Y = (rt.bottom + rt.top) * 0.5f;
 
+	MY_Math::FVector2 vCenter = { -m_vPos.X, -m_vPos.Y };
+	// 초기 배치의 정점버퍼 각 정점의 위치를 중점으로 한다.
+	SetCenterMove(vCenter);
+	SetTrans(m_vPos);
 	m_rt = rt;
 }
 
 MyActor& MyActor::Move(float dx, float dy)
 {
-	// 화면좌표계
-	for (auto& v : m_vListScreen)
-	{
-		v.p += { dx, dy };
-	}
-	m_vPos = { dx,dy };
+	Move({ dx, dy });
 
-	UpdateVertexBuffer();
+	//// 화면좌표계
+	//for (auto& v : m_vListScreen)
+	//{
+	//	v.p += { dx, dy };
+	//}
+	//m_vPos = { dx,dy };
+
+	//UpdateVertexBuffer();
 	return *this;
 }
 
@@ -76,12 +101,11 @@ MyActor& MyActor::Move(MY_Math::FVector2 d)
 	m_vPos += vOffset;
 	m_vOffset += vOffset;
 
-	float halfW = (m_rt.right - m_rt.left) * 0.5f;
-	float halfH = (m_rt.bottom - m_rt.top) * 0.5f;
+	SetTrans(m_vPos);
 
-	m_rt.left = m_vListScreen[0].p.X;
-	m_rt.right = m_vListScreen[1].p.X;
-	m_rt.top = m_vListScreen[0].p.Y;
-	m_rt.bottom = m_vListScreen[2].p.Y;
+	m_rt.left	= m_vList[0].p.X;
+	m_rt.right	= m_vList[1].p.X;
+	m_rt.top	= m_vList[0].p.Y;
+	m_rt.bottom	= m_vList[2].p.Y;
 	return *this;
 }
