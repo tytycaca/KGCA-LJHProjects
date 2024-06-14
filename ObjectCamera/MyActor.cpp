@@ -45,6 +45,15 @@ void MyActor::SetWorld(MY_Math::FMatrix& m)
 	m_matWorld = m;
 }
 
+void MyActor::SetTransform(MY_Math::FMatrix& matCamera)
+{
+	for (int iv = 0; iv < m_vListScreen.size(); iv++)
+	{
+		m_vList[iv].p = m_vList[iv].p * matCamera;
+	}
+	UpdateVertexBuffer();
+}
+
 MyActor& MyActor::Transform()
 {
 	for (int iv = 0; iv < m_vListScreen.size(); iv++)

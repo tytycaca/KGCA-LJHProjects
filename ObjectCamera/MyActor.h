@@ -35,6 +35,7 @@ public:
 	virtual void	SetPos(MY_Math::FVector2& p);
 	virtual void	SetPos(float& dx, float& dy);
 	virtual void	SetWorld(MY_Math::FMatrix& m);
+	virtual void	SetTransform(MY_Math::FMatrix& matCamera);
 
 protected:
 	MyActor& Transform();

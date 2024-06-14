@@ -33,7 +33,7 @@ void   Sample::Init()
 	float fDot = a | b;
 	float fAngle = a.Angle(b);
 
-	RECT rtBk = { 0, 0, g_xClientSize, g_yClientSize };
+	RECT rtBk = { 0, 0, 10000.0f, g_yClientSize };
 	objScreen.Create(m_pd3dDevice.Get(), m_pContext, rtBk, L"../../data/bk.bmp");
 
 	m_UIList.resize(3);
@@ -59,6 +59,9 @@ void   Sample::Init()
 
 void   Sample::Frame()
 {
+	MY_Math::FVector2 vCameraPos;
+	m_Cam.SetTransform(vCameraPos);
+
 	MY_Math::FVector2 vPos = objScreen.m_vPos;
 	MY_Math::FVector2 vScale = { (float)cos(g_fGameTime) * 0.5f + 0.5f, (float)cos(g_fGameTime) * 0.5f + 0.5f };
 	MY_Math::FVector2 vCenter = { -800.0f * 0.5f, -600.0f * 0.5f };
@@ -94,26 +97,31 @@ void   Sample::Frame()
 
 	if (m_Input.KeyCheck('W') == KEY_HOLD)
 	{
-		hero.Move({ 0.0f, -1.0f });
+		m_Cam.Up();
 		//hero.Front();
 	}
 	if (m_Input.KeyCheck('S') == KEY_HOLD)
 	{
-		hero.Move({ 0.0f, 1.0f });
+		m_Cam.Down();
 		//hero.Back();
 	}
 	if (m_Input.KeyCheck('A') == KEY_HOLD)
 	{
 		hero.Move({ -1.0f, 0.0f });
 		//hero.Left();
+		m_Cam.Right(-hero.m_vOffset.X);// +hero.m_vOffset;
 	}
 	if (m_Input.KeyCheck('D') == KEY_HOLD)
 	{
 		hero.Move({ 1.0f, 0.0f });
 		//hero.Right();
+		m_Cam.Right(-hero.m_vOffset.X);
 	}
 
+	m_Cam.Frame();
+
 	hero.Frame();
+
 	for (int iNpc = 0; iNpc < m_npcList.size(); iNpc++)
 	{
 		m_npcList[iNpc].Frame();
@@ -122,6 +130,7 @@ void   Sample::Frame()
 
 void   Sample::Render()
 {
+	objScreen.SetTransform(m_Cam.GetMatrix());
 	objScreen.Render(m_pContext);
 
 	for_each(begin(m_UIList), end(m_UIList), [&](auto& obj)
@@ -134,6 +143,7 @@ void   Sample::Render()
 			}
 		});
 
+	hero.SetTransform(m_Cam.GetMatrix());
 	hero.Render(m_pContext);
 
 	bool bGameEnding = true;
@@ -141,6 +151,7 @@ void   Sample::Render()
 	{
 		if (!m_npcList[iNpc].m_bDead)
 		{
+			m_npcList[iNpc].SetTransform(m_Cam.GetMatrix());
 			m_npcList[iNpc].Render(m_pContext);
 			bGameEnding = false;
 		}
