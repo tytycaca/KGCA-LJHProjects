@@ -1,0 +1,62 @@
+UpdateVertexBuffer() 호출 구조 변경
+ -> 함수마다 갱신을 넣는 것이 아니라 PreRender 에서 실제 드로우콜이 들어가기 전에
+     한 번만 호출하는 것으로 변경 (중복 호출 구조를 개선)
+
+MyActor::SetTransform 과 MyActor::Frame() 구조 변경
+ -> 카메라행렬 연산과 cstr 연산을 합쳐서 ~로 보냄 (놓쳐서 찾아봐야함)
+
+----------위 의 사항은 중복코드를 제거하고 최적화하는 작업이므로 아직은 할 필요 없음----------
+
+Alphablend.hlsl 쉐이더 파일 생성 후 기존의 VS PS 파일 합쳐서 넣기
+
+MyDxObject 에 m_szShader 멤버변수 추가 후 MyDxObject::LoadShader 함수 내부의
+하드코딩으로 쉐이더파일 경로설정된 부분 대체
+
+MyDxObject::Create 파라미터 hlsl 추가
+
+Sample::Init 에서 MyDxObject 초기화할 때 shader 파일 이름 넘기게 변경
+Sample 의 MyDxObject::Create 사용처에 모두 shader 파일 이름 넘기게 변경
+
+MyDxObject::Create() 상단에서 멤버변수에 파라미터로 받은 파일이름 넘기게 변경
+ -> 이렇게 함으로서 오브젝트 생성할때마다 각기 다른 쉐이더를 적용시킬 수 있게됨
+
+Sample::Init 의 배경화면 월드 버텍스좌표 변경 (배경 키우기)
+
+shader 폴더에 위에서 vs ps 합친 파일 복사해서 넘기고 default 파일로 변경
+그 후 Sample::Init 에서 배경 넘길때 디폴트로 넘김
+
+Alphablend.hlsl 파일 수정
+ -> PSMain에 조건문 넣기 (흰색인 부분 discard 시켜서 제외)
+ -> colorKey 방식
+
+Sample::Init() 의 ui 텍스처 파일 경로 넣는 반복문 수정하여 다른 텍스처 붙이기
+ -> 알파값이 들어있는 png 숫자 찾아서 넣기
+
+Alphablend.hlsl 파일 수정
+ -> colorKey 방식 삭제
+ -> 알파값이 0이면 discard 하게 수정
+
+Alphablend.hlsl 파일 수정
+ -> colorKey 방식으로 각 컬러값이 0.99f 이상이면 discard 하도록 변경
+
+TBasis 폴더에서 컬러 ui 이미지 하나 data 폴더로 가져오기
+
+Sample 헤더에 ID3D11 블렌드스테이트 멤버변수 추가
+SetAlphaBlendState() 함수 추가 및 구현
+
+MyHero 에서 MyActor 의 SetVertexData 함수 가져와서 재정의
+ -> 파라미터로 RECT rt 값 가져오고 MyDxObject::SetVertexData(rt) 최상단에서 박고 시작하기
+ -> 텍스트 좌표값을 담을 RECT 지역변수 생성 및 초기화 (texRT)
+ -> texRT를 기반으로 버텍스 데이터 갱신하게 바꾸기 (버텍스의 t 값 바꿈)
+ -> RECT 에서 받은 좌표를 갖고 uv 맵핑이 가능하게끔 구조를 변경하는 것
+
+MyNpc 에서도 마찬가지로 똑같은 SetVertexData 작업
+
+Sample 의 m_pAlphaBlend 블렌드 스테이트 지역변수 ComPtr 로 바꿔주고
+사용처 GetAddressOf 로 전부 바꿔주기
+
+init 의 ui 부분 수정
+ -> wstring iconList[] 로 텍스처 경로 배열로 받아오고 ui 텍스처 반복문에서 배열로 초기화하게 변경
+
+Sample::Init 최상단에 SetAlphaBlendState() 넣기
+
