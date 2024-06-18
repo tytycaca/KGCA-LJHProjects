@@ -1,0 +1,158 @@
+ObjectManager 프로젝트 분리
+
+MyBaseManager 클래스 생성
+
+헤더에 "MyStd.h" 연결
+
+헤더에 템플릿 기반으로 수정
+
+헤더에서 생성자 private 로 놔서 생성이 불가능하도록 만듦
+
+Sample 에 MyBaseManager 헤더 추가
+
+MyBaseManager 헤더에 static MyBaseManager mgr 로 인스턴스 생성 (private)
+
+static MyBaseManager& Get() 함수 구현 (싱글톤 패턴에서 클래스 인스턴스를 가져오는 역할)
+
+std::wstring m_csName = L"None" 멤버 변수 추가
+
+Sample::Init() 최상단에서 MyBaseManager 기능 테스트
+
+Get() 함수 내부에 static MyBaseManager mgr 변수 넣기
+
+MySingleton 클래스 템플릿 기반으로 추가 및 구현
+
+MySingleton 클래스 내부에 static T& Get() 함수 추가 및 구현
+
+MyBaseManager 에 MySingleton 클래스 상속
+
+외부에서 생성하는 것을 막아뒀기 때문에 friend class 로 MySingleton 클래스를 지정해야 한다.
+(생성자 접근 가능하게 하기 위함)
+
+MyTexMgr 클래스 생성
+
+MyBaseManager 템플릿 기반으로 변경
+
+MyTexMgr 헤더에 MyTexture 클래스 생성 및 MyBaseManager<MyTexture> 상속
+
+MyBaseManager<T> 에 멤버변수들 추가 m_List ~
+
+MyBaseManager<T> 에 멤버함수들 추가 및 virtual 선언 Load ~
+
+MyBaseManager 헤더 밑에 템플릿 기반 함수들 추가로 생성 (GetPtr 등등)
+
+Sample 에 연결하는 부분 "MyTexMgr" 로 변경
+
+텍스쳐 매니저가 베이스 매니저를 통해서 만들어지기 위해 기존에 템플릿들 전부
+template <class T, class S> 로 변경 (S를 싱글톤으로 만들겠다는 뜻)
+ ex) class MyTexMgr : public MyBaseManager<MyTexture, MyTexMgr>
+      -> MyTexture을 생성하고 MyTexMgr 을 싱글톤으로 생성하겠다는 의미
+
+class MyTexMgr : public MyBaseManager<MyTexture, MyTexMgr> 내부 구현
+
+MyBaseManager() 생성자는 public 으로 빼고 friend 선언 주석처리 (베이스매니저는 전부 공개)
+ -> 이렇게 하지 않으면 자식이 생성될때마다 부모에 friend 를 걸어야하기 때문
+ -> 어떤 매니저든 베이스 매니저를 상속해서 쓰되, 그 안에서 friend 를 걸어서 쓴다
+
+MyTexMgr 내부에 friend 선언
+
+Sample::Init() 상단부에 MyTexMgr& mgr = MyTexMgr::Get() 으로 텍스쳐 매니저 인스턴스
+참조로 가져오기
+
+MyTexMgr 헤더에 #define 으로 I_Tex 가 MyTexMgr::Get() 이 되기 위해 쉽게 매크로 선언
+
+MyDxObject 에서 wic 텍스처 로드하는 부분 지우고 텍스처 클래스의 Load 에서 구현
+
+MyTexture 클래스에서 bool Load() 함수 구현
+
+MyTexture 클래스에 디바이스, 컨텍스트, SRV 멤버 추가
+
+MyDxObject 클래스에서 m_pTexture 로 변수 만들어서 I_Tex.Load() 로 인스턴스 로드
+m_pSRV 멤버에 m_pTexture->m_pSRV 로 인스턴스 지정
+그 밑에 조건문 걸어서 추가작업
+ -> 다 이런식으로 작업할 것
+ -> CreateWICTexture ~ 이 기능은 유일하게 텍스처 매니저 클래스 안에만 있어야함
+
+MyDxObject 에 MyTexMgr.h 연결
+
+Sample::Init() 의 숫자 텍스처 반복문으로 로드하는 부분도 바뀐 방식으로 처리
+
+Load 함수는 null 을 리턴하는 경우를 없앨거임
+
+MyTexMgr 클래스(MyTexture 아님)에 디바이스와 컨텍스트를 set 하는 함수 구현
+
+MyCore 에서 디바이스가 만들어지고 나면 그 밑에 바로 I_Tex.Set() 으로 세팅
+MyCore 헤더에 MyTexMgr 헤더 추가
+
+MyBaseManager 헤더의 밑에 Load 함수 구현
+ -> 텍스쳐 이름과 인스턴스 주소를 가져와서 맵 자료구조로 묶어서 insert 하는 기능
+
+MyTexture 에서 텍스처 로드하는 부분 밑에 실패시 조건문 추가
+
+MyTexture 클래스에서 bool Load() 함수에 파라미터 추가
+ -> 디바이스도 넘길 수 있게
+
+MyBaseManager::Load 에 아규먼트 추가 (filename)
+
+MyTexture 클래스에서 bool Load() 함수에 m_csName = filename 추가
+
+MyBaseManager::GetPtr() 함수 내부 구현 (중복 검증 구현)
+
+MyBaseManager::Load() 에 중복 검증하는 부분 구현
+
+MyShaderMgr 클래스 생성
+class MyShader 추가
+
+MyBaseManager.h 연결하고 MyShaderMgr 클래스에 상속
+
+MyShaderMgr 하단에 define 으로 매크로 생성 (인스턴스 Get 하는 부분)
+
+MyBaseManager::Release() 구현
+
+MyTexture::Release() 구현
+m_pSRV.Reset()
+m_pTexture.Reset()
+
+MyObject 안의 shader 관련 변수들 전부 MyShader 에 이관
+MyDxObject 안의 LoadShader 전부 MyShaderMgr::Load 로 이관
+
+MyShader::Release() 구현
+
+MyDxObject 에 MyShaderMgr 연결
+
+MyDxObject 안의 LoadShader 전부 쉐이더매니저 통해서 접근하도록 구조 변경
+
+MyCore 에 ShaderMgr 연결
+MyCore 디바이스 생성 부분 밑에서 ShaderMgr 에 디바이스 set 해주기
+
+MyDxObject::LoadShader() 파라미터 변경 filename 넘어가게
+호출 부분 아규먼트 전부 바꿔주기
+
+MyDxObject 의 인풋레이아웃 생성하는 부분에 m_pShader-> 로 접근하게 바꾸기
+
+전체 경로를 넘겨도 파일명과 확장자만 key 값으로 저장하게 바꾸기
+ -> MyBaseManager 클래스에 std::wstring splitpath() 함수 만들기 
+
+MyBaseManager 헤더 하단에서 std::wstring splitpath() 함수 정의
+ -> wchar_t szFileName[MAX_PATH] = {0, }; 형태의 지역변수 4개 추가 
+ -> _tsplitpath_s() 함수 사용
+ -> name 에 파일이름과 파일확장자만 받아서 넘기게함
+
+MyBaseManager ::Load 에서 파일명+확장자 검출하는 부분 추가
+
+MyStd 에 <tchar.h> 추가로 연결
+
+MyBaseManager ::Load 에 pData->m_csName = name; 추가
+
+MyShader:: Load 최상단 m_csName = filename 주석처리
+ -> 전체 경로를 넘기는 부분인데 뒤에서 처리하므로 필요없음
+
+MyBaseManager 에 Release 함수 ReleaseAll 로 바꾸고 내부 수정
+ -> map 으로 구현했기 때문에 release 때리는 부분은 실제 데이터인 .second 값이 되어야함
+
+virtual ~MyBaseManager() {} 소멸자 추가
+
+MyResource 순수 가상 클래스 추가하고 MyBaseManager 에 상속
+ -> 추후에 통합 매니저 클래스를 만들 수 있게 구조 변경하는것
+ -> 당장은 통합 매니저를 사용하지 않을 것이기 때문에 사용하지는 않음
+

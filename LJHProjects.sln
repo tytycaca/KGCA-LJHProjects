@@ -113,6 +113,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectCamera", "ObjectCamer
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectAlphaBlend", "ObjectAlphaBlend\ObjectAlphaBlend.vcxproj", "{C954B5B1-5152-4DF5-9109-AF0C12AC96BD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectManager", "ObjectManager\ObjectManager.vcxproj", "{D2B41B2C-D74D-464D-A13D-447F17CF8A53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -425,6 +427,14 @@ Global
 		{C954B5B1-5152-4DF5-9109-AF0C12AC96BD}.Release|x64.Build.0 = Release|x64
 		{C954B5B1-5152-4DF5-9109-AF0C12AC96BD}.Release|x86.ActiveCfg = Release|Win32
 		{C954B5B1-5152-4DF5-9109-AF0C12AC96BD}.Release|x86.Build.0 = Release|Win32
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Debug|x64.ActiveCfg = Debug|x64
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Debug|x64.Build.0 = Debug|x64
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Debug|x86.ActiveCfg = Debug|Win32
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Debug|x86.Build.0 = Debug|Win32
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Release|x64.ActiveCfg = Release|x64
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Release|x64.Build.0 = Release|x64
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Release|x86.ActiveCfg = Release|Win32
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -481,6 +491,7 @@ Global
 		{9C353EFE-5041-4F77-AE19-75E6FB2E6627} = {3A3E3AFA-44C3-44A6-A8F1-3BE1053647FD}
 		{427EFDBF-9284-4CD8-A6E5-F31A406959F2} = {3A3E3AFA-44C3-44A6-A8F1-3BE1053647FD}
 		{C954B5B1-5152-4DF5-9109-AF0C12AC96BD} = {3A3E3AFA-44C3-44A6-A8F1-3BE1053647FD}
+		{D2B41B2C-D74D-464D-A13D-447F17CF8A53} = {3A3E3AFA-44C3-44A6-A8F1-3BE1053647FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F799282-41B5-42F1-8B44-0CEE3237F373}
