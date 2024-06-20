@@ -2,6 +2,7 @@
 #include "MyCore.h"
 #include "MyHero.h"
 #include "MyNpc.h"
+#include "MySound.h"
 
 class MyCamera
 {
@@ -49,6 +50,8 @@ public:
 
 class Sample : public MyCore
 {
+	std::shared_ptr<MySound> m_pBGSound = nullptr;
+	std::shared_ptr<MySound> m_pEffectSound = nullptr;
 	MyCamera m_Cam;
 	MyActor objScreen; // »ï°¢Çü
 	std::vector<MyActor> m_UIList;

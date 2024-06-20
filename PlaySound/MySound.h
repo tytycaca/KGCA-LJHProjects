@@ -92,4 +92,4 @@ private:
 		return pData;
 	}
 };
-#define I_Sound TSoundMgr::Get()
+#define I_Sound MySoundMgr::Get()

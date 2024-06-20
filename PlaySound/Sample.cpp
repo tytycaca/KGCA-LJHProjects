@@ -46,6 +46,14 @@ HRESULT  Sample::SetAlphaBlendState()
 
 void   Sample::Init()
 {
+	I_Sound.Set(nullptr, nullptr);
+	m_pBGSound = I_Sound.Load(L"../../data/Sound/romance.mid");
+	if (m_pBGSound)
+	{
+		m_pBGSound->Play(true);
+	}
+	m_pEffectSound = I_Sound.Load(L"../../data/Sound/GunShot.mp3");
+
 	SetAlphaBlendState();
 
 	std::wstring iconList[] =
@@ -122,6 +130,40 @@ void   Sample::Init()
 
 void   Sample::Frame()
 {
+	if (m_Input.KeyCheck(VK_END) == KEY_PUSH)
+	{
+		if (m_pEffectSound)
+		{
+			m_pEffectSound->PlayEffect();
+		}
+	}
+
+	if (m_Input.KeyCheck(VK_HOME) == KEY_PUSH)
+	{
+		if (m_pBGSound)
+		{
+			m_pBGSound->Paused();
+		}
+	}
+	if (m_Input.KeyCheck(VK_PRIOR) == KEY_HOLD) // Page Up
+	{
+		if (m_pBGSound)
+		{
+			m_pBGSound->VolumeUp(g_fSecondPerFrame * 0.3f);
+		}
+		//m_Sound.VolumeUp(g_fSecondPerFrame*0.3f);
+	}
+	if (m_Input.KeyCheck(VK_NEXT) == KEY_HOLD) // Page Down
+	{
+		if (m_pBGSound)
+		{
+			m_pBGSound->VolumeDown(g_fSecondPerFrame * 0.3f);
+		}
+		//m_Sound.VolumeDown(g_fSecondPerFrame * 0.3f);
+	}
+
+	I_Sound.Frame();
+
 	MY_Math::FVector2 vCameraPos;
 	m_Cam.SetTransform(vCameraPos);
 
@@ -193,6 +235,8 @@ void   Sample::Frame()
 
 void   Sample::Render()
 {
+	I_Sound.Render();
+
 	objScreen.SetTransform(m_Cam.GetMatrix());
 	objScreen.Render(m_pContext);
 
@@ -235,6 +279,7 @@ void   Sample::Release()
 		m_npcList[iNpc].Release();
 	}
 
+	I_Sound.Release();
 	I_Shader.Release();
 	I_Tex.Release();
 }
