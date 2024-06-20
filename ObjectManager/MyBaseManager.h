@@ -25,14 +25,14 @@ class MyBaseManager : public MySingleton<S>
 {
 public:
 	std::wstring m_csName = L"None";
-	ID3D11Device* m_pd3dDevivce = nullptr;
+	ID3D11Device* m_pd3dDevice = nullptr;
 	ID3D11DeviceContext* m_pContext = nullptr;
 	std::map<std::wstring, T*> m_list;
 
 public:
 	void Set(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pContext)
 	{
-		m_pd3dDevivce = pd3dDevice;
+		m_pd3dDevice = pd3dDevice;
 		m_pContext = pContext;
 	}
 	virtual T* Load(std::wstring filename);
@@ -59,6 +59,17 @@ T* MyBaseManager<T, S>::Load(std::wstring fullpath)
 	{
 		return pFindData;
 	}
+
+	// 중복 검사를 통과하면 로드해서 리스트에 추가
+	T* pData = new T;
+	pData->m_csName = name;
+	if (pData->Load(m_pd3dDevice, fullpath) == false)
+	{
+		delete pData;
+		return nullptr;
+	}
+	m_list.insert(std::make_pair(pData->m_csName, pData));
+	return pData;
 }
 
 template <class T, class S>
