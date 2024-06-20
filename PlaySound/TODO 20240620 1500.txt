@@ -1,0 +1,130 @@
+PlaySound 프로젝트 분리
+
+프로젝트 속성 c++ 추가 포함 디렉터리에 ../../fmod/inc 경로 추가
+링커 추가 라이브러리 디렉터리에 ../../fmod/lib/x64 경로 추가
+
+MySound 클래스 생성하고 헤더에 #include"fmod.hpp", #include "fmod_errors.h",
+#pragma comment(lib, "fmod_vc.lib") 추가
+
+../../fmod/lib/x64 폴더에서 fmod.dll -> output 폴더로 복사
+
+MySound 클래스에 #include "MyStd" 후에 MyBaseCore 상속
+
+Init, Frame, Render, Release 오버라이드
+
+인스턴스 추가후 Sample::Init(), Sample::Frame(), Sample::Render(), Sample::Release() 에
+각각 대응되는 m_sound.~ 추가
+
+MySound 클래스에
+FMOD::System* m_pFmodSystem
+FMOD::Sound* m_pFmodSound
+FMOD::Channel* m_pFmodChannel
+인스턴스 추가 및 Init 에서 nullptr 초기화
+
+MySound::Init() 에 FMOD_RESULT FMOD::System_Create(&m_pFmodSystem); 추가
+-> 이후 조건문으로 FMOD_OK 아니면 리턴 추가
+
+MySound::Init() 에 m_pFmodSystem->init(32, FMOD_INIT_NORMAL, 0); 추가 (사운드 시스템 추가)
+
+bool MySound::Load(std::wstring filename) 추가 및 구현
+
+Sample::Init() 에 m_Sound.Load() 추가
+
+MySound::Release() 구현
+
+MySound::Load 에 createSound 추가 및 오류처리
+
+to_mw, to_wm 매크로 string 헤더에서 검색해서 찾아서 MyStd.h 에 추가
+
+MySound::Play() 추가 및 구현
+
+Sample::Init() 에 Play 조건문으로 추가
+
+MySound::Paused() 추가 및 구현
+
+MySound 에 float m_fVolume 멤버 추가
+
+MySound::VolumeUp, MySound::VolumeDown 구현
+
+MySound::Load() 에 기능 추가
+
+MySound::Frame() 기능 구현
+
+MySound 헤더에 텍스쳐 매니저 가져와서 MySoundMgr 로 바꾸기
+
+MySound 클래스 내부에 있는 인스턴스 MySoundMgr 로 이관
+
+MySound::Init() 에 있는 내용 MySoundMgr 의 생성자에서 하게 바꾸기
+
+MySound 헤더에 MyBaseManager.h 연결
+
+MySound 클래스에 MyResource 상속
+
+텍스처, 쉐이더 매니저 클래스, 리소스 클래스의 Load() 의 디바이스 파라미터 삭제
+
+MyResource 에 Set() 함수 추가 (순수가상 아님)
+
+텍스처, 쉐이더 매니저 클래스에서 Set() 함수 오버라이드해 구현
+
+텍스처 클래스에 디바이스 멤버 추가
+
+BaseManager 의 Load 에 Set() 호출 부분 추가
+
+MySound::Play() 수정 I_Sound 매크로로 스태틱 기반 호출로 바꾸기 (사운드시스템 인스턴스 안넘겨도됨)
+
+사운드매니저에 소멸자 추가 (fmod 시스템 인스턴스 해제)
+
+MySoundMgr 클래스에서 오버라이드 삭제 (init frame render release)
+
+Sample::Init() 에서 사운드 Set, Load 하기
+
+Sample::Frame() 에서 키입력받아 사운드 제어하기 (매니저 기반으로 제어)
+
+쉐이더, 텍스처의 실제 컴파일, 로딩하는 구현부분 파라미터로 넘겨주던거 전부 멤버변수로 치환
+ (m_pd3dDevice)
+
+MyBaseManager::Load 부분 잘라내서 CreatObject 함수로 따로 분리하고 구조변경하기
+(잘라낸 부분 독립시키고 Load 에서 호출)
+
+CreateObject 전방선언하고 virtual 키워드 붙이기
+
+MySound 에서 CreateObject 오버라이드해서 구현
+
+MySound::Play() 의 playSound 호출하는 부분 멤버로 접근해서 호출
+
+MySound::Load() 에 CreateSound() 호출 부분 다시 구현
+
+MySound::Init() 에 BGSound, EffectSound 인스턴스 추가 후 초기화
+
+Sample::Frame() 에서 위에 추가한 인스턴스 제어문 추가 (키보드 입력에 따른 제어)
+ -> Effect 는 따로 만든 함수로 호출
+
+MySound::Frmae() 살려서 m_pFmodSystem.update() 호출
+
+MySound::Release() 내부 구현
+ -> 사운드가 나오고 있는 도중에 릴리즈를 시키려 하면 오류가 나기 때문에 릴리즈 하기 전에 Stop() 호출
+
+사운드 매니저 소멸자에서 하던 릴리즈 구문 resource 에서 상속받은 release 에서 처리하도록 바꾸기
+그리고 Sample 에서 I_Sound.릴리즈 하게 바꾸기
+ -> 리스트가 삭제되고 나서 시스템이 죽게 만드는 것
+ -> 부모가 먼저 호출이 되고 내가 죽어야함(죽을때는 자식이 먼저 죽으므로 오류가 발생함)
+ -> BaseManager 의 ReleaseAll 이 먼저 호출되고 Sound 시스템이 죽어야함
+ -> 호출 순서를 바꿔야함! 
+ -> 사운드는 특별한 기능이 붙어있기 때문에 기존 방식으로 릴리즈 불가능(순서가 꼬임)
+
+BaseManager 의 소멸자 안에 있던 ReleaseAll 빼기
+MySound 의 Release() 에서 BaseManager 의 ReleaseAll 과 FmodSystem 의 릴리즈를 시행
+
+Sample 의 Release 에서 Sound, Shader, Tex 모두 호출해서 릴리즈하기
+ -> ReleaseAll 로 일괄적으로 소멸자에서 호출하는 방식을 바꾼것
+
+BaseManager 의 ReleaseAll 이름변경 -> Release
+
+MySound::Play() 의 리턴값 변경 (FMOD::Channel* 리턴하게)
+지역변수로 pChannel 생성하고 멤버 m_pChannel 에 넘기기
+
+Sample::Frame 에서 채널 리턴값 받게 바꾸기
+
+MySound::Play() 복제해서 PlayEffect 함수 분리하고 수정하여 구현하기
+ -> 채널 만들 필요도 없고 반복할 일도 없으므로 기능 분리한 것
+
