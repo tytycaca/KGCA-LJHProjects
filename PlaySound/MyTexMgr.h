@@ -3,6 +3,15 @@
 
 class MyTexture : public MyResource
 {
+private:
+	ID3D11Device* m_pd3dDevice = nullptr;
+
+public:
+	virtual void Set(ID3D11Device* pDevice) override
+	{
+		m_pd3dDevice = pDevice;
+	};
+
 public:
 	std::wstring m_csName;
 	// 렌더링 파이프라인(픽셀쉐이더)에 전송 데이터
@@ -16,11 +25,11 @@ public:
 		m_pTexture.Reset();
 	}
 
-	bool Load(ID3D11Device* pd3dDevice, std::wstring filename)
+	bool Load(std::wstring filename)
 	{
 		HRESULT hr =
 			DirectX::CreateWICTextureFromFile(
-				pd3dDevice,
+				m_pd3dDevice,
 				filename.c_str(),
 				m_pTexture.GetAddressOf(),//&m_pTexture
 				m_pSRV.GetAddressOf());

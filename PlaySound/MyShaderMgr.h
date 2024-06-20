@@ -3,6 +3,15 @@
 
 class MyShader : public MyResource
 {
+private:
+	ID3D11Device* m_pd3dDevice = nullptr;
+
+public:
+	virtual void Set(ID3D11Device* pDevice) override
+	{
+		m_pd3dDevice = pDevice;
+	};
+
 public:
 	std::wstring m_csName;
 	ID3D11VertexShader* m_pVertexShader = nullptr;
@@ -35,7 +44,7 @@ public:
 		}
 	}
 
-	bool Load(ID3D11Device* pd3dDevice, std::wstring filename)
+	bool Load(std::wstring filename)
 	{
 		m_csName = filename;
 		HRESULT hr;
@@ -65,7 +74,7 @@ public:
 		// 오브젝트 파일의 크기
 		SIZE_T BytecodeLength = VS_Bytecode->GetBufferSize();
 
-		hr = pd3dDevice->CreateVertexShader(pShaderBytecode, BytecodeLength, nullptr, &m_pVertexShader);
+		hr = m_pd3dDevice->CreateVertexShader(pShaderBytecode, BytecodeLength, nullptr, &m_pVertexShader);
 
 		if (FAILED(hr))
 		{
@@ -95,7 +104,7 @@ public:
 
 		pShaderBytecode = PS_Bytecode->GetBufferPointer();
 		BytecodeLength = PS_Bytecode->GetBufferSize();
-		hr = pd3dDevice->CreatePixelShader(PS_Bytecode->GetBufferPointer(),
+		hr = m_pd3dDevice->CreatePixelShader(PS_Bytecode->GetBufferPointer(),
 			PS_Bytecode->GetBufferSize(), nullptr, &m_pPixelShader);
 		if (FAILED(hr)) return false;
 		return true;

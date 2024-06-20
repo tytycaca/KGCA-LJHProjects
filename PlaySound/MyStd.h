@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <memory>
 #include <algorithm>
 #include <d3d11.h>
 #include <d3dcompiler.h> 
@@ -12,6 +13,7 @@
 #include "WicTextureLoader.h"
 #include "MyMath.h"
 #include <tchar.h>
+#include <atlconv.h> // A2W
 
 #pragma comment ( lib, "d3dcompiler.lib")
 
@@ -33,6 +35,18 @@ class MyBaseCore
 	virtual void Frame() = 0;
 	virtual void Render() = 0;
 	virtual void Release() = 0;
+};
+
+static std::wstring to_mw(const std::string& _src)
+{
+	USES_CONVERSION;
+	return std::wstring(A2W(_src.c_str()));
+};
+
+static std::string to_wm(const std::wstring& _src)
+{
+	USES_CONVERSION;
+	return std::string(W2A(_src.c_str()));
 };
 
 #define SAMPLE_CREATE class Sample : public MyCore {

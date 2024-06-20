@@ -118,13 +118,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../dxtk/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../dxtk/include;../../fmod/inc;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../dxtk/lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../dxtk/lib;../../fmod/lib/x64;</AdditionalLibraryDirectories>
     </Link>
     <FxCompile>
       <EntryPointName>VSMain</EntryPointName>
@@ -155,6 +155,7 @@
     <ClCompile Include="MyNpc.cpp" />
     <ClCompile Include="MyPawn.cpp" />
     <ClCompile Include="MyShaderMgr.cpp" />
+    <ClCompile Include="MySound.cpp" />
     <ClCompile Include="MyTexMgr.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="MyActor.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="MyNpc.h" />
     <ClInclude Include="MyPawn.h" />
     <ClInclude Include="MyShaderMgr.h" />
+    <ClInclude Include="MySound.h" />
     <ClInclude Include="MyTexMgr.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="MyActor.h" />

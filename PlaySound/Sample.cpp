@@ -46,9 +46,6 @@ HRESULT  Sample::SetAlphaBlendState()
 
 void   Sample::Init()
 {
-	MyTexture* pTex1 = I_Tex.Load(L"../../data/Icons/S_SkyAtmosphere.PNG");
-	MyShader* pShader = I_Shader.Load(L"alphablend.hlsl");
-
 	SetAlphaBlendState();
 
 	std::wstring iconList[] =
@@ -79,7 +76,7 @@ void   Sample::Init()
 	{
 		std::wstring texFileName = texPath + L"¼ýÀÚ";
 		texFileName += std::to_wstring(iTex) + L".png";
-		MyTexture* pTex = I_Tex.Load(texFileName);
+		MyTexture* pTex = I_Tex.Load(texFileName).get();
 		m_pNumber.push_back(pTex->m_pSRV);
 	}
 
@@ -88,7 +85,7 @@ void   Sample::Init()
 	texPath = L"../../data/Icons/";
 	for (int iTex = 0; iTex < iNumberIcons; iTex++)
 	{
-		MyTexture* pTex = I_Tex.Load(iconList[iTex]);
+		MyTexture* pTex = I_Tex.Load(iconList[iTex]).get();
 		m_pIcons.push_back(pTex->m_pSRV);
 	}
 
@@ -237,6 +234,9 @@ void   Sample::Release()
 	{
 		m_npcList[iNpc].Release();
 	}
+
+	I_Shader.Release();
+	I_Tex.Release();
 }
 
 T_GAME_START(800, 600);

@@ -75,7 +75,7 @@ bool   MyDxObject::Create(
 	m_pContext = pContext;
 	m_szShaderFilename = hlsl;
 
-	m_pTexture = I_Tex.Load(texName);
+	m_pTexture = I_Tex.Load(texName).get();
 	if (m_pTexture != nullptr)
 	{
 		m_pSRV = m_pTexture->m_pSRV;
@@ -125,7 +125,7 @@ bool     MyDxObject::CreateVertexBuffer(ID3D11Device* pd3dDevice)
 }
 bool     MyDxObject::LoadShader(std::wstring filename)
 {
-	m_pShader = I_Shader.Load(filename);
+	m_pShader = I_Shader.Load(filename).get();
 	if (m_pShader == nullptr) return false;
 	return true;
 }
