@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Sample.cpp" />
+    <ClCompile Include="MyCore.cpp" />
+    <ClCompile Include="MyDevice.cpp" />
+    <ClCompile Include="MyDxObject.cpp" />
+    <ClCompile Include="MyInput.cpp" />
+    <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="MyTimer.cpp" />
+    <ClCompile Include="MyWindow.cpp" />
+    <ClCompile Include="MyWriterFont.cpp" />
+    <ClCompile Include="MyCollision.cpp" />
+    <ClCompile Include="MyActor.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MyHero.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MyNpc.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPawn.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBaseManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTexMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyShaderMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MySound.cpp" />
+    <ClCompile Include="MySprite.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sample.h" />
+    <ClInclude Include="MyCore.h" />
+    <ClInclude Include="MyDevice.h" />
+    <ClInclude Include="MyDxObject.h" />
+    <ClInclude Include="MyInput.h" />
+    <ClInclude Include="MyMath.h" />
+    <ClInclude Include="MyTimer.h" />
+    <ClInclude Include="MyWindow.h" />
+    <ClInclude Include="MyWriterFont.h" />
+    <ClInclude Include="MyCollision.h" />
+    <ClInclude Include="MyActor.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyHero.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyNpc.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPawn.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyStd.h" />
+    <ClInclude Include="MyBaseManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTexMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyShaderMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MySound.h" />
+    <ClInclude Include="MySprite.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{9034fe73-a4ea-4fb9-a68b-b644815ba31f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{458eecb9-6def-4784-85c7-e86afaf5b65a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{9c1df868-168c-4cee-be49-af1ab93b9d80}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\data\shader\PS.txt">
+      <Filter>HLSL</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\VS.txt">
+      <Filter>HLSL</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Alphablend.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

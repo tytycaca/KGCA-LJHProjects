@@ -1,0 +1,122 @@
+CreateSprite 프로젝트 분리
+
+MySprite 클래스 생성 후 MyDxObject 헤더 연결 및 상속
+
+MyActor 클래스 기능 분리 - 씬에 배치 가능한, 움직이 기능이 없는 오브젝트
+1) 렌더링 관리 컴포넌트
+2) 이동처리 관리 컴포넌트
+3) 충돌처리 관리 컴포넌트
+
+MyActor 에 MySprite 연결
+
+Sample 에 MySprite 연결하고 멤버 추가
+ -> m_EffectSprite
+
+Sample 의 Number Load 하는 반복문 부분 MySprite 로 이관(멤버변수까지 같이)
+ -> Path 를 넘겨서 작업할 수 있게 변경
+
+Sample::Render 에 화면 고정으로 뷰변환 생략하는부분 추가
+
+Sample 헤더에 My_Effect using 문 추가하고 그걸 기반으로 m_EffectList 멤버 추가하기
+
+Sample::Init 에 sprite 변수 추가하고 m_EffectList 에 로드하기
+
+MySprite::Load() 함수 분리
+ -> Number 로딩하는 함수와 Icon 로딩하는 함수로 분리
+
+MySprite 에 m_pSRVList 멤버 추가하고 로딩함수에 사용하여 변경
+
+Sample::Render 의 UI 뿌리는 부분 인덱스 수정
+
+Sample::Render에 fAnimationTimer 지역 변수 추가하고 g_fSecondPerFrame 누적해주기
+이 변수 기반으로 UI 렌더하는 부분 바꿔주기
+
+이펙트 파일 로드하는 함수 MySprite::LoadC() 추가
+ -> 아이콘 로드하는 부분에서 리스트 긁어와서 하드코딩으로 텍스처 추가
+
+Sample::Render()에 화면고정하는 UI 인덱스 기준으로 변경
+
+MySprite::LoadD 추가하고 구현
+
+MySprite::Load 에
+ID3D11Texture2D* pTex = (ID3D11Texture2D)m_pTexture; 추가하고
+D3D11_TEXTURE2D_DESC 텍스쳐에 멤버변수로 생성해서 반환값 받기
+
+MyDxObject::UpdateVertexBuffer() MySprite에 가져와서 바꾸기 (MySprite::Update)
+ -> UV 값 갱신하도록 변경
+
+MySprite 에 MyRect 만들고 uv값에 사용
+
+MySprite::LoadD 함수 uv값 변경하도록 수정
+
+Sample::Render() 수정
+ -> PreRender PostRender 사이에서 Update 하도록
+
+MySprite::Update() 수정
+ -> 여러개의 텍스쳐로 되어있는 텍스쳐파일 합본 이미지 들고와서 잘라서 변화되도록 뿌리게
+
+A: 열장의텍스쳐 B: n장의 텍스쳐 C: 한장을 4장으로 쪼개기 D: 9장으로 쪼개기
+ -> Load~ 의 기능들임 -> 이것들 하나의 함수로 합칠것
+
+MyStd 헤더에 DDSTextureLoader.h 연결
+
+MyTexture::Load() 함수에 DDS 텍스쳐도 읽을 수 있도록 변경
+
+MyTexture::Update() 에서 쓰던 지역 변수들 전부 멤버 변수로 변경
+ -> Update 함수 멤버 변수를 사용하는 것으로 변경
+
+MyTexture::SetAnim() 함수 추가하고 내부에서 멤버 변수들 세팅할 수 있게 구현
+
+MyTexture::Update() 에서 UV 값 바꿀 수 있게 변경
+
+LoadA,B,C,D 를 하나의 Load 함수로 합치는 작업 (함수 오버로딩 이용)
+(한개의 텍스처, 여러개의 텍스처, 한장에 여러개의 텍스처가 합쳐진 텍스처)
+ -> LoadA() 의 반복문으로 텍스쳐 긁어오던 작업을 리스트의 형태로 Path 하드코딩하게 바꾸기
+ -> 넘길때 사이즈를 같이 넘겨서 몇 개의 텍스쳐가 넘어오는지 알 수 있게 추가
+
+MySprite 의 전체적인 호출구조
+ 1) MySample::Init() 에서 Load
+ 2) MySample::Init() 에서 SetAnim
+ 3) MySample::Render() 에서 Update
+ -> 호출 구조에 맞게 MySample 코드 변경
+
+MySprite::GetSRV() 구현하여 쉐이더리소스뷰 멤버 가져오기
+ -> Render 에서 SRV 교체하려면 Sprite 가 변경해서 갖고있는 쉐이더리소스뷰를 가져와야하기 때문
+ -> 반환값을 ComPtr 을 써줘야함 (Shared_ptr 을 쓰면 더블포인터를 가져올때 문제가 생김)
+
+MySprite::Update() UVList 의 사이즈가 0이냐 아니냐의 조건으로 분기나눔
+ -> 0이면 텍스처 자체를 교체 (이미지 한 장에 단일 텍스처)
+ -> 그게 아니면 한장의 텍스처에 여러개의 텍스처가 들어가있는 것이므로 UV만 교체
+
+MySprite::Update() 내부 멤버변수가 필요한 부분 찾아서 전부 교체해주기 (누락된 작업 처리)
+
+UV값 바꾸는 Load 함수 offset 기반으로 변경
+
+MyActor 에 MySprite 추가하고 인스턴스 멤버로 추가
+
+Init 에서 MySprite 에 로드된 인스턴스들 Actor 기반 인스턴스안의 멤버로 대입하여 초기화
+
+MyActor::Frame() 에서 MySprite::Update() 하게 바꿈
+ -> Sample 에서 귀찮게 하던 작업들 간소화하는 것
+
+MyDxObject 에서 MyDxObject::InRender() 빈 렌더함수 만들기
+ -> 렌더 타이밍을 맞추기 위해서 함수를 쪼개놓는것
+
+Sample 에서 수동으로 MySprite::Update() 하던 부분들 전부 빼기
+
+MySprite::Update() 에 박아뒀던 UV 리스트 조건문 MyActor::Frame() 에서 처리하도록 구조 변경
+
+Sample::Render() 바뀐 구조에 맞게 구조변경
+ -> 뺄 부분들 빼기
+ -> MyActor 인스턴스를 통해서 차례로 MySprite 에 접근하게 호출 구조 변경
+
+MySprite 생성자에서 resize로 리스트 6개로 바꾸던 부분 Load 마지막 부분으로 넘김
+ -> 단일 이미지 단일 텍스처일때만 리사이즈하게
+ ※ 이 부분 어디인지 정확하게 찾아보고 의도 파악하고 TODO 수정해야함
+
+MyActor::Render() 오버라이드해서 그 안에서 MyDxObject::PreRender, MyDxObject::PostRender 하고
+그 사이에서 쉐이더 리소스 교체하게 바꾸기
+ -> 마찬가지로 Sample 에서 반복적으로 하드코딩 하던 작업들 자동화
+
+위에서 바뀐 구조대로 Sample::Render() 변경
+ -> PreRender, PostRender 분리하여 렌더하던 부분 MyActor::Render() 로 통합
