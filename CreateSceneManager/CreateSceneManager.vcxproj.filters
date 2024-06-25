@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <FxCompile Include="Alphablend.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sample.cpp" />
+    <ClCompile Include="MyActor.cpp" />
+    <ClCompile Include="MyBaseManager.cpp" />
+    <ClCompile Include="MyCollision.cpp" />
+    <ClCompile Include="MyCore.cpp" />
+    <ClCompile Include="MyDevice.cpp" />
+    <ClCompile Include="MyDxObject.cpp" />
+    <ClCompile Include="MyHero.cpp" />
+    <ClCompile Include="MyInput.cpp" />
+    <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="MyNpc.cpp" />
+    <ClCompile Include="MyPawn.cpp" />
+    <ClCompile Include="MyShaderMgr.cpp" />
+    <ClCompile Include="MySound.cpp" />
+    <ClCompile Include="MySprite.cpp" />
+    <ClCompile Include="MyTexMgr.cpp" />
+    <ClCompile Include="MyTimer.cpp" />
+    <ClCompile Include="MyWindow.cpp" />
+    <ClCompile Include="MyWriterFont.cpp" />
+    <ClCompile Include="MyCamera.cpp" />
+    <ClCompile Include="MySceneResult.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MySceneLobby.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MySceneIngame.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MyScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MySceneTitle.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sample.h" />
+    <ClInclude Include="MyActor.h" />
+    <ClInclude Include="MyBaseManager.h" />
+    <ClInclude Include="MyCollision.h" />
+    <ClInclude Include="MyCore.h" />
+    <ClInclude Include="MyDevice.h" />
+    <ClInclude Include="MyDxObject.h" />
+    <ClInclude Include="MyHero.h" />
+    <ClInclude Include="MyInput.h" />
+    <ClInclude Include="MyMath.h" />
+    <ClInclude Include="MyNpc.h" />
+    <ClInclude Include="MyPawn.h" />
+    <ClInclude Include="MyShaderMgr.h" />
+    <ClInclude Include="MySound.h" />
+    <ClInclude Include="MySprite.h" />
+    <ClInclude Include="MyStd.h" />
+    <ClInclude Include="MyTexMgr.h" />
+    <ClInclude Include="MyTimer.h" />
+    <ClInclude Include="MyWindow.h" />
+    <ClInclude Include="MyWriterFont.h" />
+    <ClInclude Include="MyCamera.h" />
+    <ClInclude Include="MySceneResult.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MySceneLobby.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MySceneIngame.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MyScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MySceneTitle.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\data\Sprite\SpriteInfo.txt" />
+    <Text Include="intro.txt">
+      <Filter>Scene</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{16f9fb74-4c30-4a1e-8a16-5daf7bfac98c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
