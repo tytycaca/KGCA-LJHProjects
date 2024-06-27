@@ -1,0 +1,135 @@
+게임 클래스 만들고 그쪽으로 씬 기능 포함시키고 게임 클래스를 샘플에 연결
+
+샘플에 게임 객체 생성하고 init~ 함수들 일대일 대응시키기
+
+MyScene 에서 생성자 추가 (초기화 리스트를 사용하여 초기화)
+MyScene(MyGame* ~)
+
+MyScene 에 게임 객체 생성 m_pGame
+
+MyScene 에 헤더들 연결
+
+MyDxObject 에 Init() 추가하고 virtual 붙이기
+
+상호참조 오류때문에 구조를 바꿔야함 (Scene 과 GameObj 클래스에서 왔다갔다 무한루프함)
+ -> MyGame 헤더에 MyScene 헤더만 연결하고 나머지 다 지우기
+
+Sample 에 MyGameObj 객체 생성
+
+MyScene 에 MyGame 헤더 빼고 MyGameObj 클래스 전방선언하기
+ -> 헤더에서 상호참조가 발생하는 것을 막기 위함
+ -> 대신에 cpp 에서 헤더(MyGame)를 연결하고 사용함
+
+MyGame.cpp 에서 MyGameObj 함수들 접근
+ -> ex) MyGameObj::Init() ~
+
+MySceneIngame ~ 이하 3개 클래스의 디폴트 생성자 지우고 따로 초기화 리스트를 사용한 생성자 정의
+ -> 생성자 델리게이션
+
+MyGame::Init() 에서 초기화 하는 부분에 this 포인터 아규먼트로 넘기기
+
+----------- 윗 부분에서 MyGameObj 으로 따로 클래스를 뺀 이유는 MyGameObj::Frame 에서
+씬 체인지 하는 부분을 자동화 하기 위함 --------------
+
+MySceneTitle::Frame 에서 회전 부분 빼기
+
+지금 구조는 씬에서 씬으로 다이렉트로 넘어가는 구조이지만 이것을 중간에 반드시 이벤트가 끼도록
+변경할 것임
+
+MyGameObj 에 MyGameState 열거형으로 이벤트를 위한 상태 정의
+
+MyGameObj 에 MyGameEvent 열거형으로 이벤트 정의
+
+MyFiniteState 클래스 생성
+ -> int 2개를 원소로하는 map 컨테이너 생성
+
+MyFiniteStateSystem 클래스 생성 및 정의
+ -> int 와 MyFintieState* 를 원소로 하는 map 컨테이너 생성
+
+Sample 헤더에 MyFiniteState 연결하고 객체 생성
+
+MyFiniteStateSystem 에 AddStateTransition() 함수 생성 및 구현
+
+Sample::Init() 에서 AddStateTransition() 사용해서 상태변환 구현
+
+MyFiniteStateSystem 에 m_iStateIndex 멤버 변수 추가하고 AddStateTransition() 추가 구현
+
+MyFiniteState 에도 AddStateTransition() 추가하고 구현
+
+MyScene 에 MySceneStart, MySceneEnd 클래스 생성하고 생성자 구현 (가상의 기능)
+
+MyGame 에 새로만든 Scene 클래스들 객체 생성하고 초기화 (shared_ptr)
+
+MyScene 에 virtual void Execute() = 0 순수 가상 함수 추가
+
+MyGameObj 의 Frame 안쪽 코드들 주석처리
+
+MyScene 에 MyFiniteState 헤더 추가
+
+MyFiniteStateSystem 싱글톤화 시키기고 기본생성자 막아놓기
+
+MyFiniteState 에 GetTransition() 함수 추가 및 구현
+
+MyScene~ 클래스들에 Execute() 오버라이드해서 구현
+ -> 이벤트 전환하는 함수
+
+MyScene 에 m_iStateIndex 멤버 추가
+
+MyScene~ 클래스들의 생성자에 m_iStateIndex 초기화 코드 추가
+
+MySceneStart::Execute()에 조건문으로 steate 바꾸는 부분 추가하고 MyScene.cpp 으로 구현부 옮김
+ -> 상호참조때문에 전방선언 했기 때문에 구현은 무조건 cpp 에서 해야함
+ -> 나머지 클래스들도 전부 같은 처리를 해줘야함
+
+MyGameObj::Frame() 에서 MySceneStart::Execute() 호출
+
+MySceneTitle::Execute() 에서 조건문에 따른 이벤트 변경 부분 구현
+
+MyGame 클래스에 m_SceneList[] 배열 멤버 변수 추가하고 각 열거형에 맞는 객체의 인덱스가 들어오게 연결
+
+MyScene~ 클래스들의 Execute() 에서 iOutState 를 인덱스로하는 배열로 받아서 작업하게 바꿈 (자동화)
+
+나머지 MyScene~ 클래스들의 Execute() 마저 구현 (이벤트 분기 구현)
+
+MySceneIngame::Execute() 런타임 타이머 0.0f 로 초기화
+
+MyFiniteState 클래스의 헤더들 다 지우고 map 만 연결
+
+MyFiniteState 에 있었던 MyFiniteStateSystem 클래스를 MyFiniteStateMachine 클래스로 이름변경해서
+별도의 파일로 분리하고 MyFiniteState 헤더 연결
+ -> FSM 을 씬 변경에만 사용하는 것이 아니라 ui교체 ai 등등 범용성을 갖기 위해 분리한 것
+
+MyFiniteState::GetTransition() 구현부 cpp 파일로 빼기
+
+FSM 헤더에서 using 문으로 MyFiniteState 객체 짧게 선언하고 사용처 전부 바꾸기 (편의성)
+
+MyFSM::AddStateTransition 의 조건문 변경
+
+FSM 헤더에 memory, string 헤더 연결
+
+MyScene 에 FSM 객체 shared_ptr 로 생성하고 Init 에서 초기화
+ -> static 을 붙여서 유일한 객체로 만들어야함 (그래야 하나로 관리되기 때문)
+ -> protected 로 놓고 Getter 만들어서 접근
+ -> private 로 놓지 않고 protected 로 놓는 이유는 다른 곳에서 사용할 상황이 생길수도 있기 때문
+     (스크립트를 읽어서 사용한다는 등...)
+
+MyFSM 에 매니저 클래스 생성 및 구현
+
+MySceneTitle 에 있던 타이틀 구현부분 MyScene 파일의 MySceneStart 로 이관
+
+MyGame::Init() 에 Start, End 씬 Init 넣기
+
+MyScene::Init() 에서 FSM 객체 생성하는 부분에 조건문 넣어서 중복 생성 안하게 막기
+
+MyGameObj::Init() 에서 MyScene::Init() 호출하기
+
+SpriteInfo 스크립트에 kgca1~3.png 추가
+
+MyScene 에 kgca 로고 렌더하는 코드 추가 ( Init Frame Render 에 코드추가)
+
+MyScene~ 클래스들 구현부 각 상태와 이벤트에 맞게 변경하기 (코드 보면서 컨텐츠 추가하면 됨)
+
+각 Scene 의 Execute 에서 씬을 체인지할때 특정 상태에 따른 이벤트 변화를 MyScene 에서 정의해놓지
+않으면 버그가 일어나므로 반드시 모든 케이스를 다 정의해놓을것 (AddStateTransition)
+
+MyGameObj::Frame() 과 Render 에 CurrentScene 관련 함수 호출 코드 추가
