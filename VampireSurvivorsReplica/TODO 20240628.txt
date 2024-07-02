@@ -1,0 +1,123 @@
+CreateCollisionManager 프로젝트 분리
+
+헤더에있는 MyActor::ResetSpriteData() cpp로 옮기기
+
+MyActor::HitOverlap()
+MyActor::HitSelect()
+함수 구현
+
+MyObjectMgr 클래스 생성
+ -> MyActor 헤더 연결
+ -> MySingleton<MyObjectMgr> 상속
+
+map m_ObjectList, map m_SelectLIst 충돌처리 담당하는 map 멤버변수 정의
+
+MyStd 에 functional 헤더 추가
+using CollisionFunction = std::function<void(MyActor*, DWORD)>;
+using SelectionFunction = std::function<void(MyActor*, DWORD)>; 펑터 사용 (전역)
+
+앞서 정의한 map 멤버 펑터를 사용한 버전으로 수정 및 이름변경 (m_fnCollisionExecute, m_fnSelectExecute)
+
+MyObjectMgr::AddCollisionExecute() 함수 정의 및 구현
+MyObjectMgr::AddSelectExecute() 함수 정의 및 구현
+MyObjectMgr::Frame() 추가
+MyObjectMgr Getter define 으로 추가 (싱글톤 인스턴스 받아오는 함수)
+
+m_iExecuteCollisionID, m_iExecuteSelectID 멤버 추가
+
+MyActor 에 int m_iSelectID, m_iCollisionID 멤버 추가 및 0으로 초기화
+
+MyScene 에 MyObjectMgr 헤더 추가
+
+MySceneTitle::Init()  에 I_ObjMgr.AddSelectExecute() 호출 (스타트 버튼 아래에서 호출)
+ -> ~버튼에 함수펑터를 사용해 기능을 넣으려고 하는 것
+
+MyActor::SetOverlap()
+MyActor::SetSelect() 함수 추가
+ -> 위에서 작업한 함수펑터 호출기능 이쪽으로 이관하고 원래 자리에는 SetSelect() 호출
+
+MySceneTitle.cpp 에 헤더 추가 (순환참조오류)
+
+MyObjectMgr::Frame() 에 m_SelectList 순회하는 반복문 추가
+ -> MyCollision::RectToPT 로 기존에 처리하던 마우스 셀렉 기능 이쪽으로 이관
+
+MyInput 헤더에 DWORD m_MouseState[3] 추가
+
+MyInput::Frame() 에서 마우스상태정의
+
+MyActor 에 MySelectState 상태 열거형 정의
+
+MyObjectMgr::Frame() m_SelectLIst 순회하는 반복문에 키 상태 받아오는 부분 추가 및 find(m_iSelectID) 추가
+ -> 받아온 오브젝트의 ID 를 식별하는 과정
+
+이후 end 가 아니라면 미리 정의해둔 함수 펑터 콜백하는 조건문 추가
+
+MySceneTitle 에서 MyObjectMgr::Frame() 호출
+m_StartBtn.m_dwSelectState == 조건문으로 씬 체인지 구현
+
+이제부터 직접 충돌처리를 하드코딩으로 하지 않고 충돌 매니저를 통해서 한다
+
+MySceneTitle::Render() 에서 앞서 정의한 기능을 통해 StartBtn 의 상태에 따른 리소스를 교체하게 코드 추가
+
+버튼의 상태값 자체를 받아서 자동으로 텍스처가 바뀌게 MyActor 의 코드 수정
+ -> 멤버 추가 및 추가된 멤버를 사용하여 코드 변경
+ -> SpriteInfo 에 텍스처들 추가
+
+MySceneTitle 안에 박아뒀던 스타트버튼 기능들 MyButton 클래스로 분리
+
+MyObjectMgr::Frame() 에 RectToRect 충돌 처리하는 자동화 기능 추가
+
+충돌이 아니어도 실시간 호출이 되게 변경 (else 구문 추가)
+
+MySceneIngame 또한 새로 구현한 자동화 collision 기능으로 처리
+
+SetOverlap -> SetCollision 으로 이름변경
+
+MyObjectMgr 에 Release() 추가 및 구현
+ -> 충돌처리에 관여하는 오브젝트리스트는 씬이 체인지될때마다 클리어되어야 하기 때문에 그 부분 추가
+
+MySceneIngame.cpp 에 MyObjectMgr 헤더 추가
+ -> 오브젝트매니저(충돌 자동화 매니저) 가 필요한 코드에는 헤더에 넣지 말고 직접 cpp 파일에 연결할것
+ -> 순환참조 오류 때문
+
+MySceneLobby::Execute() 의 씬체인지 하는 부분에 I_ObjMgr.Release() 추가
+ -> 오브젝트 리스트 초기화하는 코드
+
+MySceneTitle::Execute() 에서 다음씬으로 넘어가는 부분에서도 I_ObjMgr.Release() 추가
+
+AddCollsionExecute 
+AddSelectExeucte 수정
+MyObjectMgr::Frame() 의 충돌처리부분 수정
+
+MySceneIngame::reset() 에 등록하는 부분 추가 및 시작부분에 오브젝트리스트 지우는 부분 추가
+ -> 씬이 리셋될때 충돌처리하는 오브젝트 리스트를 싹다 지우고 등록하게
+
+MySceneIngame::setplayer, npc 에서 setcollision 빼기
+
+리셋 이외에 I_ObjMgr.Release() (오브젝트 클리어) 하는 부분 다 빼기
+
+MyHero 에 HitOverlap 구현하고 인게임 프레임에서 충돌작업 자동화로 수정하기
+ -> 충돌시에 사운드나 이펙트 나오게 하려면 이 HitOverlap 함수에서 구현하면된다
+
+인게임씬의 UIList 돌리는 부분도 충돌처리 바꿔주기
+
+MyObjectMgr::Frame() 수정
+ -> 함수콜 안하고 다이렉트로 작업하게 바꾸기 (평상시에는 함수콜 하지말고 그냥 바꾸자)
+
+DelCollisionExecute(), DelSelectExecute() 추가 및 구현
+ -> 오브젝트 매니저의 특정 요소를 삭제하는 기능이 필요함
+
+MyActor::Release() 에 구현한 삭제함수로 기능 추가 
+
+MySceneIngame 의 레벨업에 인게임 프레임에서 호출하던 부분 옮기기 이후 프레임 리셋 밑에 반복문 추가
+
+MySceneIngame::LevelUp() 에서 Npc 반복문 돌리는 구문 아래 충돌처리 반복 코드 추가
+ -> Npc는 지역변수로 데이터만 복사해서 가져와서 로직이 돌아가게 만들어져 있으므로 구조를 변경해야함
+
+LevelUp 에 npc리스트 리사이즈 하는 부분 추가
+ -> 동적이지 않고 정적일 때에는 그냥 리사이즈 때려서 배열 생성해버리는 것이 편하다
+ -> 이런식으로하면 컬리전 처리를 따로 추가해줄 필요가 없다
+ -> 다만 이렇게 고정해버리면 push_back 이나 emplace_back 하면 안된다
+ -> 오브젝트 구분하는 고유값으로 주소값을 사용했기 때문
+
+

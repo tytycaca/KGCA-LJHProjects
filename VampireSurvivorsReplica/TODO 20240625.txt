@@ -1,0 +1,104 @@
+샘플 초기화에서 사운드 처리 분리 Sample::SetSound()
+
+샘플 초기화에서 UI 처리 분리 Sample::SetUI()
+
+Sample::Frame() 에서 사운드처리하던 부분 삭제 (테스트 코드)
+
+Hero::Frame() 에 이동처리 이관
+
+Input 객체 싱글톤화시켜서 밖으로 빼기
+
+스프라이트에 대한 업데이트 작업을 바깥으로 빼기 MyActor::UpdateSprite()
+
+렌더 직전에 UpdateSprite()를 호출하게 변경
+
+Sample::Init() 에 스프라이트와 스크립트 추가 (Naver MyBox 에서 갱신된 리소스팩 받아서 적용시키기)
+
+CreateSceneManager 로 프로젝트 분리
+
+Scene 추상클래스 추가 (헤더 추가)
+
+MySceneTitle : MyScene클래스 추가
+
+MySceneLobby : MyScene 추가
+
+MySceneIngame : MyScene 추가
+
+MySceneResult : MyScene 추가
+
+Sample 에 헤더 연결하고 Scene 객체 생성
+
+알파블렌딩 객체 옮기고 코어에서 작동하게 만들기 (알파블렌딩 상시 적용)
+
+Sample 에서 스프라이트, 사운드, 쉐이더, 텍스처 코어로 빼기
+
+Core 에 필요한 헤더 추가
+
+Sample 헤더에 Title Lobby Ingame Result 객체 정의 (shared_ptr)
+
+Sample::Init() 에서 멤버 생성 및 초기화
+
+인게임에 Sample 기능들 다 빼기 (Sample 헤더에는 Scene 객체만 남기기)
+
+m_pCurrentScene 을 인게임으로 냅두기
+
+Sample 구현부에 m_pCurrentScene 빼고 나머지 다 빼기
+
+디바이스 클래스 독립시키고 Core 에 직접 Window 헤더 연결하고 상속
+ -> 디바이스 클래스에서 윈도우도 상속 빼기
+
+디바이스 헤더의 멤버들 전부 Static 걸어놓기
+
+그리고 디바이스 cpp 에 전방선언
+
+코어에 디바이스 헤더 연결
+
+크리에이트 딜리트 디바이스 및 셋뷰포트 참조 찾아가면서 네임스페이스 달아주기
+
+std 에 디바이스 헤더 연결
+
+디바이스헤더에서 윈도우 연결 해제
+
+디바이스에 필요한 d3d 기능 std에서 디바이스로 연결 이동(컴파일러 지시문까지)
+
+std 에서 마찬가지로 텍스처 헤더들은 텍스처 매니저쪽으로 이관하여 연결
+
+Core 에서 사용하는 디바이스 관련 기능들 전부 네임스페이스 붙여주기
+
+MyDevice 구현부(.cpp)에 std 헤더 연결 (재귀 연결 문제때문에 헤더에는 절대 넣으면 안됨)
+
+IngameScene 클래스에서 디바이스 쓰는 부분 네임스페이스 붙여주기
+
+IngameScene 클래스 구현부(.cpp)에 std 헤더 연결
+
+Input 클래스 네임스페이스 붙이기
+
+코어에 박아둔 게임끝내는 변수 m_bGameRun 을 g_bGameRun 으로해서 전역으로 빼기
+
+SceneTitle 에서 뿌릴 UI 관련 기능만 Ingame 에서 가져오기
+
+SceneTitle::Frame() 에서 반복문 돌려서 버텍스 수정하는 부분 추가하기
+ -> 매프레임마다 알파값 줄이는것 구현 (페이드인)
+ -> g_fSecondPerFrame = 1초 (프레임에 상관없이 1초를 가리키는 값)
+     여기에 얼마를 곱하냐에 따라 기준초가 달라짐 ex) g_fSecondPerFrame * 0.3 은 0.3초임
+
+사용하기 편하게 디폴트 쉐이더 파일 현재폴더로 복사해서 Intro 로 이름 바꾸고 타이틀씬에 경로 적용
+
+Intro 쉐이더 psOut.c.a = psIn.c.a 구문 추가
+ -> 코드에서 수정했던 정점 컬러의 알파값 적용시키는 구문
+
+Sample::Frame() 에서 조건문 걸어서 타이틀에서 인게임으로 바뀌게 수정
+
+Sample::Init() 에서 생성한 객체들 전부 초기화 해주기
+
+사운드 매니저 기능 코어로 빼기
+
+타이틀씬에서 인게임씬으로 넘어갈때 알파값에 따라 사운드가 바뀌게끔 추가
+
+타이틀씬에서 FadeOut 기능 구현하기
+
+psOut.c = pixel * psIn.c; 구문 추가 (Intro.txt)
+ -> 정점 컬러 변환한값 적용시키기 위함
+
+타이틀에 버튼 하나 추가 및 기능 구현 (인풋 기능 필요하므로 MyInput 헤더 연결)
+
