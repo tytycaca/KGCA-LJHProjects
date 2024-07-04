@@ -13,7 +13,7 @@ void   MySceneIngame::SetSound()
 }
 void   MySceneIngame::SetUI()
 {
-	RECT rtBk = { -1000, -1000, 1000.0f, 1000.0f };
+	RECT rtBk = { 0, 0, 1280, 720 };
 	objScreen.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, rtBk,
 		L"../../data/1234.jpg",
 		L"../../data/shader/Default.txt");
@@ -25,19 +25,19 @@ void   MySceneIngame::SetUI()
 		L"Alphablend.hlsl");
 	m_UIList[0].SetAnim(1.0f, I_Sprite.GetPtr(L"DefalultNumber"));
 
-	m_UIList[1].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 700, 0, 800, 100 },
+	m_UIList[1].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 1180, 0, 1280, 100 },
 		L"../../data/kgca1.png",
 		L"Alphablend.hlsl");
 	m_UIList[1].SetAnim(20.0f, I_Sprite.GetPtr(L"IconList"));
 
 	m_UIList[2].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
-		{ 700, 500, 800, 600 },
+		{ 1180, 620, 1280, 720 },
 		L"../../data/kgca1.png",
 		L"Alphablend.hlsl");
 	m_UIList[2].SetAnim(1.0f, I_Sprite.GetPtr(L"Fog"));
 
 	m_UIList[3].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
-		{ 0, 500, 100, 600 },
+		{ 0, 620, 100, 720 },
 		L"../../data/Effect/slashFire_4x4.png",
 		L"Alphablend.hlsl");
 	m_UIList[3].SetAnim(1.0f, I_Sprite.GetPtr(L"wik"));
@@ -45,7 +45,7 @@ void   MySceneIngame::SetUI()
 void   MySceneIngame::SetPlayer()
 {
 	//DrawRect = { 91, 1, 91+40, 1+60 }
-	hero.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 380, 270, 420, 330 },
+	hero.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 615, 335, 665, 385 },
 		L"../../data/Sprite/bitmap1Alpha.bmp",
 		L"Alphablend.hlsl");
 	hero.m_fSpeed = 500.0f;
@@ -63,7 +63,7 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 		L"rtExplosion",
 	};
 
-	hero.SetVertexData({ 380, 270, 420, 330 });
+	hero.SetVertexData({ 615, 335, 665, 385 });
 	m_Cam.m_vCameraPos = { 0.0f,0.0f };
 	for (int iNpc = 0; iNpc < iLevel; iNpc++)
 	{

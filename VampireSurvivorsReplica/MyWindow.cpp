@@ -33,7 +33,7 @@ bool   MyWindow::CreateWin(HINSTANCE hInstance, UINT xSize, UINT ySize)
 	HWND hwnd = CreateWindowEx(
 		0,
 		L"SAMPLE_WINDOW",
-		L"샘플 윈도우 프로젝트", // Window text
+		L"VampireSurvivorsReplica", // Window text
 		dwStyle,	 // Window style
 		// Size and position
 		0, 0,   // position

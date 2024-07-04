@@ -44,4 +44,4 @@ void    Main::Release()
 	m_pCurrentScene->Release();
 }
 
-T_GAME_START(800, 600);
+T_GAME_START(1280, 720);

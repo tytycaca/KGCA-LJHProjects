@@ -10,18 +10,19 @@ void   MySceneTitle::Init()
 		m_pBGSound->Play(true);
 	}
 
-	RECT rtBk = { 0, 0, 800.0f, 600.0f };
+	RECT rtBk = { 0, 0, 1280, 720.0f };
 	objScreen.Create(MyDevice::m_pd3dDevice.Get(), 
 		MyDevice::m_pContext, rtBk,
-		L"../../resource/title.png",
+		L"../../resource/title.jpg",
 		L"intro.txt");
 	objScreen.m_pSprite = nullptr;
 
 	m_UIList.resize(1);
-	m_UIList[0].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 280, 370, 520, 430 },
-		L"../../resource/button_c9_normal.png",
+	m_UIList[0].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 528 , 500, 732, 559 },
+		L"../../resource/start_normal.png",
 		L"intro.txt");
 	m_UIList[0].SetAnim(1.0f, I_Sprite.GetPtr(L"StartButton"));
+
 }
 void    MySceneTitle::Frame()
 {
@@ -51,7 +52,7 @@ void    MySceneTitle::Frame()
 	if (m_bStartFadeOut == true)
 	{
 		static float alpha1 = 0.0f;
-		alpha1 += g_fSecondPerFrame;
+		alpha1 += g_fSecondPerFrame * 2.0f;
 		for (auto& v : objScreen.m_vList)
 		{
 			if (m_bFadeOut)
@@ -88,7 +89,7 @@ void    MySceneTitle::Frame()
 	if (m_bStartFadeOut == true)
 	{
 		static float alpha1 = 0.0f;
-		alpha1 += g_fSecondPerFrame;
+		alpha1 += g_fSecondPerFrame * 2.0f;
 		for (auto& v : m_UIList[0].m_vList)
 		{
 			if (m_bFadeOut)

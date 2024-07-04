@@ -11,7 +11,7 @@ public:
 	RECT		m_rtClient;
 public:
 	void   CreateRegisterClass(HINSTANCE hInstance);
-	bool   CreateWin(HINSTANCE hInstance, UINT xSize = 800, UINT ySize = 600);
+	bool   CreateWin(HINSTANCE hInstance, UINT xSize = 1280, UINT ySize = 720);
 	bool   WindowRun();
 	MyWindow();
 };

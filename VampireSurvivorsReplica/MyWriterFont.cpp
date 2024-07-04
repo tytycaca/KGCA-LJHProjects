@@ -63,7 +63,7 @@ void TWriterFont::Frame() {
 void TWriterFont::DrawText(std::wstring msg, POINT pos)
 {
 	m_pd2dRT->BeginDraw();
-	D2D1_RECT_F layoutRect = { pos.x,pos.y, 800, 600 };
+	D2D1_RECT_F layoutRect = { pos.x,pos.y, 1280, 720 };
 	m_pDefaultColor->SetColor({ 1,0,0,1 });
 	m_pd2dRT->DrawText(msg.c_str(), msg.size(),
 		m_pWriteTF30, &layoutRect, m_pDefaultColor);
@@ -74,7 +74,7 @@ void TWriterFont::Render()
 	m_pd2dRT->BeginDraw();
 			// render
 		std::wstring msg = L"게임아카데미!!!!";
-		D2D1_RECT_F layoutRect = {0,0, 800, 600};
+		D2D1_RECT_F layoutRect = {0,0, 1280, 720};
 		m_pDefaultColor->SetColor({ 0,0,0,1 });
 		m_pd2dRT->DrawText(msg.c_str(), msg.size(), 
 						   m_pWriteTF30,&layoutRect, m_pDefaultColor);
@@ -82,7 +82,7 @@ void TWriterFont::Render()
 
 	m_pd2dRT->BeginDraw();
 		std::wstring msg1 = L"KGCA Game";
-		D2D1_RECT_F layoutRect1 = { 200,200, 800, 600 };
+		D2D1_RECT_F layoutRect1 = { 200,200, 1280, 720 };
 		m_pDefaultColor->SetColor({ 1,1,0,1 });
 		m_pd2dRT->DrawText(msg1.c_str(), msg1.size(),
 			m_pWriteTF50, &layoutRect, m_pDefaultColor);

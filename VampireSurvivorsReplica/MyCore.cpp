@@ -106,7 +106,7 @@ void   MyCore::GameInit()
 		SetAlphaBlendState();
 
 		I_Sound.Set(nullptr, nullptr);
-		I_Sprite.Load(L"../../data/Sprite/SpriteInfo.txt");
+		I_Sprite.Load(L"../../resource/SpriteInfo.txt");
 
 		m_font.Init();
 		// 3D 백버퍼를 얻어서 전달해야 한다.
