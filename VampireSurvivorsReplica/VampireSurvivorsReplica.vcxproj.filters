@@ -12,7 +12,6 @@
     <ClCompile Include="MyDxObject.cpp" />
     <ClCompile Include="MyInput.cpp" />
     <ClCompile Include="MyMath.cpp" />
-    <ClCompile Include="MyPawn.cpp" />
     <ClCompile Include="MyShaderMgr.cpp" />
     <ClCompile Include="MySound.cpp" />
     <ClCompile Include="MySprite.cpp" />
@@ -25,9 +24,6 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="MySceneLobby.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="MySceneIngame.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="MyScene.cpp">
@@ -45,6 +41,10 @@
     <ClCompile Include="MyNpc.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="MySceneIngame.cpp" />
+    <ClCompile Include="MyPawn.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -55,7 +55,6 @@
     <ClInclude Include="MyDxObject.h" />
     <ClInclude Include="MyInput.h" />
     <ClInclude Include="MyMath.h" />
-    <ClInclude Include="MyPawn.h" />
     <ClInclude Include="MyShaderMgr.h" />
     <ClInclude Include="MySound.h" />
     <ClInclude Include="MySprite.h" />
@@ -87,6 +86,9 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="MyNpc.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPawn.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>

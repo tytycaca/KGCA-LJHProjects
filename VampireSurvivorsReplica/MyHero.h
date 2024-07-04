@@ -3,11 +3,11 @@
 class MyHero : public MyPawn
 {
 public:
+	bool bIsRight = true;
+	bool bIsMove = false;
+
+public:
 	virtual void  Frame() override;
-	virtual void  Front();
-	virtual void  Back();
-	virtual void  Left();
-	virtual void  Right();
 	void	SetVertexData(RECT rt) override;
 	MyHero();
 };

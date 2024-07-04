@@ -70,7 +70,7 @@ void   MyCore::GamePostFrame()
 }
 void  MyCore::GamePreRender()
 {
-	float clearColor[] = { 0.3640f, 0.4543545322f, 0.645672321f, 1.0f };
+	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	MyDevice::m_pContext->ClearRenderTargetView(MyDevice::m_pRTV, clearColor);
 
 	MyDevice::m_pContext->OMSetRenderTargets(1, &MyDevice::m_pRTV, nullptr);

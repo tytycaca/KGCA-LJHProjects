@@ -13,9 +13,9 @@ void   MySceneIngame::SetSound()
 }
 void   MySceneIngame::SetUI()
 {
-	RECT rtBk = { 0, 0, 1280, 720 };
-	objScreen.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, rtBk,
-		L"../../data/1234.jpg",
+	RECT rtBG = { -640, -360, 1920, 1080 };
+	objScreen.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, rtBG,
+		L"../../resource/BG_Library.png",
 		L"../../data/shader/Default.txt");
 	objScreen.m_pSprite = nullptr;
 
@@ -40,14 +40,15 @@ void   MySceneIngame::SetUI()
 		{ 0, 620, 100, 720 },
 		L"../../data/Effect/slashFire_4x4.png",
 		L"Alphablend.hlsl");
-	m_UIList[3].SetAnim(1.0f, I_Sprite.GetPtr(L"wik"));
+	m_UIList[3].SetAnim(2.0f, I_Sprite.GetPtr(L"wik"));
 }
 void   MySceneIngame::SetPlayer()
 {
 	//DrawRect = { 91, 1, 91+40, 1+60 }
 	hero.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 615, 335, 665, 385 },
-		L"../../data/Sprite/bitmap1Alpha.bmp",
+		L"../../resource/Antonio_01.png",
 		L"Alphablend.hlsl");
+	//hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
 	hero.m_fSpeed = 500.0f;
 }
 void    MySceneIngame::LevelUp(UINT iLevel)
@@ -63,7 +64,8 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 		L"rtExplosion",
 	};
 
-	hero.SetVertexData({ 615, 335, 665, 385 });
+	hero.m_vPos.X = 640.0f;
+	hero.m_vPos.Y = 360.0f;
 	m_Cam.m_vCameraPos = { 0.0f,0.0f };
 	for (int iNpc = 0; iNpc < iLevel; iNpc++)
 	{
@@ -83,7 +85,6 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 }
 void   MySceneIngame::Init()
 {
-
 	SetSound();
 	SetUI();
 	SetPlayer();
@@ -155,11 +156,73 @@ void    MySceneIngame::Frame()
 		}
 	}
 
-	//m_Cam.Up();
-	hero.Frame();
+	if (I_Input.KeyCheck('A') == KEY_HOLD)
+	{
+		hero.bIsMove = true;
+		if (hero.m_vPos.X - 25 > objScreen.m_rt.left)
+		{
+			hero.Move({ -1.0f,0.0f });
+		}
+	}
+	if (I_Input.KeyCheck('D') == KEY_HOLD)
+	{
+		hero.bIsMove = true;
+		if (hero.m_vPos.X + 25 < objScreen.m_rt.right)
+		{
+			hero.Move({ 1.0f,0.0f });
+		}
+	}
+	if (I_Input.KeyCheck('W') == KEY_HOLD)
+	{
+		hero.bIsMove = true;
+		if (hero.m_vPos.Y - 25 > objScreen.m_rt.top + 375)
+		{
+			hero.Move({ 0.0f,-1.0f });
+		}
+	}
+	if (I_Input.KeyCheck('S') == KEY_HOLD)
+	{
+		hero.bIsMove = true;
+		if (hero.m_vPos.Y + 25 < objScreen.m_rt.bottom - 375)
+		{
+			hero.Move({ 0.0f,1.0f });
+		}
+	}
 
-	m_Cam.Left(-hero.m_vOffset.X);// +hero.m_vOffset;
-	m_Cam.m_vCameraPos.Y = m_Cam.m_vCameraPos.Y + -hero.m_vOffset.Y;
+	if (I_Input.KeyCheck('W') == KEY_UP)
+		hero.bIsMove = false;
+	if (I_Input.KeyCheck('S') == KEY_UP)
+		hero.bIsMove = false;
+	if (I_Input.KeyCheck('A') == KEY_UP)
+		hero.bIsMove = false;
+	if (I_Input.KeyCheck('D') == KEY_UP)
+		hero.bIsMove = false;
+
+	/*if (hero.bIsRight)
+	{
+		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
+	}
+	else
+	{
+		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
+	}*/
+
+	if (hero.m_vPos.X < 0)
+		m_Cam.m_vCameraPos.X = g_xClientSize / 2;
+	else if (hero.m_vPos.X > g_xClientSize)
+		m_Cam.m_vCameraPos.X = -(int)(g_xClientSize / 2);
+	else
+		m_Cam.m_vCameraPos.X = -hero.m_vPos.X + g_xClientSize / 2;
+
+	if (hero.m_vPos.Y < 0)
+		m_Cam.m_vCameraPos.Y = g_yClientSize / 2;
+	else if (hero.m_vPos.Y > g_yClientSize)
+		m_Cam.m_vCameraPos.Y = -(int)(g_yClientSize / 2);
+	else
+		m_Cam.m_vCameraPos.Y = -hero.m_vPos.Y + g_yClientSize / 2;
+
+	hero.Frame();
+	m_Cam.Move(hero.m_vOffset);
 	m_Cam.Frame();
 
 }
@@ -186,8 +249,21 @@ void    MySceneIngame::Render()
 	/// 
 	/// </summary>
 	hero.SetViewTransform(m_Cam.GetMatrix());
-	hero.Render(MyDevice::m_pContext);
 
+	if (I_Input.KeyCheck('D') == KEY_PUSH)
+	{
+		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
+	}
+	else if (I_Input.KeyCheck('A') == KEY_PUSH)
+	{
+		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
+	}
+
+	if(hero.bIsMove)
+		hero.UpdateSprite();
+
+	hero.Render(MyDevice::m_pContext);
+	
 	bool bGameEnding = true;
 
 	for_each(begin(m_npcList), end(m_npcList), [&](auto& obj)
@@ -200,13 +276,6 @@ void    MySceneIngame::Render()
 				bGameEnding = false;
 			}
 		});
-	//g_bGameRun = !bGameEnding;
-
-	// 하단 화면을 벗어나면.
-	if (g_yClientSize <= hero.m_vList[2].p.Y)
-	{
-		g_bGameRun = false;
-	}
 
 	// 적 격퇴
 	if (bGameEnding)
