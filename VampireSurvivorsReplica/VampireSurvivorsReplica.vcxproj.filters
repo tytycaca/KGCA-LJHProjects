@@ -41,9 +41,11 @@
     <ClCompile Include="MyNpc.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="MySceneIngame.cpp" />
     <ClCompile Include="MyPawn.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MySceneIngame.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

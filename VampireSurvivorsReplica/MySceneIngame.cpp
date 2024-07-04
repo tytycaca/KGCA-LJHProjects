@@ -19,7 +19,7 @@ void   MySceneIngame::SetUI()
 		L"../../data/shader/Default.txt");
 	objScreen.m_pSprite = nullptr;
 
-	m_UIList.resize(4);
+	m_UIList.resize(6);
 	m_UIList[0].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 0, 0, 100, 100 },
 		L"../../data/kgca1.png",
 		L"Alphablend.hlsl");
@@ -41,6 +41,16 @@ void   MySceneIngame::SetUI()
 		L"../../data/Effect/slashFire_4x4.png",
 		L"Alphablend.hlsl");
 	m_UIList[3].SetAnim(2.0f, I_Sprite.GetPtr(L"wik"));
+
+	m_UIList[4].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
+		{ 0, 0, 1, 35 },
+		L"../../resource/exp_bar.png",
+		L"Alphablend.hlsl");
+
+	m_UIList[5].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
+		{ 0, 0, 1280, 35 },
+		L"../../resource/exp_bar_empty.png",
+		L"Alphablend.hlsl");
 }
 void   MySceneIngame::SetPlayer()
 {
@@ -122,7 +132,7 @@ void    MySceneIngame::Frame()
 	objScreen.Frame();
 
 
-	for (auto& ui : m_UIList)
+	/*for (auto& ui : m_UIList)
 	{
 		if (MyCollision::RectToPt(ui.m_rt, I_Input.m_ptMousePos))
 		{
@@ -133,6 +143,11 @@ void    MySceneIngame::Frame()
 			ui.SetTrans(ui.m_vPos);
 		}
 		ui.Frame();
+	}*/
+
+	for (auto& ui : m_UIList)
+	{
+		ui.Frame();
 	}
 
 	for (auto& npc : m_npcList)
@@ -141,6 +156,7 @@ void    MySceneIngame::Frame()
 		if (npc.m_bDead == false && MyCollision::RectToRect(npc.m_rt, hero.m_rt))
 		{
 			npc.m_bDead = true;
+			hero.m_fEXP += 10;
 			m_iNpcCounter = max(0, m_iNpcCounter - 1);
 		}
 	}
@@ -158,7 +174,7 @@ void    MySceneIngame::Frame()
 
 	if (I_Input.KeyCheck('A') == KEY_HOLD)
 	{
-		hero.bIsMove = true;
+		hero.m_bIsMove = true;
 		if (hero.m_vPos.X - 25 > objScreen.m_rt.left)
 		{
 			hero.Move({ -1.0f,0.0f });
@@ -166,7 +182,7 @@ void    MySceneIngame::Frame()
 	}
 	if (I_Input.KeyCheck('D') == KEY_HOLD)
 	{
-		hero.bIsMove = true;
+		hero.m_bIsMove = true;
 		if (hero.m_vPos.X + 25 < objScreen.m_rt.right)
 		{
 			hero.Move({ 1.0f,0.0f });
@@ -174,7 +190,7 @@ void    MySceneIngame::Frame()
 	}
 	if (I_Input.KeyCheck('W') == KEY_HOLD)
 	{
-		hero.bIsMove = true;
+		hero.m_bIsMove = true;
 		if (hero.m_vPos.Y - 25 > objScreen.m_rt.top + 375)
 		{
 			hero.Move({ 0.0f,-1.0f });
@@ -182,7 +198,7 @@ void    MySceneIngame::Frame()
 	}
 	if (I_Input.KeyCheck('S') == KEY_HOLD)
 	{
-		hero.bIsMove = true;
+		hero.m_bIsMove = true;
 		if (hero.m_vPos.Y + 25 < objScreen.m_rt.bottom - 375)
 		{
 			hero.Move({ 0.0f,1.0f });
@@ -190,15 +206,15 @@ void    MySceneIngame::Frame()
 	}
 
 	if (I_Input.KeyCheck('W') == KEY_UP)
-		hero.bIsMove = false;
+		hero.m_bIsMove = false;
 	if (I_Input.KeyCheck('S') == KEY_UP)
-		hero.bIsMove = false;
+		hero.m_bIsMove = false;
 	if (I_Input.KeyCheck('A') == KEY_UP)
-		hero.bIsMove = false;
+		hero.m_bIsMove = false;
 	if (I_Input.KeyCheck('D') == KEY_UP)
-		hero.bIsMove = false;
+		hero.m_bIsMove = false;
 
-	/*if (hero.bIsRight)
+	/*if (hero.m_bIsRight)
 	{
 		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
 	}
@@ -237,13 +253,21 @@ void    MySceneIngame::Render()
 	m_UIList[0].PostRender(MyDevice::m_pContext);
 
 	//for (auto obj : m_UIList)
-	for (int iUI = 1; iUI < m_UIList.size(); iUI++)
+	for (int iUI = 1; iUI < m_UIList.size()-2; iUI++)
 	{
 		m_UIList[iUI].UpdateSprite();
 		// 화면 고정( 뷰 변환 생략 )
 		//obj.SetViewTransform(m_Cam.GetMatrix());
 		m_UIList[iUI].Render(MyDevice::m_pContext);
 	}
+
+	m_UIList[4].PreRender(MyDevice::m_pContext);
+	MY_Math::FVector2 scale = MY_Math::FVector2(g_xClientSize * hero.m_fEXP / 50, 1);
+	m_UIList[4].SetScale(scale);
+	m_UIList[4].UpdateVertexBuffer();
+	m_UIList[4].PostRender(MyDevice::m_pContext);
+
+	m_UIList[5].Render(MyDevice::m_pContext);
 
 	/// <summary>
 	/// 
@@ -259,7 +283,7 @@ void    MySceneIngame::Render()
 		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
 	}
 
-	if(hero.bIsMove)
+	if(hero.m_bIsMove)
 		hero.UpdateSprite();
 
 	hero.Render(MyDevice::m_pContext);
@@ -296,7 +320,5 @@ void    MySceneIngame::Release()
 	{
 		m_npcList[iNpc].Release();
 	}
-
-
 }
 

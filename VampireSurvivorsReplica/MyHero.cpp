@@ -63,6 +63,9 @@ void  MyHero::Frame()
 	//	//hero.Left();		
 	//}
 
+	if (m_fEXP >= 100.0f)
+		m_fEXP = 0.0f;
+
 	MyPawn::Frame();
 }
 MyHero::MyHero()

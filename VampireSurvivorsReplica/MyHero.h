@@ -3,8 +3,9 @@
 class MyHero : public MyPawn
 {
 public:
-	bool bIsRight = true;
-	bool bIsMove = false;
+	bool m_bIsRight = true;
+	bool m_bIsMove = false;
+	float m_fEXP = 0.0f;
 
 public:
 	virtual void  Frame() override;
