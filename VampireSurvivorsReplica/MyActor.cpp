@@ -30,6 +30,15 @@ void    MyActor::UpdateSprite()
 		}
 	}
 }
+int    MyActor::GetSpriteIndex()
+{
+	return m_pSprite->GetSpriteIndex(m_SpriteData);
+}
+void    MyActor::SetSpriteIndex(int index)
+{
+	m_pSprite->SetSpriteIndex(m_SpriteData, index);
+}
+
 void    MyActor::SetTrans(MY_Math::FVector2& p)
 {
 	m_matTrans.Translation(p);

@@ -69,6 +69,8 @@ public:
 	virtual MyActor&	SetWorldTransform(MY_Math::FMatrix& m);
 
 	virtual void    UpdateSprite();
+	int			GetSpriteIndex();
+	void    SetSpriteIndex(int index);
 	virtual void    Render(ID3D11DeviceContext* pContext) override;
 };
 

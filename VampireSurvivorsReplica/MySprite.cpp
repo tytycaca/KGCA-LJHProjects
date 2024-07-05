@@ -132,6 +132,16 @@ void   MySprite::Update(MySpriteData& data)
 	}
 }
 
+int MySprite::GetSpriteIndex(MySpriteData& data)
+{
+	return data.m_iAnimIndex;
+}
+
+void MySprite::SetSpriteIndex(MySpriteData& data, int index)
+{
+	data.m_iAnimIndex = index;
+}
+
 MySprite::MySprite()
 {
 	

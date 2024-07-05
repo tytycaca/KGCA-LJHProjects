@@ -14,6 +14,7 @@ public:
 	std::vector<MyActor> m_UIList;
 	std::vector<MyNpc>	m_npcList;
 	MyHero hero;
+	std::shared_ptr<MyWeaponWhip> m_pWeaponWhip = std::make_shared<MyWeaponWhip>();
 	UINT  m_iNpcCounter = 0;
 	void    LevelUp(UINT iNpc);
 public:
@@ -25,5 +26,6 @@ public:
 	void  SetSound();
 	void  SetUI();
 	void  SetPlayer();
+	void  SetWeaponWhip();
 };
 

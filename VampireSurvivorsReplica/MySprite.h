@@ -41,6 +41,8 @@ public:
 		m_SpriteData.m_fChangeTime = m_SpriteData.m_fAnimationTimer / m_SpriteData.m_fTexCounter;
 	}
 	void   Update(MySpriteData& data);
+	int    GetSpriteIndex(MySpriteData& data);
+	void   SetSpriteIndex(MySpriteData& data, int index);
 public:
 	void  Load(STRING_VECTOR& iconList);
 	void  Load(std::wstring path, RECT_ARRAY& list);

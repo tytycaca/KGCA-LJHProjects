@@ -1,5 +1,6 @@
 #pragma once
 #include "MyHero.h"
+#include "MyWeaponWhip.h"
 #include "MyNpc.h"
 #include "MySound.h"
 #include "MySprite.h"

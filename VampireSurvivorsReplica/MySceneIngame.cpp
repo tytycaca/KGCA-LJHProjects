@@ -59,12 +59,31 @@ void   MySceneIngame::SetUI()
 }
 void   MySceneIngame::SetPlayer()
 {
-	//DrawRect = { 91, 1, 91+40, 1+60 }
-	hero.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 615, 335, 665, 385 },
+	hero.m_vInitPos.X = 640.0f;
+	hero.m_vInitPos.Y = 360.0f;
+	hero.m_fWidth = 50.0f;
+	hero.m_fHeight = 50.0f;
+	hero.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
+		{ (LONG)(hero.m_vInitPos.X - hero.m_fWidth / 2),
+		  (LONG)(hero.m_vInitPos.Y - hero.m_fHeight / 2),
+		  (LONG)(hero.m_vInitPos.X + hero.m_fWidth / 2),
+		  (LONG)(hero.m_vInitPos.Y + hero.m_fHeight / 2)},
 		L"../../resource/Antonio_01.png",
 		L"Alphablend.hlsl");
 	//hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
-	hero.m_fSpeed = 500.0f;
+	hero.m_fSpeed = 300.0f;
+}
+void   MySceneIngame::SetWeaponWhip()
+{
+	m_pWeaponWhip->Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
+		{ (LONG)(hero.m_vInitPos.X),
+		  (LONG)(hero.m_vInitPos.Y - hero.m_fHeight / 2),
+		  (LONG)(hero.m_vInitPos.X + hero.m_fWidth * 4),
+		  (LONG)(hero.m_vInitPos.Y + hero.m_fHeight / 2) },
+		L"../../resource/whipVfx0.png",
+		L"Alphablend.hlsl");
+	m_pWeaponWhip->SetAnim(m_pWeaponWhip->m_fAnimDuration, I_Sprite.GetPtr(L"WeaponWhip"));
+	m_pWeaponWhip->m_fSpeed = 0.0f;
 }
 void    MySceneIngame::LevelUp(UINT iLevel)
 {
@@ -103,6 +122,7 @@ void   MySceneIngame::Init()
 	SetSound();
 	SetUI();
 	SetPlayer();
+	SetWeaponWhip();
 	LevelUp(m_iLevel);
 }
 void    MySceneIngame::Frame()
@@ -243,6 +263,7 @@ void    MySceneIngame::Frame()
 		m_Cam.m_vCameraPos.Y = -hero.m_vPos.Y + g_yClientSize / 2;
 
 	hero.Frame();
+	m_pWeaponWhip->Frame();
 	m_Cam.Move(hero.m_vOffset);
 	m_Cam.Frame();
 
@@ -291,6 +312,22 @@ void    MySceneIngame::Render()
 		hero.UpdateSprite();
 
 	hero.Render(MyDevice::m_pContext);
+
+	
+	m_pWeaponWhip->m_fCooltimeCounter += g_fSecondPerFrame;
+
+	if (m_pWeaponWhip->m_fCooltimeCounter >= m_pWeaponWhip->m_fCooltime)
+	{
+		m_pWeaponWhip->UpdateSprite();
+		m_pWeaponWhip->Render(MyDevice::m_pContext);
+		if (m_pWeaponWhip->m_iCurrentSpriteIndex == 5)
+		{
+			m_pWeaponWhip->m_fCooltimeCounter = 0.0f;
+			m_pWeaponWhip->SetSpriteIndex(0);
+		}
+	}
+
+	
 	
 	bool bGameEnding = true;
 

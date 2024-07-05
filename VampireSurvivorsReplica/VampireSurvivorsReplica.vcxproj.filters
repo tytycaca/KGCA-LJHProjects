@@ -47,6 +47,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MyWeaponWhip.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -91,6 +94,9 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="MyPawn.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyWeaponWhip.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>

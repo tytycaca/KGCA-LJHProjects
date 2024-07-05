@@ -181,6 +181,7 @@
     <ClCompile Include="MySprite.cpp" />
     <ClCompile Include="MyTexMgr.cpp" />
     <ClCompile Include="MyTimer.cpp" />
+    <ClCompile Include="MyWeaponWhip.cpp" />
     <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="MyWriterFont.cpp" />
   </ItemGroup>
@@ -209,6 +210,7 @@
     <ClInclude Include="MyStd.h" />
     <ClInclude Include="MyTexMgr.h" />
     <ClInclude Include="MyTimer.h" />
+    <ClInclude Include="MyWeaponWhip.h" />
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="MyWriterFont.h" />
   </ItemGroup>
