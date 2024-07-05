@@ -320,10 +320,11 @@ void    MySceneIngame::Render()
 	{
 		m_pWeaponWhip->UpdateSprite();
 		m_pWeaponWhip->Render(MyDevice::m_pContext);
-		if (m_pWeaponWhip->m_iCurrentSpriteIndex == 5)
+		m_pWeaponWhip->m_fAnimDuration -= g_fSecondPerFrame;
+		if (m_pWeaponWhip->m_fAnimDuration <= 0.0f)
 		{
+			m_pWeaponWhip->m_fAnimDuration = 0.15f;
 			m_pWeaponWhip->m_fCooltimeCounter = 0.0f;
-			m_pWeaponWhip->SetSpriteIndex(0);
 		}
 	}
 
