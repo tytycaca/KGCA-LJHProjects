@@ -4,7 +4,6 @@
     <FxCompile Include="Alphablend.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sample.cpp" />
     <ClCompile Include="MyBaseManager.cpp" />
     <ClCompile Include="MyCollision.cpp" />
     <ClCompile Include="MyCore.cpp" />
@@ -47,6 +46,7 @@
     <ClCompile Include="MySceneIngame.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -107,5 +107,8 @@
     <Filter Include="Object">
       <UniqueIdentifier>{9f70da41-b4ad-48f7-b965-d9151d8ade34}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

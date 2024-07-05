@@ -43,6 +43,10 @@ bool   MyWindow::CreateWin(HINSTANCE hInstance, UINT xSize, UINT ySize)
 		m_hInstance, // Instance handle
 		NULL // Additional application data
 	);
+
+	// 윈도우 타이틀, 테두리 없애기
+	// SetWindowLong(hwnd, GWL_STYLE, 0);
+
 	if (hwnd == NULL)
 	{
 		return false;

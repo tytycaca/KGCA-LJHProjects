@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MyScene" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAEBCCABAAAAE=</HashCode>
+      <FileName>MyScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySceneIngame" Collapsed="true">
+    <Position X="0.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAABMAAEAAABBAAEAAAIABAAAAAAAACBAiABAAAQE=</HashCode>
+      <FileName>MySceneIngame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySceneLobby" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MySceneLobby.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySceneResult" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MySceneResult.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySceneTitle" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABIABEAAAAIAAAAAAEAAAAAAAAAgABACABAAAAE=</HashCode>
+      <FileName>MySceneTitle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyActor" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAEIAAFCsAQAAAECAAAEAAAAAANAgAAIBFQggCQGAE=</HashCode>
+      <FileName>MyActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyHero" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAEAAAAEAAAAAAAAAAAAAAAAAAgAAAJAAAAAAAE=</HashCode>
+      <FileName>MyHero.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyNpc" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAE=</HashCode>
+      <FileName>MyNpc.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPawn" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyPawn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySingleton&lt;T&gt;" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyBaseManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyResource" Collapsed="true">
+    <Position X="10" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAABAAAAAAAAAAAAAAACAAAAAAAABAAAAA=</HashCode>
+      <FileName>MyBaseManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBaseManager&lt;T, S&gt;" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAgAAAAAAABAAAAAAAAAAEBAAQCgACAAAACBAAAAA=</HashCode>
+      <FileName>MyBaseManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TCamera" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAJAAAAAAAAAACAAAAAAAAAAACACAAAQAABM=</HashCode>
+      <FileName>MyCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyCollision" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>MyCollision.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyCore" Collapsed="true">
+    <Position X="1.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAQCAIAAAAACAQAAAAAAAAAAhCAABABACABAIAGU=</HashCode>
+      <FileName>MyCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyDevice" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CRAAAAAAAAAAICAAAAAAAAAAAAAAAAAEAAAACAgAAAA=</HashCode>
+      <FileName>MyDevice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyDxObject" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AJAECACAAIAAAAAgAAAAAAAAAAAhgEAAARBAiBgCCBE=</HashCode>
+      <FileName>MyDxObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyInput" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgCAAAAAABAgAAEAAAAAAAAAAEAAAAAACABAAE=</HashCode>
+      <FileName>MyInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyShader" Collapsed="true">
+    <Position X="10" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAABAAAAAAAAAAAAQAICAAAAAAAIBAAAAA=</HashCode>
+      <FileName>MyShaderMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyShaderMgr" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>MyShaderMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySound" Collapsed="true">
+    <Position X="7.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgggAAAAAAAAAAAAAAAAAAAAgQAECACoBQiMBAAAAE=</HashCode>
+      <FileName>MySound.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySoundMgr" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAIAAAAAAAAAAAAAgAAABAAEBAAAAE=</HashCode>
+      <FileName>MySound.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySprite" Collapsed="true">
+    <Position X="5.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIwAgACEAAAAAQAAAAAAAAAAAAABCAAACAAAAAACAAA=</HashCode>
+      <FileName>MySprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySpriteUV" Collapsed="true">
+    <Position X="4.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>MySprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySpriteTex" Collapsed="true">
+    <Position X="6.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MySprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySpriteManager" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAgIBAIAAQAAAAAAAAEBQAAIAAAAAAAQAAAAAA=</HashCode>
+      <FileName>MySprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBaseCore" Collapsed="true">
+    <Position X="1.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACABAAAAE=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyTexture" Collapsed="true">
+    <Position X="12.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAIAABAAgAAAAAAAAAAAACAAAAAAAABAAQAA=</HashCode>
+      <FileName>MyTexMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyTexMgr" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>MyTexMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyTimer" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAwAAAABIAAACAAAAACQAABAAACAAAEABE=</HashCode>
+      <FileName>MyTimer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyWindow" Collapsed="true">
+    <Position X="4.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAACIAAAQAEAAAABAAAAAAAAAAAAAAAAAgAAQ=</HashCode>
+      <FileName>MyWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyWriterFont" Collapsed="true">
+    <Position X="4" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAAAAAAAwAAAAAAACAAAAAAAAAAgAAAAAJAKBBAAAIE=</HashCode>
+      <FileName>MyWriterFont.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main" Collapsed="true">
+    <Position X="1.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAABIAAAAAAAAAgAAAAAABACABAgAAE=</HashCode>
+      <FileName>Main.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MY_Math::FMatrix" Collapsed="true">
+    <Position X="9.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAACAAIQAAAAAAAAAAAAAEAgAAAAAAA=</HashCode>
+      <FileName>MyMath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MY_Math::FVector2" Collapsed="true">
+    <Position X="0.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAEAAAAQBACAAAAAAAAEAiAAAAACA=</HashCode>
+      <FileName>MyMath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MY_Math::FVector4" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAIYAE=</HashCode>
+      <FileName>MyMath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MyVertex" Collapsed="true">
+    <Position X="18.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAACAAEQAAAAAAAA=</HashCode>
+      <FileName>MyDxObject.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="myRECT" Collapsed="true">
+    <Position X="15.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAgAAAAIAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>MySprite.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MySpriteData" Collapsed="true">
+    <Position X="17" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAQACAAAAAAAAAACAAAAAAQAAAAA=</HashCode>
+      <FileName>MySprite.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MY_Math::float2" Collapsed="true">
+    <Position X="0.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyMath.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MY_Math::float3x3" Collapsed="true">
+    <Position X="9.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyMath.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="T_STR" Collapsed="true">
+    <Position X="17" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="W_STR" Collapsed="true">
+    <Position X="18.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="C_STR" Collapsed="true">
+    <Position X="15.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="STRING_VECTOR" Collapsed="true">
+    <Position X="15.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="DWORD_VECTOR" Collapsed="true">
+    <Position X="17" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="RECT_ARRAY" Collapsed="true">
+    <Position X="18.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStd.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="SceneStatus" Collapsed="true">
+    <Position X="17" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAEAAAAAAIAQAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyScene.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UIStatus" Collapsed="true">
+    <Position X="18.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAQAAAAAEAAA=</HashCode>
+      <FileName>MyActor.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="KeyState" Collapsed="true">
+    <Position X="15.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAgAAAAAAAAAAAAAAgAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyInput.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
