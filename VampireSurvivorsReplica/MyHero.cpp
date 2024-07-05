@@ -64,8 +64,11 @@ void  MyHero::Frame()
 	//}
 
 	if (m_fEXP >= 100.0f)
+	{
 		m_fEXP = 0.0f;
-
+		m_iCharLv++;
+	}
+		
 	MyPawn::Frame();
 }
 MyHero::MyHero()

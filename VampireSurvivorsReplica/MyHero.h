@@ -6,6 +6,7 @@ public:
 	bool m_bIsRight = true;
 	bool m_bIsMove = false;
 	float m_fEXP = 0.0f;
+	int m_iCharLv = 1;
 
 public:
 	virtual void  Frame() override;

@@ -1,5 +1,5 @@
 #include "MyWriterFont.h"
-void TWriterFont::Init() {
+void MyWriterFont::Init() {
 
 	HRESULT hr;
 	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED,&m_pd2dFactory);
@@ -25,9 +25,17 @@ void TWriterFont::Init() {
 		L"en-us",
 		&m_pWriteTF50);
 
-	
+	hr = m_pWriteFactory->CreateTextFormat(
+		L"LanaPixel",
+		nullptr,
+		DWRITE_FONT_WEIGHT_THIN,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		28,
+		L"en-us",
+		&m_pWriteTF15_LanaPixel);
 }
-void TWriterFont::ResetDevice(IDXGISurface* dxgiSurface)
+void MyWriterFont::ResetDevice(IDXGISurface* dxgiSurface)
 {	
 	D2D1_RENDER_TARGET_PROPERTIES rtp;
 	rtp.type = D2D1_RENDER_TARGET_TYPE_DEFAULT;
@@ -57,10 +65,10 @@ void TWriterFont::ResetDevice(IDXGISurface* dxgiSurface)
 	}
 	
 }
-void TWriterFont::Frame() {
+void MyWriterFont::Frame() {
 	int k = 0;
 }
-void TWriterFont::DrawText(std::wstring msg, POINT pos)
+void MyWriterFont::DrawText(std::wstring msg, POINT pos)
 {
 	m_pd2dRT->BeginDraw();
 	D2D1_RECT_F layoutRect = { pos.x,pos.y, 1280, 720 };
@@ -69,7 +77,7 @@ void TWriterFont::DrawText(std::wstring msg, POINT pos)
 		m_pWriteTF30, &layoutRect, m_pDefaultColor);
 	m_pd2dRT->EndDraw();
 }
-void TWriterFont::Render() 
+void MyWriterFont::Render() 
 {
 	m_pd2dRT->BeginDraw();
 			// render
@@ -88,7 +96,25 @@ void TWriterFont::Render()
 			m_pWriteTF50, &layoutRect, m_pDefaultColor);
 	m_pd2dRT->EndDraw();
 }
-void TWriterFont::Release() {
+
+void MyWriterFont::RenderLevel(int lv, D2D1_RECT_F rect, D2D1_COLOR_F color)
+{
+	m_pd2dRT->BeginDraw();
+	std::wstring msg1 = L"LV " + std::to_wstring(lv);
+	D2D1_RECT_F layoutRect = rect;
+	m_pDefaultColor->SetColor(color);
+	m_pd2dRT->DrawText(msg1.c_str(), msg1.size(),
+		m_pWriteTF15_LanaPixel, &layoutRect, m_pDefaultColor);
+	m_pd2dRT->EndDraw();
+}
+
+void MyWriterFont::Release() {
+	if (m_pWriteTF15_LanaPixel)
+	{
+		m_pWriteTF15_LanaPixel->Release();
+		m_pWriteTF15_LanaPixel = nullptr;
+	}
+
 	if (m_pWriteTF50)
 	{
 		m_pWriteTF50->Release();

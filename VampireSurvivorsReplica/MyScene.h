@@ -4,6 +4,7 @@
 #include "MySound.h"
 #include "MySprite.h"
 #include "MyCamera.h"
+#include "MyWriterFont.h"
 
 enum class SceneStatus
 {
@@ -20,7 +21,9 @@ public:
 	bool	m_bSceneChange = false;
 	std::shared_ptr<MySound>				m_pBGSound = nullptr;
 	SceneStatus m_ssCurrentSceneStatus = SceneStatus::Default;
+	MyWriterFont m_WriterFont;
 public:
+	virtual void    InitInstance(MyWriterFont mf);
 	virtual void    Init() {};
 	virtual void    Frame() {};
 	virtual void    Render() {};

@@ -10,6 +10,7 @@ void   Main::Init()
 	m_pTitleScene->Init();
 	m_pLobbyScene->Init();
 	m_pIngameScene->Init();
+	m_pIngameScene->InitInstance(m_font);
 	m_pResultScene->Init();
 
 	m_pCurrentScene = m_pTitleScene.get();

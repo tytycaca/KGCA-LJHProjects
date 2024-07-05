@@ -19,7 +19,7 @@ void   MySceneIngame::SetUI()
 		L"../../data/shader/Default.txt");
 	objScreen.m_pSprite = nullptr;
 
-	m_UIList.resize(6);
+	m_UIList.resize(7);
 	m_UIList[0].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 0, 0, 100, 100 },
 		L"../../data/kgca1.png",
 		L"Alphablend.hlsl");
@@ -50,6 +50,11 @@ void   MySceneIngame::SetUI()
 	m_UIList[5].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
 		{ 0, 0, 1280, 35 },
 		L"../../resource/exp_bar_empty.png",
+		L"Alphablend.hlsl");
+
+	m_UIList[6].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
+		{ 0, 0, 1280, 35 },
+		L"../../resource/exp_bar_bg.png",
 		L"Alphablend.hlsl");
 }
 void   MySceneIngame::SetPlayer()
@@ -261,17 +266,16 @@ void    MySceneIngame::Render()
 		m_UIList[iUI].Render(MyDevice::m_pContext);
 	}
 
-	m_UIList[4].PreRender(MyDevice::m_pContext);
+	m_UIList[6].Render(MyDevice::m_pContext); // EXP바 배경
+	m_UIList[4].PreRender(MyDevice::m_pContext); // EXP바 게이지
 	MY_Math::FVector2 scale = MY_Math::FVector2(g_xClientSize * hero.m_fEXP / 50, 1);
 	m_UIList[4].SetScale(scale);
 	m_UIList[4].UpdateVertexBuffer();
 	m_UIList[4].PostRender(MyDevice::m_pContext);
+	m_UIList[5].Render(MyDevice::m_pContext); // EXP바 테두리
+	
+	m_WriterFont.RenderLevel(hero.m_iCharLv, D2D1_RECT_F{ 1200, 4, 1280, 26 }, D2D1_COLOR_F{ 1, 1, 1, 1 });
 
-	m_UIList[5].Render(MyDevice::m_pContext);
-
-	/// <summary>
-	/// 
-	/// </summary>
 	hero.SetViewTransform(m_Cam.GetMatrix());
 
 	if (I_Input.KeyCheck('D') == KEY_PUSH)

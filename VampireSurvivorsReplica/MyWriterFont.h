@@ -7,18 +7,20 @@
 #pragma comment( lib, "dwrite.lib")
 
 
-class TWriterFont : public MyBaseCore
+class MyWriterFont : public MyBaseCore
 {
 	ID2D1Factory*		m_pd2dFactory = nullptr;
 	ID2D1RenderTarget*	m_pd2dRT = nullptr;
 	IDWriteFactory*		m_pWriteFactory = nullptr;
 	IDWriteTextFormat*	m_pWriteTF30 = nullptr;
 	IDWriteTextFormat*  m_pWriteTF50 = nullptr;
+	IDWriteTextFormat* m_pWriteTF15_LanaPixel = nullptr;
 	ID2D1SolidColorBrush* m_pDefaultColor= nullptr;
 public:
 	virtual void Init() override;
 	virtual void Frame()override;
 	virtual void Render()override;
+	void RenderLevel(int lv, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	virtual void Release()override;
 
 	void ResetDevice(IDXGISurface* dxgiSurface);

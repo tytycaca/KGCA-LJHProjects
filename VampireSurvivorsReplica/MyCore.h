@@ -13,7 +13,7 @@ class MyCore : public MyWindow, public MyBaseCore
 {
 public:
 	MyTimer m_Timer;
-	TWriterFont  m_font;
+	MyWriterFont  m_font;
 	
 
 	ComPtr<ID3D11BlendState> m_pAlphaBlend = nullptr;
