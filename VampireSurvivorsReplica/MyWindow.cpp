@@ -14,6 +14,7 @@ void   MyWindow::CreateRegisterClass(HINSTANCE hInstance)
 	wc.lpfnWndProc = WindowProc;	// 집주소(또는 전화번호)
 	wc.hInstance = hInstance;		// 주민번호
 	wc.lpszClassName = L"SAMPLE_WINDOW";	// 이름
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	RegisterClass(&wc);
 
 	m_hInstance = hInstance;
