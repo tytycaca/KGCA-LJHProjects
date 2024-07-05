@@ -14,12 +14,14 @@ class MyWriterFont : public MyBaseCore
 	IDWriteFactory*		m_pWriteFactory = nullptr;
 	IDWriteTextFormat*	m_pWriteTF30 = nullptr;
 	IDWriteTextFormat*  m_pWriteTF50 = nullptr;
-	IDWriteTextFormat* m_pWriteTF15_LanaPixel = nullptr;
+	IDWriteTextFormat* m_pWriteTF28_LanaPixel = nullptr;
+	IDWriteTextFormat* m_pWriteTF15_SourceCodePro = nullptr;
 	ID2D1SolidColorBrush* m_pDefaultColor= nullptr;
 public:
 	virtual void Init() override;
 	virtual void Frame()override;
 	virtual void Render()override;
+	void RenderTimer(std::wstring timer, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	void RenderLevel(int lv, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	virtual void Release()override;
 

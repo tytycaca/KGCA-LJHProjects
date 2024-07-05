@@ -33,7 +33,17 @@ void MyWriterFont::Init() {
 		DWRITE_FONT_STRETCH_NORMAL,
 		28,
 		L"en-us",
-		&m_pWriteTF15_LanaPixel);
+		&m_pWriteTF28_LanaPixel);
+
+	hr = m_pWriteFactory->CreateTextFormat(
+		L"SourceCodePro",
+		nullptr,
+		DWRITE_FONT_WEIGHT_BOLD,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		15,
+		L"en-us",
+		&m_pWriteTF15_SourceCodePro);
 }
 void MyWriterFont::ResetDevice(IDXGISurface* dxgiSurface)
 {	
@@ -97,22 +107,39 @@ void MyWriterFont::Render()
 	m_pd2dRT->EndDraw();
 }
 
+void MyWriterFont::RenderTimer(std::wstring timer, D2D1_RECT_F rect, D2D1_COLOR_F color)
+{
+	m_pd2dRT->BeginDraw();
+	std::wstring msg = timer;
+	D2D1_RECT_F layoutRect = rect;
+	m_pDefaultColor->SetColor(color);
+	m_pd2dRT->DrawText(msg.c_str(), msg.size(),
+		m_pWriteTF15_SourceCodePro, &layoutRect, m_pDefaultColor);
+	m_pd2dRT->EndDraw();
+}
+
 void MyWriterFont::RenderLevel(int lv, D2D1_RECT_F rect, D2D1_COLOR_F color)
 {
 	m_pd2dRT->BeginDraw();
-	std::wstring msg1 = L"LV " + std::to_wstring(lv);
+	std::wstring msg = L"LV " + std::to_wstring(lv);
 	D2D1_RECT_F layoutRect = rect;
 	m_pDefaultColor->SetColor(color);
-	m_pd2dRT->DrawText(msg1.c_str(), msg1.size(),
-		m_pWriteTF15_LanaPixel, &layoutRect, m_pDefaultColor);
+	m_pd2dRT->DrawText(msg.c_str(), msg.size(),
+		m_pWriteTF28_LanaPixel, &layoutRect, m_pDefaultColor);
 	m_pd2dRT->EndDraw();
 }
 
 void MyWriterFont::Release() {
-	if (m_pWriteTF15_LanaPixel)
+	if (m_pWriteTF15_SourceCodePro)
 	{
-		m_pWriteTF15_LanaPixel->Release();
-		m_pWriteTF15_LanaPixel = nullptr;
+		m_pWriteTF15_SourceCodePro->Release();
+		m_pWriteTF15_SourceCodePro = nullptr;
+	}
+
+	if (m_pWriteTF28_LanaPixel)
+	{
+		m_pWriteTF28_LanaPixel->Release();
+		m_pWriteTF28_LanaPixel = nullptr;
 	}
 
 	if (m_pWriteTF50)
