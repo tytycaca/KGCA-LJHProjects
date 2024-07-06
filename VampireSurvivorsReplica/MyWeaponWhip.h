@@ -6,7 +6,7 @@ class MyWeaponWhip : public MyPawn
 public:
 	bool m_bIsRight = true;
 	float m_fAnimDuration = 0.15f;
-	float m_fCooltime = 0.6f;
+	float m_fCooltime = 2.0f; //0.6f
 	float m_fCooltimeCounter = 0.0f;
 	int m_iCurrentSpriteIndex = 0;
 

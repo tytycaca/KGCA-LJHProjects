@@ -288,11 +288,13 @@ void    MySceneIngame::Render()
 	}
 
 	m_UIList[6].Render(MyDevice::m_pContext); // EXP바 배경
+
 	m_UIList[4].PreRender(MyDevice::m_pContext); // EXP바 게이지
 	MY_Math::FVector2 scale = MY_Math::FVector2(g_xClientSize * hero.m_fEXP / 50, 1);
 	m_UIList[4].SetScale(scale);
 	m_UIList[4].UpdateVertexBuffer();
 	m_UIList[4].PostRender(MyDevice::m_pContext);
+
 	m_UIList[5].Render(MyDevice::m_pContext); // EXP바 테두리
 	
 	m_WriterFont.get()->RenderLevel(hero.m_iCharLv, D2D1_RECT_F{ 1200, 4, 1280, 26 }, D2D1_COLOR_F{ 1, 1, 1, 1 });
@@ -312,7 +314,6 @@ void    MySceneIngame::Render()
 		hero.UpdateSprite();
 
 	hero.Render(MyDevice::m_pContext);
-
 	
 	m_pWeaponWhip->m_fCooltimeCounter += g_fSecondPerFrame;
 
@@ -320,15 +321,13 @@ void    MySceneIngame::Render()
 	{
 		m_pWeaponWhip->UpdateSprite();
 		m_pWeaponWhip->Render(MyDevice::m_pContext);
-		m_pWeaponWhip->m_fAnimDuration -= g_fSecondPerFrame;
-		if (m_pWeaponWhip->m_fAnimDuration <= 0.0f)
+
+		if (m_pWeaponWhip->GetSpriteIndex() == 5)
 		{
-			m_pWeaponWhip->m_fAnimDuration = 0.15f;
+			m_pWeaponWhip->SetSpriteIndex(0);
 			m_pWeaponWhip->m_fCooltimeCounter = 0.0f;
 		}
 	}
-
-	
 	
 	bool bGameEnding = true;
 
