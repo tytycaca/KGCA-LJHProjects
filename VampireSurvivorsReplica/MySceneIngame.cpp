@@ -83,11 +83,11 @@ void   MySceneIngame::SetWeaponWhip()
 		L"../../resource/whipVfx0.png",
 		L"Alphablend.hlsl");
 	m_pWeaponWhip->SetAnim(m_pWeaponWhip->m_fAnimDuration, I_Sprite.GetPtr(L"WeaponWhip"));
-	m_pWeaponWhip->m_fSpeed = 0.0f;
+	m_pWeaponWhip->m_fSpeed = 300.0f;
 }
 void    MySceneIngame::LevelUp(UINT iLevel)
 {
-	Sleep(1000);
+	Sleep(100);
 	std::vector<std::wstring> spriteName =
 	{
 		L"DefalultNumber",
@@ -100,6 +100,8 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 
 	hero.m_vPos.X = 640.0f;
 	hero.m_vPos.Y = 360.0f;
+	m_pWeaponWhip->m_vPos.X = 740.0f;
+	m_pWeaponWhip->m_vPos.Y = 360.0f;
 	m_Cam.m_vCameraPos = { 0.0f,0.0f };
 	for (int iNpc = 0; iNpc < iLevel; iNpc++)
 	{
@@ -116,6 +118,7 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 		m_npcList.push_back(npc);
 	}
 	m_iNpcCounter = m_npcList.size();
+	m_pWeaponWhip->m_fCooltimeCounter = 0.0f;
 }
 void   MySceneIngame::Init()
 {
@@ -146,29 +149,7 @@ void    MySceneIngame::Frame()
 		}
 	}
 
-	//MY_Math::FVector2 vPos = objScreen.m_vPos;
-	//MY_Math::FVector2 vScale = { (float)cos(g_fGameTime) * 0.5f + 0.5f, (float)cos(g_fGameTime) * 0.5f + 0.5f };
-	//MY_Math::FVector2 vCenter = { -800.0f * 0.5f, -600.0f * 0.5f };
-
-	////objScreen.SetCenterMove(vCenter);
-	////objScreen.SetScale(vScale);
-	////objScreen.SetRotate(g_fGameTime);
-	////objScreen.SetTrans(vPos);
 	objScreen.Frame();
-
-
-	/*for (auto& ui : m_UIList)
-	{
-		if (MyCollision::RectToPt(ui.m_rt, I_Input.m_ptMousePos))
-		{
-			MY_Math::FVector2 vScale = { 0.7f + (float)cos(g_fGameTime * 5) * 0.5f + 0.5f,
-										0.7f + (float)cos(g_fGameTime * 5) * 0.5f + 0.5f };
-			ui.SetScale(vScale);
-			ui.SetRotate(g_fGameTime);
-			ui.SetTrans(ui.m_vPos);
-		}
-		ui.Frame();
-	}*/
 
 	for (auto& ui : m_UIList)
 	{
@@ -197,12 +178,22 @@ void    MySceneIngame::Frame()
 		}
 	}
 
+	if (I_Input.KeyCheck('D') == KEY_PUSH)
+	{
+		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
+	}
+	else if (I_Input.KeyCheck('A') == KEY_PUSH)
+	{
+		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
+	}
+
 	if (I_Input.KeyCheck('A') == KEY_HOLD)
 	{
 		hero.m_bIsMove = true;
 		if (hero.m_vPos.X - 25 > objScreen.m_rt.left)
 		{
 			hero.Move({ -1.0f,0.0f });
+			m_pWeaponWhip->Move({ -1.0f,0.0f });
 		}
 	}
 	if (I_Input.KeyCheck('D') == KEY_HOLD)
@@ -211,6 +202,7 @@ void    MySceneIngame::Frame()
 		if (hero.m_vPos.X + 25 < objScreen.m_rt.right)
 		{
 			hero.Move({ 1.0f,0.0f });
+			m_pWeaponWhip->Move({ 1.0f,0.0f });
 		}
 	}
 	if (I_Input.KeyCheck('W') == KEY_HOLD)
@@ -219,6 +211,7 @@ void    MySceneIngame::Frame()
 		if (hero.m_vPos.Y - 25 > objScreen.m_rt.top + 375)
 		{
 			hero.Move({ 0.0f,-1.0f });
+			m_pWeaponWhip->Move({ 0.0f,-1.0f });
 		}
 	}
 	if (I_Input.KeyCheck('S') == KEY_HOLD)
@@ -227,6 +220,7 @@ void    MySceneIngame::Frame()
 		if (hero.m_vPos.Y + 25 < objScreen.m_rt.bottom - 375)
 		{
 			hero.Move({ 0.0f,1.0f });
+			m_pWeaponWhip->Move({ 0.0f,1.0f });
 		}
 	}
 
@@ -239,26 +233,17 @@ void    MySceneIngame::Frame()
 	if (I_Input.KeyCheck('D') == KEY_UP)
 		hero.m_bIsMove = false;
 
-	/*if (hero.m_bIsRight)
-	{
-		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
-	}
-	else
-	{
-		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
-	}*/
-
 	if (hero.m_vPos.X < 0)
 		m_Cam.m_vCameraPos.X = g_xClientSize / 2;
 	else if (hero.m_vPos.X > g_xClientSize)
-		m_Cam.m_vCameraPos.X = -(int)(g_xClientSize / 2);
+		m_Cam.m_vCameraPos.X = -(float)(g_xClientSize / 2);
 	else
 		m_Cam.m_vCameraPos.X = -hero.m_vPos.X + g_xClientSize / 2;
 
 	if (hero.m_vPos.Y < 0)
 		m_Cam.m_vCameraPos.Y = g_yClientSize / 2;
 	else if (hero.m_vPos.Y > g_yClientSize)
-		m_Cam.m_vCameraPos.Y = -(int)(g_yClientSize / 2);
+		m_Cam.m_vCameraPos.Y = -(float)(g_yClientSize / 2);
 	else
 		m_Cam.m_vCameraPos.Y = -hero.m_vPos.Y + g_yClientSize / 2;
 
@@ -298,27 +283,16 @@ void    MySceneIngame::Render()
 	m_UIList[5].Render(MyDevice::m_pContext); // EXP바 테두리
 	
 	m_WriterFont.get()->RenderLevel(hero.m_iCharLv, D2D1_RECT_F{ 1200, 4, 1280, 26 }, D2D1_COLOR_F{ 1, 1, 1, 1 });
-
-	hero.SetViewTransform(m_Cam.GetMatrix());
-
-	if (I_Input.KeyCheck('D') == KEY_PUSH)
-	{
-		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
-	}
-	else if (I_Input.KeyCheck('A') == KEY_PUSH)
-	{
-		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
-	}
-
-	if(hero.m_bIsMove)
-		hero.UpdateSprite();
-
-	hero.Render(MyDevice::m_pContext);
 	
-	m_pWeaponWhip->m_fCooltimeCounter += g_fSecondPerFrame;
+	hero.SetViewTransform(m_Cam.GetMatrix());
+	if (hero.m_bIsMove)
+		hero.UpdateSprite();
+	hero.Render(MyDevice::m_pContext);
 
+	m_pWeaponWhip->m_fCooltimeCounter += g_fSecondPerFrame;
 	if (m_pWeaponWhip->m_fCooltimeCounter >= m_pWeaponWhip->m_fCooltime)
 	{
+		m_pWeaponWhip->SetViewTransform(m_Cam.GetMatrix());
 		m_pWeaponWhip->UpdateSprite();
 		m_pWeaponWhip->Render(MyDevice::m_pContext);
 
