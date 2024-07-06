@@ -101,9 +101,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\data\Sprite\SpriteInfo.txt" />
     <Text Include="intro.txt">
       <Filter>Scene</Filter>
+    </Text>
+    <Text Include="..\..\resource\SpriteInfo.txt">
+      <Filter>Object</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

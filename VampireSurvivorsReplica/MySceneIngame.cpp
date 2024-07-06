@@ -88,7 +88,7 @@ void   MySceneIngame::SetWeaponWhip()
 void    MySceneIngame::LevelUp(UINT iLevel)
 {
 	Sleep(100);
-	std::vector<std::wstring> spriteName =
+	/*std::vector<std::wstring> spriteName =
 	{
 		L"DefalultNumber",
 		L"wik",
@@ -96,7 +96,7 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 		L"IconList",
 		L"rtBomb",
 		L"rtExplosion",
-	};
+	};*/
 
 	hero.m_vPos.X = 640.0f;
 	hero.m_vPos.Y = 360.0f;
@@ -110,11 +110,12 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 		pos.X = randstep(0.0f, g_xClientSize);
 		pos.Y = randstep(0.0f, g_yClientSize);
 		npc.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
-			{ (LONG)pos.X, (LONG)pos.Y,(LONG)(pos.X + 67.0f), (LONG)(pos.Y + 78.0f) },
-			L"../../data/Sprite/bitmap1Alpha.bmp",
+			{ (LONG)pos.X, (LONG)pos.Y,(LONG)(pos.X + 30.0f), (LONG)(pos.Y + 30.0f) },
+			L"../../resource/Bat1_0.png",
 			L"Alphablend.hlsl");
 
-		npc.SetAnim(1.0f, I_Sprite.GetPtr(spriteName[m_iLevel % spriteName.size()]));
+		/*npc.SetAnim(1.0f, I_Sprite.GetPtr(spriteName[m_iLevel % spriteName.size()]));*/
+		npc.SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBat"));
 		m_npcList.push_back(npc);
 	}
 	m_iNpcCounter = m_npcList.size();
@@ -159,7 +160,9 @@ void    MySceneIngame::Frame()
 	for (auto& npc : m_npcList)
 	{
 		npc.Frame();
-		if (npc.m_bDead == false && MyCollision::RectToRect(npc.m_rt, hero.m_rt))
+		if (npc.m_bDead == false
+			&& MyCollision::RectToRect(npc.m_rt, m_pWeaponWhip->m_rt)
+			&& m_pWeaponWhip->m_bAnimOn)
 		{
 			npc.m_bDead = true;
 			hero.m_fEXP += 10;
@@ -180,10 +183,18 @@ void    MySceneIngame::Frame()
 
 	if (I_Input.KeyCheck('D') == KEY_PUSH)
 	{
+		hero.m_bIsRight = true;
+		MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X + 100.0f, hero.m_vPos.Y);
+		m_pWeaponWhip->SetPos(p);
+		m_pWeaponWhip->SetAnim(m_pWeaponWhip->m_fAnimDuration, I_Sprite.GetPtr(L"WeaponWhip"));
 		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
 	}
 	else if (I_Input.KeyCheck('A') == KEY_PUSH)
 	{
+		hero.m_bIsRight = false;
+		MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X - 100.0f, hero.m_vPos.Y);
+		m_pWeaponWhip->SetPos(p);
+		m_pWeaponWhip->SetAnim(m_pWeaponWhip->m_fAnimDuration, I_Sprite.GetPtr(L"WeaponWhipReversed"));
 		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
 	}
 
@@ -258,19 +269,19 @@ void    MySceneIngame::Render()
 	objScreen.SetViewTransform(m_Cam.GetMatrix());
 	objScreen.Render(MyDevice::m_pContext);
 
-	m_UIList[0].PreRender(MyDevice::m_pContext);
-	MyDevice::m_pContext->PSSetShaderResources(0, 1,
-		m_UIList[0].m_pSprite->GetSRV(m_iNpcCounter).GetAddressOf());
-	m_UIList[0].PostRender(MyDevice::m_pContext);
+	//m_UIList[0].PreRender(MyDevice::m_pContext);
+	//MyDevice::m_pContext->PSSetShaderResources(0, 1,
+	//	m_UIList[0].m_pSprite->GetSRV(m_iNpcCounter).GetAddressOf());
+	//m_UIList[0].PostRender(MyDevice::m_pContext);
 
-	//for (auto obj : m_UIList)
-	for (int iUI = 1; iUI < m_UIList.size()-2; iUI++)
-	{
-		m_UIList[iUI].UpdateSprite();
-		// 화면 고정( 뷰 변환 생략 )
-		//obj.SetViewTransform(m_Cam.GetMatrix());
-		m_UIList[iUI].Render(MyDevice::m_pContext);
-	}
+	////for (auto obj : m_UIList)
+	//for (int iUI = 1; iUI < m_UIList.size()-2; iUI++)
+	//{
+	//	m_UIList[iUI].UpdateSprite();
+	//	// 화면 고정( 뷰 변환 생략 )
+	//	//obj.SetViewTransform(m_Cam.GetMatrix());
+	//	m_UIList[iUI].Render(MyDevice::m_pContext);
+	//}
 
 	m_UIList[6].Render(MyDevice::m_pContext); // EXP바 배경
 
@@ -292,12 +303,14 @@ void    MySceneIngame::Render()
 	m_pWeaponWhip->m_fCooltimeCounter += g_fSecondPerFrame;
 	if (m_pWeaponWhip->m_fCooltimeCounter >= m_pWeaponWhip->m_fCooltime)
 	{
+		m_pWeaponWhip->m_bAnimOn = true;
 		m_pWeaponWhip->SetViewTransform(m_Cam.GetMatrix());
 		m_pWeaponWhip->UpdateSprite();
 		m_pWeaponWhip->Render(MyDevice::m_pContext);
 
 		if (m_pWeaponWhip->GetSpriteIndex() == 5)
 		{
+			m_pWeaponWhip->m_bAnimOn = false;
 			m_pWeaponWhip->SetSpriteIndex(0);
 			m_pWeaponWhip->m_fCooltimeCounter = 0.0f;
 		}
