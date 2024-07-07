@@ -36,19 +36,21 @@ void   MyNpc::SetVertexData(RECT rt)
 }
 void    MyNpc::Frame() 
 {
-	if (m_vPos.X > 1000.0f)
+	if (m_vPos.X > 1920.0f)
 	{
 		m_vDirection.X = -1.0f;
+		SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBatReversed"));
 	}
-	if (m_vPos.X < -1000.0f)
+	if (m_vPos.X < -640.0f)
 	{
 		m_vDirection.X = 1.0f;
+		SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBat"));
 	}
-	if (m_vPos.Y > 1000.0f)
+	if (m_vPos.Y > 1080.0f)
 	{
 		m_vDirection.Y = -1.0f;
 	}
-	if (m_vPos.Y < -1000.0f)
+	if (m_vPos.Y < -360.0f)
 	{
 		m_vDirection.Y = 1.0f;
 	}

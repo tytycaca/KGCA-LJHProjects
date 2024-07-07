@@ -55,6 +55,10 @@ public:
 	MY_Math::FVector2	m_vDirection = { 1.0f, 0.0f };
 	MY_Math::FVector2	m_vOffset;
 	MY_Math::FVector2	m_vVelocity; // ¼Óµµ
+	bool m_bIsRight = true;
+	bool m_bIsMove = false;
+	bool m_bIsHit = false;
+	bool m_bIsDmged = false;
 public:
 	virtual void    Frame() override;
 	virtual void	SetVertexData(RECT rt) override;
@@ -69,6 +73,7 @@ public:
 	virtual MyActor&	SetWorldTransform(MY_Math::FMatrix& m);
 
 	virtual void    UpdateSprite();
+	void    UpdateSpriteWithColor(float r, float g, float b, float a);
 	int			GetSpriteIndex();
 	void    SetSpriteIndex(int index);
 	virtual void    Render(ID3D11DeviceContext* pContext) override;

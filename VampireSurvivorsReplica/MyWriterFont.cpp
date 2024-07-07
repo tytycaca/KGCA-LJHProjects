@@ -107,7 +107,7 @@ void MyWriterFont::Render()
 	m_pd2dRT->EndDraw();
 }
 
-void MyWriterFont::RenderTimer(std::wstring timer, D2D1_RECT_F rect, D2D1_COLOR_F color)
+void MyWriterFont::RenderSysInfo(std::wstring timer, D2D1_RECT_F rect, D2D1_COLOR_F color)
 {
 	m_pd2dRT->BeginDraw();
 	std::wstring msg = timer;
@@ -122,6 +122,17 @@ void MyWriterFont::RenderLevel(int lv, D2D1_RECT_F rect, D2D1_COLOR_F color)
 {
 	m_pd2dRT->BeginDraw();
 	std::wstring msg = L"LV " + std::to_wstring(lv);
+	D2D1_RECT_F layoutRect = rect;
+	m_pDefaultColor->SetColor(color);
+	m_pd2dRT->DrawText(msg.c_str(), msg.size(),
+		m_pWriteTF28_LanaPixel, &layoutRect, m_pDefaultColor);
+	m_pd2dRT->EndDraw();
+}
+
+void MyWriterFont::RenderHP(float hp, D2D1_RECT_F rect, D2D1_COLOR_F color)
+{
+	m_pd2dRT->BeginDraw();
+	std::wstring msg = L"HP " + std::to_wstring((int)floor(hp));
 	D2D1_RECT_F layoutRect = rect;
 	m_pDefaultColor->SetColor(color);
 	m_pd2dRT->DrawText(msg.c_str(), msg.size(),

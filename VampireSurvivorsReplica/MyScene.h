@@ -14,6 +14,7 @@ enum class SceneStatus
 	Lobby,
 	Ingame,
 	Result,
+	GameOver,
 };
 
 class MyScene

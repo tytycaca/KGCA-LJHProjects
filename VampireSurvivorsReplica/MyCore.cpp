@@ -80,7 +80,7 @@ void  MyCore::GamePreRender()
 void  MyCore::GamePostRender()
 {
 	//m_font.DrawText(m_Timer.m_csBuffer, { 0,0 });
-	m_font.RenderTimer(m_Timer.m_csBuffer, D2D1_RECT_F{ 3, 700, 700, 720 }, D2D1_COLOR_F{ 0, 255, 0, 1 });
+	m_font.RenderSysInfo(m_Timer.m_csBuffer, D2D1_RECT_F{ 3, 700, 700, 720 }, D2D1_COLOR_F{ 0, 255, 0, 1 });
 	MyDevice::m_pSwapChain->Present(0, 0);
 }
 void   MyCore::GameRender()

@@ -6,12 +6,14 @@ void   Main::Init()
 	m_pLobbyScene = std::make_shared<MySceneLobby>();
 	m_pIngameScene = std::make_shared<MySceneIngame>();
 	m_pResultScene = std::make_shared<MySceneResult>();
+	m_pGameOverScene = std::make_shared<MySceneResult>();
 
 	m_pTitleScene->Init();
 	m_pLobbyScene->Init();
 	m_pIngameScene->Init();
 	m_pIngameScene->InitInstance(m_font);
 	m_pResultScene->Init();
+	m_pGameOverScene->Init();
 
 	m_pCurrentScene = m_pTitleScene.get();
 
@@ -30,6 +32,8 @@ void    Main::Frame()
 			m_pCurrentScene = m_pIngameScene.get();
 		else if (m_pCurrentScene->m_ssCurrentSceneStatus == SceneStatus::Result)
 			m_pCurrentScene = m_pResultScene.get();
+		else if (m_pCurrentScene->m_ssCurrentSceneStatus == SceneStatus::Result)
+			m_pCurrentScene = m_pGameOverScene.get();
 
 		m_pCurrentScene->m_bSceneChange = false;
 		m_pCurrentScene->m_pBGSound->Play(true);

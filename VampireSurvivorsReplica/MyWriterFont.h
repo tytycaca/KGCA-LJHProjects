@@ -21,8 +21,9 @@ public:
 	virtual void Init() override;
 	virtual void Frame()override;
 	virtual void Render()override;
-	void RenderTimer(std::wstring timer, D2D1_RECT_F rect, D2D1_COLOR_F color);
+	void RenderSysInfo(std::wstring timer, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	void RenderLevel(int lv, D2D1_RECT_F rect, D2D1_COLOR_F color);
+	void RenderHP(float hp, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	virtual void Release()override;
 
 	void ResetDevice(IDXGISurface* dxgiSurface);

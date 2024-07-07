@@ -30,6 +30,24 @@ void    MyActor::UpdateSprite()
 		}
 	}
 }
+void    MyActor::UpdateSpriteWithColor(float r, float g, float b, float a)
+{
+	if (m_pSprite != nullptr)
+	{
+		m_pSprite->Update(m_SpriteData);
+		if (m_pSprite->m_vList.size() > 0)
+		{
+			for (int iV = 0; iV < 6; iV++)
+			{
+				m_vList[iV].t = m_pSprite->m_vList[iV].t;
+				m_vList[iV].c.X = r;
+				m_vList[iV].c.Y = g;
+				m_vList[iV].c.Z = b;
+				m_vList[iV].c.W = a;
+			}
+		}
+	}
+}
 int    MyActor::GetSpriteIndex()
 {
 	return m_pSprite->GetSpriteIndex(m_SpriteData);
