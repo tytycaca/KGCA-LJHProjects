@@ -178,6 +178,17 @@ void MyWriterFont::RenderText(std::wstring text, D2D1_RECT_F rect, D2D1_COLOR_F 
 	m_pd2dRT->EndDraw();
 }
 
+void MyWriterFont::RenderMonsterNumber(int monNum, D2D1_RECT_F rect, D2D1_COLOR_F color)
+{
+	m_pd2dRT->BeginDraw();
+	std::wstring msg = std::to_wstring(monNum / 10) + std::to_wstring(monNum % 10);
+	D2D1_RECT_F layoutRect = rect;
+	m_pDefaultColor->SetColor(color);
+	m_pd2dRT->DrawText(msg.c_str(), msg.size(),
+		m_pWriteTF28_LanaPixel, &layoutRect, m_pDefaultColor);
+	m_pd2dRT->EndDraw();
+}
+
 void MyWriterFont::Release() {
 	if (m_pWriteTF15_SourceCodePro)
 	{

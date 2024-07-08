@@ -98,15 +98,12 @@ void   MySceneIngame::SetWeaponWhip()
 void    MySceneIngame::LevelUp(UINT iMonsterNum)
 {
 	Sleep(100);
-	/*std::vector<std::wstring> spriteName =
+	std::vector<std::wstring> spriteName =
 	{
-		L"DefalultNumber",
-		L"wik",
-		L"rtClash",
-		L"IconList",
-		L"rtBomb",
-		L"rtExplosion",
-	};*/
+		L"MonsterBat",
+		L"MonsterImp",
+		L"MonsterBat"
+	};
 
 	hero.m_vPos.X = 640.0f;
 	hero.m_vPos.Y = 360.0f;
@@ -120,12 +117,13 @@ void    MySceneIngame::LevelUp(UINT iMonsterNum)
 		pos.X = randstep(-640, 1920);
 		pos.Y = randstep(-360, 1080);
 		npc.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
-			{ (LONG)pos.X, (LONG)pos.Y,(LONG)(pos.X + 30.0f), (LONG)(pos.Y + 30.0f) },
-			L"../../resource/Bat1_0.png",
+			{ (LONG)pos.X, (LONG)pos.Y,(LONG)(pos.X + 40.0f + m_fMonsterScaleOffset), (LONG)(pos.Y + 40.0f + m_fMonsterScaleOffset) },
+			L"../../resource/BatRe_i01.png",
 			L"Alphablend.hlsl");
-
+		npc.m_Name = spriteName[m_iCurrentStage - 1];
+		npc.SetAnim(1.0f, I_Sprite.GetPtr(npc.m_Name));
+		//npc.SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBat"));
 		/*npc.SetAnim(1.0f, I_Sprite.GetPtr(spriteName[m_iMonsterNum % spriteName.size()]));*/
-		npc.SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBat"));
 		m_npcList.push_back(npc);
 	}
 	m_iNpcCounter = m_npcList.size();
@@ -150,7 +148,7 @@ void    MySceneIngame::Frame()
 		pos.Y = randstep(0.0f, g_yClientSize);
 		npc.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
 			{ (LONG)pos.X, (LONG)pos.Y,(LONG)(pos.X + 67.0f), (LONG)(pos.Y + 78.0f) },
-			L"../../resource/Bat1_0.png",
+			L"../../resource/BatRe_i01.png",
 			L"Alphablend.hlsl");
 		npc.SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBat"));
 		m_npcList.push_back(npc);
@@ -189,7 +187,7 @@ void    MySceneIngame::Frame()
 					npc.m_bIsHit = true;
 
 					hero.m_bIsDmged = true;
-					hero.m_fHP -= npc.m_fDMG;
+					hero.m_fHP -= (npc.m_fDMG + m_fMonsterDMGOffset);
 					if (hero.m_fHP <= 0.0f)
 					{
 						m_bSceneChange = true;
@@ -417,7 +415,16 @@ void    MySceneIngame::Render()
 	{
 		m_iCurrentStage++;
 		m_iMonsterNum += 10;
+		m_fMonsterScaleOffset += 10;
+		m_fMonsterDMGOffset += 10;
 		LevelUp(m_iMonsterNum);
+	}
+	// 게임 클리어
+	if (m_iCurrentStage >= 3)
+	{
+		m_bSceneChange = true;
+		m_ssCurrentSceneStatus = SceneStatus::Result;
+		m_pBGSound->Stop();
 	}
 
 	m_UIList[6].Render(MyDevice::m_pContext); // EXP바 배경
@@ -434,9 +441,10 @@ void    MySceneIngame::Render()
 	m_UIList[7].Render(MyDevice::m_pContext); // hp바 게이지
 
 	m_WriterFont.get()->RenderLevel(hero.m_iCharLv, D2D1_RECT_F{ 1200, 4, 1280, 26 }, D2D1_COLOR_F{ 1, 1, 1, 1 });
-	m_WriterFont.get()->RenderHP(hero.m_fHP, D2D1_RECT_F{ 1200, 32, 1280, 56 }, D2D1_COLOR_F{ 1,0,0,1 });
+	//m_WriterFont.get()->RenderHP(hero.m_fHP, D2D1_RECT_F{ 1200, 32, 1280, 56 }, D2D1_COLOR_F{ 1,0,0,1 });
 	m_WriterFont.get()->RenderTimer(g_fGameTime, D2D1_RECT_F{ 577, 32, 800, 56 }, D2D1_COLOR_F{ 1,1,1,1 });
 	m_WriterFont.get()->RenderStageNumber(m_iCurrentStage, D2D1_RECT_F{ 0, 32, 300, 56 }, D2D1_COLOR_F{ 1,1,1,1 });
+	m_WriterFont.get()->RenderMonsterNumber(m_iNpcCounter, D2D1_RECT_F{ 1215, 32, 1280, 56 }, D2D1_COLOR_F{ 1,0,0,1 });
 }
 void    MySceneIngame::Release()
 {

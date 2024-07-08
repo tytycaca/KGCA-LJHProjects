@@ -59,6 +59,7 @@ public:
 	bool m_bIsMove = false;
 	bool m_bIsHit = false;
 	bool m_bIsDmged = false;
+	int m_iCurrentSpriteIndex = 0;
 public:
 	virtual void    Frame() override;
 	virtual void	SetVertexData(RECT rt) override;
