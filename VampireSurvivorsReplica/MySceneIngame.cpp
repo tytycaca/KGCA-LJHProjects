@@ -221,13 +221,17 @@ void    MySceneIngame::Frame()
 	if (I_Input.KeyCheck('D') == KEY_PUSH)
 	{
 		hero.m_bIsRight = true;
+		m_pWeaponWhip->m_iCurrentSpriteIndex = m_pWeaponWhip->GetSpriteIndex();
 		m_pWeaponWhip->SetAnim(m_pWeaponWhip->m_fAnimDuration, I_Sprite.GetPtr(L"WeaponWhip"));
+		m_pWeaponWhip->SetSpriteIndex(m_pWeaponWhip->m_iCurrentSpriteIndex);
 		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"Antonio"));
 	}
 	else if (I_Input.KeyCheck('A') == KEY_PUSH)
 	{
 		hero.m_bIsRight = false;
+		m_pWeaponWhip->m_iCurrentSpriteIndex = m_pWeaponWhip->GetSpriteIndex();
 		m_pWeaponWhip->SetAnim(m_pWeaponWhip->m_fAnimDuration, I_Sprite.GetPtr(L"WeaponWhipReversed"));
+		m_pWeaponWhip->SetSpriteIndex(m_pWeaponWhip->m_iCurrentSpriteIndex);
 		hero.SetAnim(0.5f, I_Sprite.GetPtr(L"AntonioReversed"));
 	}
 
@@ -310,10 +314,10 @@ void    MySceneIngame::Frame()
 		m_pWeaponWhip->SetPos(p);
 	}
 
-	//MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X, hero.m_vPos.Y +32.5f);
-	//m_UIList[7].SetPos(p); // hp 바 게이지
-	//p = MY_Math::FVector2(hero.m_vPos.X + 25.0f, hero.m_vPos.Y + 32.5f);
-	//m_UIList[8].SetPos(p); // hp 바 배경
+	MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X, hero.m_vPos.Y +32.5f);
+	m_UIList[7].SetPos(p); // hp 바 게이지
+	p = MY_Math::FVector2(hero.m_vPos.X + 25.0f, hero.m_vPos.Y + 32.5f);
+	m_UIList[8].SetPos(p); // hp 바 배경
 	m_UIList[7].Frame();
 	m_UIList[8].Frame();
 
@@ -352,14 +356,8 @@ void    MySceneIngame::Render()
 
 	m_UIList[7].SetViewTransform(m_Cam.GetMatrix());
 	m_UIList[8].SetViewTransform(m_Cam.GetMatrix());
-	m_UIList[7].Render(MyDevice::m_pContext); // EXP바 게이지
-	//m_UIList[8].PreRender(MyDevice::m_pContext); // EXP바 배경
-	//scale = MY_Math::FVector2(50 * (100-hero.m_fHP) / 100, 1);
-	//m_UIList[8].SetScale(scale);
-	//MY_Math::FVector2 trans = MY_Math::FVector2(-(50 * (100 - hero.m_fHP) / 200), 0);
-	//m_UIList[8].SetTrans(trans);
-	//m_UIList[8].UpdateVertexBuffer();
-	//m_UIList[8].PostRender(MyDevice::m_pContext);
+	m_UIList[8].Render(MyDevice::m_pContext); // hp바 배경
+	m_UIList[7].Render(MyDevice::m_pContext); // hp바 게이지
 	
 	m_WriterFont.get()->RenderLevel(hero.m_iCharLv, D2D1_RECT_F{ 1200, 4, 1280, 26 }, D2D1_COLOR_F{ 1, 1, 1, 1 });
 	m_WriterFont.get()->RenderHP(hero.m_fHP, D2D1_RECT_F{ 1200, 32, 1280, 56 }, D2D1_COLOR_F{ 1,0,0,1 });
