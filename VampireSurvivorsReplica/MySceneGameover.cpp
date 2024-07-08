@@ -1,28 +1,28 @@
-#include "MySceneTitle.h"
+#include "MySceneGameover.h"
 #include "MyInput.h"
-void   MySceneTitle::Init()
+void   MySceneGameover::Init()
 {
-	m_pBGSound = I_Sound.Load(L"../../resource/sfx_titleIntro.wav");
-	if (m_pBGSound && m_ssCurrentSceneStatus == SceneStatus::Title)
+	m_pBGSound = I_Sound.Load(L"../../resource/sfx_gameOver.wav");
+	/*if (m_pBGSound && m_ssCurrentSceneStatus == SceneStatus::GameOver)
 	{
 		m_pBGSound->Play(false);
-	}
+	}*/
 
 	RECT rtBk = { 0, 0, 1280, 720.0f };
 	objScreen.Create(MyDevice::m_pd3dDevice.Get(), 
 		MyDevice::m_pContext, rtBk,
-		L"../../resource/SceneTitle.jpg",
+		L"../../resource/SceneGameOver.png",
 		L"intro.txt");
 	objScreen.m_pSprite = nullptr;
 
 	m_UIList.resize(1);
 	m_UIList[0].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext, { 528 , 500, 732, 559 },
-		L"../../resource/start_normal.png",
+		L"../../resource/endgame_normal.png",
 		L"intro.txt");
-	m_UIList[0].SetAnim(1.0f, I_Sprite.GetPtr(L"StartButton"));
+	m_UIList[0].SetAnim(1.0f, I_Sprite.GetPtr(L"EndGameButton"));
 
 }
-void    MySceneTitle::Frame()
+void    MySceneGameover::Frame()
 {
 	for (auto& ui : m_UIList)
 	{
@@ -78,9 +78,7 @@ void    MySceneTitle::Frame()
 
 		if (alpha1 > 2.0f && m_bFadeOut)
 		{
-			m_bSceneChange = true;
-			m_ssCurrentSceneStatus = SceneStatus::Ingame;
-			m_pBGSound->Stop();
+			g_bGameRun = false;
 		}
 	}
 
@@ -115,13 +113,11 @@ void    MySceneTitle::Frame()
 
 		if (alpha1 > 2.0f && m_bFadeOut)
 		{
-			m_bSceneChange = true;
-			m_ssCurrentSceneStatus = SceneStatus::Ingame;
-			m_pBGSound->Stop();
+			g_bGameRun = false;
 		}
 	}
 }
-void    MySceneTitle::Render()
+void    MySceneGameover::Render()
 {
 	objScreen.Render(MyDevice::m_pContext);
 
@@ -146,8 +142,10 @@ void    MySceneTitle::Render()
 			m_UIList[0].m_pSprite->GetSRV(2).GetAddressOf());
 		m_UIList[0].PostRender(MyDevice::m_pContext);
 	}
+
+	//m_WriterFont.get()->RenderText(L"게임 종료", D2D1_RECT_F{ 577, 512, 697, 536 }, D2D1_COLOR_F{1, 1, 1, 1});
 }
-void    MySceneTitle::Release()
+void    MySceneGameover::Release()
 {
 	objScreen.Release();
 	for (auto& obj : m_UIList)

@@ -119,5 +119,7 @@ void    MyInput::KeyTest()
 }
 DWORD   MyInput::KeyCheck(DWORD dwKey)
 {
+	if (g_bGamePause)
+		return NULL;
 	return g_dwKeyState[dwKey];
 }

@@ -1,6 +1,9 @@
 #pragma once
 #include <windows.h>
 #include <tchar.h>
+
+extern bool g_bGamePause;
+
 enum KeyState
 {
 	KEY_FREE = 0,	// Æò»ó½Ã

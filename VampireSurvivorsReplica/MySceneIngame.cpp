@@ -3,12 +3,12 @@
 #include "MyInput.h"
 void   MySceneIngame::SetSound()
 {	
-	m_pBGSound = I_Sound.Load(L"../../data/sound/romance.mid");
-	if (m_pBGSound)
+	m_pBGSound = I_Sound.Load(L"../../resource/bgm_library.wav");
+	/*if (m_pBGSound && m_ssCurrentSceneStatus == SceneStatus::Ingame)
 	{
-		//m_pBGSound->Play(true);
-	}
-	m_pEffectSound = I_Sound.Load(L"../../data/sound/GunShot.mp3").get();
+		m_pBGSound->Play(true);
+	}*/
+	//m_pEffectSound = I_Sound.Load(L"../../data/sound/GunShot.mp3").get();
 
 }
 void   MySceneIngame::SetUI()
@@ -95,7 +95,7 @@ void   MySceneIngame::SetWeaponWhip()
 	m_pWeaponWhip->SetAnim(m_pWeaponWhip->m_fAnimDuration, I_Sprite.GetPtr(L"WeaponWhip"));
 	m_pWeaponWhip->m_fSpeed = 300.0f;
 }
-void    MySceneIngame::LevelUp(UINT iLevel)
+void    MySceneIngame::LevelUp(UINT iMonsterNum)
 {
 	Sleep(100);
 	/*std::vector<std::wstring> spriteName =
@@ -113,7 +113,7 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 	m_pWeaponWhip->m_vPos.X = 740.0f;
 	m_pWeaponWhip->m_vPos.Y = 360.0f;
 	m_Cam.m_vCameraPos = { 0.0f,0.0f };
-	for (int iNpc = 0; iNpc < iLevel; iNpc++)
+	for (int iNpc = 0; iNpc < iMonsterNum; iNpc++)
 	{
 		MyNpc npc;
 		MY_Math::FVector2 pos;
@@ -141,22 +141,20 @@ void   MySceneIngame::Init()
 }
 void    MySceneIngame::Frame()
 {
-	if (m_iNpcCounter <= 9)
+
+	if (I_Input.KeyCheck(VK_F1) == KEY_PUSH)
 	{
-		if (I_Input.KeyCheck(VK_F1) == KEY_PUSH)
-		{
-			MyNpc npc;
-			MY_Math::FVector2 pos;
-			pos.X = randstep(0.0f, g_xClientSize);
-			pos.Y = randstep(0.0f, g_yClientSize);
-			npc.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
-				{ (LONG)pos.X, (LONG)pos.Y,(LONG)(pos.X + 67.0f), (LONG)(pos.Y + 78.0f) },
-				L"../../data/Sprite/bitmap1Alpha.bmp",
-				L"Alphablend.hlsl");
-			npc.SetAnim(1.0f, I_Sprite.GetPtr(L"DefalultNumber"));
-			m_npcList.push_back(npc);
-			m_iNpcCounter = m_npcList.size();
-		}
+		MyNpc npc;
+		MY_Math::FVector2 pos;
+		pos.X = randstep(0.0f, g_xClientSize);
+		pos.Y = randstep(0.0f, g_yClientSize);
+		npc.Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
+			{ (LONG)pos.X, (LONG)pos.Y,(LONG)(pos.X + 67.0f), (LONG)(pos.Y + 78.0f) },
+			L"../../resource/Bat1_0.png",
+			L"Alphablend.hlsl");
+		npc.SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBat"));
+		m_npcList.push_back(npc);
+		m_iNpcCounter = m_npcList.size();
 	}
 
 	objScreen.Frame();
@@ -193,7 +191,12 @@ void    MySceneIngame::Frame()
 					hero.m_bIsDmged = true;
 					hero.m_fHP -= npc.m_fDMG;
 					if (hero.m_fHP <= 0.0f)
-						g_bGameRun = false;
+					{
+						m_bSceneChange = true;
+						m_ssCurrentSceneStatus = SceneStatus::GameOver;
+						m_pBGSound->Stop();
+						//g_bGameRun = false;
+					}
 					hero.m_fHitTimer = 0.0f;
 				}
 			}
@@ -396,7 +399,7 @@ void    MySceneIngame::Render()
 		}
 	}
 	
-	bool bGameEnding = true;
+	bool bStageEnding = true;
 
 	for_each(begin(m_npcList), end(m_npcList), [&](auto& obj)
 		{
@@ -405,12 +408,12 @@ void    MySceneIngame::Render()
 				obj.UpdateSprite();
 				obj.SetViewTransform(m_Cam.GetMatrix());
 				obj.Render(MyDevice::m_pContext);
-				bGameEnding = false;
+				bStageEnding = false;
 			}
 		});
 
 	// Àû °ÝÅð
-	if (bGameEnding)
+	if (bStageEnding)
 	{
 		m_iCurrentStage++;
 		m_iMonsterNum += 10;

@@ -5,7 +5,7 @@ void   MySound::Init()
 bool   MySound::Load(std::wstring filename)
 {
 	// 1개의 사운드 파일 단위로 1개의 채널이 만들어 진다.
-	m_fVolume = 0.5f;  // 0 ~ 1	
+	m_fVolume = 0.2f;  // 0 ~ 1	
 	FMOD_RESULT hr = m_pFmodSystem->createSound(to_wm(filename).c_str(),
 		FMOD_DEFAULT, 0, &m_pSound);
 	if (hr == FMOD_OK)

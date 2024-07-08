@@ -4,6 +4,7 @@
 #include "MySceneLobby.h"
 #include "MySceneIngame.h"
 #include "MySceneResult.h"
+#include "MySceneGameover.h"
 
 class Main : public MyCore
 {

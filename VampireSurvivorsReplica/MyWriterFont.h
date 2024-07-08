@@ -26,6 +26,7 @@ public:
 	void RenderHP(float hp, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	void RenderTimer(float timer, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	void RenderStageNumber(int stage, D2D1_RECT_F rect, D2D1_COLOR_F color);
+	void RenderText(std::wstring text, D2D1_RECT_F rect, D2D1_COLOR_F color);
 	virtual void Release()override;
 
 	void ResetDevice(IDXGISurface* dxgiSurface);

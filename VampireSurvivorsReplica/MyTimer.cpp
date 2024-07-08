@@ -1,6 +1,7 @@
 #include "MyTimer.h"
 double   g_fSecondPerFrame = 0.0f;
 double   g_fGameTime = 0.0f;
+extern bool g_bGamePause;
 void    MyTimer::DebugTimer()
 {
 #ifdef _DEBUG
@@ -29,8 +30,15 @@ void    MyTimer::Frame()
 	m_fSecondPerFrame = (float)m_dwSecondPerFrame / 1000.0f;
 	m_fGameTimeTick += m_fSecondPerFrame;
 
-	g_fSecondPerFrame = m_fSecondPerFrame;
-	g_fGameTime = m_fGameTimeTick;
+	if (!g_bGamePause)
+	{
+		g_fSecondPerFrame = m_fSecondPerFrame;
+		g_fGameTime = m_fGameTimeTick;
+	}
+	else
+	{
+		g_fSecondPerFrame = 0.0f;
+	}
 
 	fSecondTime += m_fSecondPerFrame;
 	if (fSecondTime >= 1.0f) // 1.01f

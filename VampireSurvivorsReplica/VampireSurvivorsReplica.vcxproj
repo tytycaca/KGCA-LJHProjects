@@ -172,6 +172,9 @@
     <ClCompile Include="MyNpc.cpp" />
     <ClCompile Include="MyPawn.cpp" />
     <ClCompile Include="MyScene.cpp" />
+    <ClCompile Include="MySceneGameover.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="MySceneIngame.cpp" />
     <ClCompile Include="MySceneLobby.cpp" />
     <ClCompile Include="MySceneResult.cpp" />
@@ -200,6 +203,9 @@
     <ClInclude Include="MyNpc.h" />
     <ClInclude Include="MyPawn.h" />
     <ClInclude Include="MyScene.h" />
+    <ClInclude Include="MySceneGameover.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="MySceneIngame.h" />
     <ClInclude Include="MySceneLobby.h" />
     <ClInclude Include="MySceneResult.h" />

@@ -53,6 +53,9 @@
     <ClCompile Include="MyWeaponWhip.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="MySceneGameover.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="MyWeaponWhip.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MySceneGameover.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

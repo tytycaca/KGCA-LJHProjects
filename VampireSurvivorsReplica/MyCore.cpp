@@ -1,5 +1,6 @@
 #include "MyCore.h"
 bool		 g_bGameRun = true;
+bool		 g_bGamePause = false;
 
 HRESULT  MyCore::SetAlphaBlendState()
 {
