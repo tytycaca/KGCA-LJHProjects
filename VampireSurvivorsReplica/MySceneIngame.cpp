@@ -141,7 +141,6 @@ void   MySceneIngame::Init()
 }
 void    MySceneIngame::Frame()
 {
-
 	if (m_iNpcCounter <= 9)
 	{
 		if (I_Input.KeyCheck(VK_F1) == KEY_PUSH)
@@ -241,9 +240,9 @@ void    MySceneIngame::Frame()
 		if (hero.m_vPos.X - 25 > objScreen.m_rt.left)
 		{
 			hero.Move({ -1.0f,0.0f });
-			m_pWeaponWhip->Move({ -1.0f,0.0f });
-			m_UIList[7].Move({ -1.0f,0.0f });
-			m_UIList[8].Move({ -1.0f,0.0f });
+			//m_pWeaponWhip->Move({ -1.0f,0.0f });
+			//m_UIList[7].Move({ -1.0f,0.0f });
+			//m_UIList[8].Move({ -1.0f,0.0f });
 		}
 	}
 	if (I_Input.KeyCheck('D') == KEY_HOLD)
@@ -252,9 +251,9 @@ void    MySceneIngame::Frame()
 		if (hero.m_vPos.X + 25 < objScreen.m_rt.right)
 		{
 			hero.Move({ 1.0f,0.0f });
-			m_pWeaponWhip->Move({ 1.0f,0.0f });
-			m_UIList[7].Move({ 1.0f,0.0f });
-			m_UIList[8].Move({ 1.0f,0.0f });
+			//m_pWeaponWhip->Move({ 1.0f,0.0f });
+			//m_UIList[7].Move({ 1.0f,0.0f });
+			//m_UIList[8].Move({ 1.0f,0.0f });
 		}
 	}
 	if (I_Input.KeyCheck('W') == KEY_HOLD)
@@ -263,9 +262,9 @@ void    MySceneIngame::Frame()
 		if (hero.m_vPos.Y - 25 > objScreen.m_rt.top + 375)
 		{
 			hero.Move({ 0.0f,-1.0f });
-			m_pWeaponWhip->Move({ 0.0f,-1.0f });
-			m_UIList[7].Move({ 0.0f,-1.0f });
-			m_UIList[8].Move({ 0.0f,-1.0f });
+			//m_pWeaponWhip->Move({ 0.0f,-1.0f });
+			//m_UIList[7].Move({ 0.0f,-1.0f });
+			//m_UIList[8].Move({ 0.0f,-1.0f });
 		}
 	}
 	if (I_Input.KeyCheck('S') == KEY_HOLD)
@@ -274,9 +273,9 @@ void    MySceneIngame::Frame()
 		if (hero.m_vPos.Y + 25 < objScreen.m_rt.bottom - 375)
 		{
 			hero.Move({ 0.0f,1.0f });
-			m_pWeaponWhip->Move({ 0.0f,1.0f });
-			m_UIList[7].Move({ 0.0f,1.0f });
-			m_UIList[8].Move({ 0.0f,1.0f });
+			//m_pWeaponWhip->Move({ 0.0f,1.0f });
+			//m_UIList[7].Move({ 0.0f,1.0f });
+			//m_UIList[8].Move({ 0.0f,1.0f });
 		}
 	}
 
@@ -306,23 +305,35 @@ void    MySceneIngame::Frame()
 	if (hero.m_bIsRight)
 	{
 		MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X + 100.0f, hero.m_vPos.Y);
-		m_pWeaponWhip->SetPos(p);
+		m_pWeaponWhip->SetTrans(p);
 	}
 	else
 	{
 		MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X - 100.0f, hero.m_vPos.Y);
-		m_pWeaponWhip->SetPos(p);
+		m_pWeaponWhip->SetTrans(p);
 	}
 
 	MY_Math::FVector2 s = MY_Math::FVector2(hero.m_fHP / 100.0f, 1.0f);
 	MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X - (50.0f * (100.0f - hero.m_fHP) / 100.0f)/2, hero.m_vPos.Y +32.5f);
 	m_UIList[7].SetScale(s);
-	m_UIList[7].SetPos(p); // hp 바 게이지
+	m_UIList[7].SetTrans(p); // hp 바 게이지
 	p = MY_Math::FVector2(hero.m_vPos.X, hero.m_vPos.Y + 32.5f);
-	m_UIList[8].SetPos(p); // hp 바 배경
+	m_UIList[8].SetTrans(p); // hp 바 배경
+
+	// 충돌처리 박스 동기화 (플레이어) (정지상태에서의 동기화)
+	hero.m_rt.left   = hero.m_vList[0].p.X;
+	hero.m_rt.right  = hero.m_vList[1].p.X;
+	hero.m_rt.top    = hero.m_vList[0].p.Y;
+	hero.m_rt.bottom = hero.m_vList[2].p.Y;
+
+	// 충돌처리 박스 동기화 (채찍 스프라이트)
+	m_pWeaponWhip->m_rt.left   = m_pWeaponWhip->m_vList[0].p.X;
+	m_pWeaponWhip->m_rt.right  = m_pWeaponWhip->m_vList[1].p.X;
+	m_pWeaponWhip->m_rt.top    = m_pWeaponWhip->m_vList[0].p.Y;
+	m_pWeaponWhip->m_rt.bottom = m_pWeaponWhip->m_vList[2].p.Y;
+
 	m_UIList[7].Frame();
 	m_UIList[8].Frame();
-
 	hero.Frame();
 	m_pWeaponWhip->Frame();
 	m_Cam.Move(hero.m_vOffset);

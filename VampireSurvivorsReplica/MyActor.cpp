@@ -13,8 +13,6 @@ void    MyActor::Frame()
 	m_matWorld = m_matCenter * m_matScale * m_matRotate * m_matTrans;
 	SetWorldTransform();
 	//m_vOffset = { 0.0f,0.0f };
-
-	
 }
 void    MyActor::UpdateSprite()
 {
