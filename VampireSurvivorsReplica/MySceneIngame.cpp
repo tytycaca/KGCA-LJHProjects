@@ -182,37 +182,27 @@ void    MySceneIngame::Frame()
 			hero.m_fEXP += 30;
 			m_iNpcCounter = max(0, m_iNpcCounter - 1);
 		}
-		else
+		if (hero.m_fHitTimer >= hero.m_fHitCooltime)
 		{
-			npc.m_bIsHit = false;
-			npc.m_bIsDmged = false;
-		}
-		
-		if (MyCollision::RectToRect(hero.m_rt, npc.m_rt))
-		{
-			if (!npc.m_bDead)
+			if (MyCollision::RectToRect(hero.m_rt, npc.m_rt))
 			{
-				hero.m_bIsHit = true;
-				npc.m_bIsHit = true;
-
-				if (hero.m_fHitTimer >= hero.m_fHitCooltime)
+				if (!npc.m_bDead)
 				{
+					hero.m_bIsHit = true;
+					npc.m_bIsHit = true;
+
 					hero.m_bIsDmged = true;
 					hero.m_fHP -= 10.0f;
 					if (hero.m_fHP <= 0.0f)
 						g_bGameRun = false;
 					hero.m_fHitTimer = 0.0f;
 				}
-				else
-				{
-					hero.m_bIsDmged = false;
-				}
 			}
-		}
-		else
-		{
-			hero.m_bIsHit = false;
-			npc.m_bIsHit = false;
+			else
+			{
+				hero.m_bIsHit = false;
+				npc.m_bIsHit = false;
+			}
 		}
 	}
 
