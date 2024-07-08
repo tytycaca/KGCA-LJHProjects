@@ -3,7 +3,9 @@
 class MySceneIngame :   public MyScene
 {
 public:
-	UINT		m_iLevel = 25;
+	UINT		m_iMonsterNum = 25;
+	UINT		m_iCurrentStage = 1;
+	UINT		m_iCurrentMonsterNum = 0;
 	using T_Effect = std::shared_ptr<MySprite>;
 	std::vector<T_Effect>  m_EffectList;
 	

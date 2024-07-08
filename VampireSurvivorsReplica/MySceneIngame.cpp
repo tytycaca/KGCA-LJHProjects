@@ -124,7 +124,7 @@ void    MySceneIngame::LevelUp(UINT iLevel)
 			L"../../resource/Bat1_0.png",
 			L"Alphablend.hlsl");
 
-		/*npc.SetAnim(1.0f, I_Sprite.GetPtr(spriteName[m_iLevel % spriteName.size()]));*/
+		/*npc.SetAnim(1.0f, I_Sprite.GetPtr(spriteName[m_iMonsterNum % spriteName.size()]));*/
 		npc.SetAnim(1.0f, I_Sprite.GetPtr(L"MonsterBat"));
 		m_npcList.push_back(npc);
 	}
@@ -137,7 +137,7 @@ void   MySceneIngame::Init()
 	SetUI();
 	SetPlayer();
 	SetWeaponWhip();
-	LevelUp(m_iLevel);
+	LevelUp(m_iMonsterNum);
 }
 void    MySceneIngame::Frame()
 {
@@ -347,22 +347,6 @@ void    MySceneIngame::Render()
 	//	//obj.SetViewTransform(m_Cam.GetMatrix());
 	//	m_UIList[iUI].Render(MyDevice::m_pContext);
 	//}
-
-	m_UIList[6].Render(MyDevice::m_pContext); // EXP바 배경
-	m_UIList[4].PreRender(MyDevice::m_pContext); // EXP바 게이지
-	MY_Math::FVector2 scale = MY_Math::FVector2(g_xClientSize * hero.m_fEXP / 50, 1);
-	m_UIList[4].SetScale(scale);
-	m_UIList[4].UpdateVertexBuffer();
-	m_UIList[4].PostRender(MyDevice::m_pContext);
-	m_UIList[5].Render(MyDevice::m_pContext); // EXP바 테두리
-
-	m_UIList[7].SetViewTransform(m_Cam.GetMatrix());
-	m_UIList[8].SetViewTransform(m_Cam.GetMatrix());
-	m_UIList[8].Render(MyDevice::m_pContext); // hp바 배경
-	m_UIList[7].Render(MyDevice::m_pContext); // hp바 게이지
-	
-	m_WriterFont.get()->RenderLevel(hero.m_iCharLv, D2D1_RECT_F{ 1200, 4, 1280, 26 }, D2D1_COLOR_F{ 1, 1, 1, 1 });
-	m_WriterFont.get()->RenderHP(hero.m_fHP, D2D1_RECT_F{ 1200, 32, 1280, 56 }, D2D1_COLOR_F{ 1,0,0,1 });
 	
 	hero.SetViewTransform(m_Cam.GetMatrix());
 	for (auto& v : hero.m_vList)
@@ -417,9 +401,28 @@ void    MySceneIngame::Render()
 	// 적 격퇴
 	if (bGameEnding)
 	{
-		m_iLevel++;
-		LevelUp(m_iLevel);
+		m_iCurrentStage++;
+		m_iMonsterNum += 10;
+		LevelUp(m_iMonsterNum);
 	}
+
+	m_UIList[6].Render(MyDevice::m_pContext); // EXP바 배경
+	m_UIList[4].PreRender(MyDevice::m_pContext); // EXP바 게이지
+	MY_Math::FVector2 scale = MY_Math::FVector2(g_xClientSize * hero.m_fEXP / 50, 1);
+	m_UIList[4].SetScale(scale);
+	m_UIList[4].UpdateVertexBuffer();
+	m_UIList[4].PostRender(MyDevice::m_pContext);
+	m_UIList[5].Render(MyDevice::m_pContext); // EXP바 테두리
+
+	m_UIList[7].SetViewTransform(m_Cam.GetMatrix());
+	m_UIList[8].SetViewTransform(m_Cam.GetMatrix());
+	m_UIList[8].Render(MyDevice::m_pContext); // hp바 배경
+	m_UIList[7].Render(MyDevice::m_pContext); // hp바 게이지
+
+	m_WriterFont.get()->RenderLevel(hero.m_iCharLv, D2D1_RECT_F{ 1200, 4, 1280, 26 }, D2D1_COLOR_F{ 1, 1, 1, 1 });
+	m_WriterFont.get()->RenderHP(hero.m_fHP, D2D1_RECT_F{ 1200, 32, 1280, 56 }, D2D1_COLOR_F{ 1,0,0,1 });
+	m_WriterFont.get()->RenderTimer(g_fGameTime, D2D1_RECT_F{ 577, 32, 800, 56 }, D2D1_COLOR_F{ 1,1,1,1 });
+	m_WriterFont.get()->RenderStageNumber(m_iCurrentStage, D2D1_RECT_F{ 0, 32, 300, 56 }, D2D1_COLOR_F{ 1,1,1,1 });
 }
 void    MySceneIngame::Release()
 {

@@ -140,6 +140,33 @@ void MyWriterFont::RenderHP(float hp, D2D1_RECT_F rect, D2D1_COLOR_F color)
 	m_pd2dRT->EndDraw();
 }
 
+void MyWriterFont::RenderTimer(float timer, D2D1_RECT_F rect, D2D1_COLOR_F color)
+{
+	m_pd2dRT->BeginDraw();
+	int sec10;
+	sec10 = (int)timer / 10;
+	if ((int)timer / 10 >= 6)
+		sec10 -= 6;
+	std::wstring msg = L"Time " + std::to_wstring((int)timer / 60 / 10) + std::to_wstring(((int)timer / 60 % 10)) +
+						   L":" + std::to_wstring(sec10) + std::to_wstring(((int)timer % 10));
+	D2D1_RECT_F layoutRect = rect;
+	m_pDefaultColor->SetColor(color);
+	m_pd2dRT->DrawText(msg.c_str(), msg.size(),
+		m_pWriteTF28_LanaPixel, &layoutRect, m_pDefaultColor);
+	m_pd2dRT->EndDraw();
+}
+
+void MyWriterFont::RenderStageNumber(int stage, D2D1_RECT_F rect, D2D1_COLOR_F color)
+{
+	m_pd2dRT->BeginDraw();
+	std::wstring msg = L"STAGE " + std::to_wstring(stage / 10) + std::to_wstring(stage % 10);
+	D2D1_RECT_F layoutRect = rect;
+	m_pDefaultColor->SetColor(color);
+	m_pd2dRT->DrawText(msg.c_str(), msg.size(),
+		m_pWriteTF28_LanaPixel, &layoutRect, m_pDefaultColor);
+	m_pd2dRT->EndDraw();
+}
+
 void MyWriterFont::Release() {
 	if (m_pWriteTF15_SourceCodePro)
 	{
