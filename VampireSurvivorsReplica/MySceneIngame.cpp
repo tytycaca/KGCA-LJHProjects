@@ -63,7 +63,7 @@ void   MySceneIngame::SetUI()
 		L"Alphablend.hlsl");
 
 	m_UIList[8].Create(MyDevice::m_pd3dDevice.Get(), MyDevice::m_pContext,
-		{ 664, 390, 665, 395 },
+		{ 615, 390, 665, 395 },
 		L"../../resource/hp_bar_bg.png",
 		L"Alphablend.hlsl");
 }
@@ -179,7 +179,7 @@ void    MySceneIngame::Frame()
 			npc.m_bIsHit = true;
 			npc.m_bIsDmged = true;
 			npc.m_bDead = true;
-			hero.m_fEXP += 30;
+			hero.m_fEXP += npc.m_fEXP;
 			m_iNpcCounter = max(0, m_iNpcCounter - 1);
 		}
 		if (hero.m_fHitTimer >= hero.m_fHitCooltime)
@@ -192,7 +192,7 @@ void    MySceneIngame::Frame()
 					npc.m_bIsHit = true;
 
 					hero.m_bIsDmged = true;
-					hero.m_fHP -= 10.0f;
+					hero.m_fHP -= npc.m_fDMG;
 					if (hero.m_fHP <= 0.0f)
 						g_bGameRun = false;
 					hero.m_fHitTimer = 0.0f;
@@ -314,9 +314,11 @@ void    MySceneIngame::Frame()
 		m_pWeaponWhip->SetPos(p);
 	}
 
-	MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X, hero.m_vPos.Y +32.5f);
+	MY_Math::FVector2 s = MY_Math::FVector2(hero.m_fHP / 100.0f, 1.0f);
+	MY_Math::FVector2 p = MY_Math::FVector2(hero.m_vPos.X - (50.0f * (100.0f - hero.m_fHP) / 100.0f)/2, hero.m_vPos.Y +32.5f);
+	m_UIList[7].SetScale(s);
 	m_UIList[7].SetPos(p); // hp 바 게이지
-	p = MY_Math::FVector2(hero.m_vPos.X + 25.0f, hero.m_vPos.Y + 32.5f);
+	p = MY_Math::FVector2(hero.m_vPos.X, hero.m_vPos.Y + 32.5f);
 	m_UIList[8].SetPos(p); // hp 바 배경
 	m_UIList[7].Frame();
 	m_UIList[8].Frame();
