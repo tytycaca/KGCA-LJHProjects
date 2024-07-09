@@ -26,7 +26,7 @@ public:
 	}
 	FMOD::Sound*   m_pSound = nullptr;
 	FMOD::Channel* m_pChannel = nullptr;
-	float		   m_fVolume = 1.0f;
+	float		   m_fVolume = 0.5f;
 	unsigned int	m_SizeMS;
 	wchar_t			m_msSound[MAX_PATH] = { 0, };
 	wchar_t			m_msPlay[MAX_PATH] = { 0, };

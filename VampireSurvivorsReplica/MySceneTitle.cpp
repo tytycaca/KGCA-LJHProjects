@@ -3,6 +3,7 @@
 void   MySceneTitle::Init()
 {
 	m_pBGSound = I_Sound.Load(L"../../resource/sfx_titleIntro.wav");
+	m_buttonSound = I_Sound.Load(L"../../resource/sfx_morph.wav");
 	if (m_pBGSound && m_ssCurrentSceneStatus == SceneStatus::Title)
 	{
 		m_pBGSound->Play(false);

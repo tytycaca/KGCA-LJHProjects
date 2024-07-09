@@ -22,6 +22,7 @@ class MyScene
 public:
 	bool	m_bSceneChange = false;
 	std::shared_ptr<MySound>				m_pBGSound = nullptr;
+	std::shared_ptr<MySound> m_buttonSound = nullptr;
 	SceneStatus m_ssCurrentSceneStatus = SceneStatus::Default;
 	std::shared_ptr<MyWriterFont> m_WriterFont;
 

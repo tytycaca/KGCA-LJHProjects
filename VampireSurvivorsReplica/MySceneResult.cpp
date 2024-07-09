@@ -3,6 +3,7 @@
 void   MySceneResult::Init()
 {
 	m_pBGSound = I_Sound.Load(L"../../resource/Winner SFX.wav");
+	m_buttonSound = I_Sound.Load(L"../../resource/sfx_morph.wav");
 	/*if (m_pBGSound && m_ssCurrentSceneStatus == SceneStatus::GameOver)
 	{
 		m_pBGSound->Play(false);
@@ -33,6 +34,7 @@ void    MySceneResult::Frame()
 			if (I_Input.KeyCheck(VK_LBUTTON) == KEY_PUSH || I_Input.KeyCheck(VK_LBUTTON) == KEY_HOLD)
 			{
 				ui.m_usCurrentUIStatus = UIStatus::Pressed;
+				m_buttonSound->Play(false);
 			}
 			if (I_Input.KeyCheck(VK_LBUTTON) == KEY_UP)
 			{

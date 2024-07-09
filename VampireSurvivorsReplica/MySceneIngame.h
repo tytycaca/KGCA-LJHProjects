@@ -9,6 +9,7 @@ public:
 	float		m_fMonsterDMGOffset = 0.0f;
 	using T_Effect = std::shared_ptr<MySprite>;
 	std::vector<T_Effect>  m_EffectList;
+	std::shared_ptr<MySound> m_attackSound = nullptr;
 	
 	MySound* m_pEffectSound = nullptr;
 	TCamera				m_Cam;

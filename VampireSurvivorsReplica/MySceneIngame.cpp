@@ -4,6 +4,8 @@
 void   MySceneIngame::SetSound()
 {	
 	m_pBGSound = I_Sound.Load(L"../../resource/bgm_library.wav");
+	m_attackSound = I_Sound.Load(L"../../resource/sfx_exp_short_soft6.wav");
+	m_attackSound->m_pChannel->setVolume(0.0f);
 	/*if (m_pBGSound && m_ssCurrentSceneStatus == SceneStatus::Ingame)
 	{
 		m_pBGSound->Play(true);
@@ -388,6 +390,7 @@ void    MySceneIngame::Render()
 		m_pWeaponWhip->SetViewTransform(m_Cam.GetMatrix());
 		m_pWeaponWhip->UpdateSprite();
 		m_pWeaponWhip->Render(MyDevice::m_pContext);
+		m_attackSound->Play(false);
 
 		if (m_pWeaponWhip->GetSpriteIndex() == 5)
 		{
