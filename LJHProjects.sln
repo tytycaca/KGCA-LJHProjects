@@ -125,6 +125,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DirectX_2D_Project", "Direc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VampireSurvivorsReplica", "VampireSurvivorsReplica\VampireSurvivorsReplica.vcxproj", "{D16A267F-7901-49DA-9210-352C79224B13}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{F682E33C-EB09-467D-8D59-C2869D22392C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
